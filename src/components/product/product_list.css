@@ -1,21 +1,15 @@
 .content {
   display: flex;
+  flex-direction: column;
+  align-items: center;
   margin: auto;
-  width: 50%;
-  border: 1px solid red;
+  width: 70%;
 }
 
-.list {
-  list-style: none;
-  border: 1px solid green;
+.collapse {
+  width: 100%;
 }
 
-.list__item {
-  color: black;
-  font-size: 20px;
-  border: 1px solid brown;
-}
+.collapse__item {
 
-.list__item:first-of-type {
-  background-color: dodgerblue;
 }

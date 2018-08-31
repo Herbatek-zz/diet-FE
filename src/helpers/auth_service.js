@@ -20,6 +20,11 @@ export default class AuthService {
         }
     }
 
+    static getDecodedToken() {
+        const token = AuthService.getToken();
+        return decode(token);
+    }
+
     static getToken() {
         return Cookies.get(TOKEN);
     }

@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {Layout} from 'antd';
 
 import {fetchProduct} from "../../actions";
 import Header from '../default/header';
 import Footer from '../default/footer';
+
 
 class ProductShow extends Component {
     componentDidMount() {
@@ -19,9 +21,9 @@ class ProductShow extends Component {
 
 
         return (
-            <div>
+            <Layout>
                 <Header />
-                <div>
+                <div className='content'>
                     <h4>Name: {product.name}</h4>
                     <h5>Description: {product.description}</h5>
                     <img src={product.imageUrl} alt='product' />
@@ -34,7 +36,7 @@ class ProductShow extends Component {
                     <h5>PAFE: {product.proteinAndFatEquivalent}</h5>
                 </div>
                 <Footer/>
-            </div>
+            </Layout>
         );
     }
 }

@@ -1,46 +1,87 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
+import {Layout, Menu, Icon, Avatar} from 'antd';
 
-import AuthService from '../auth_service';
+import AuthService from '../../helpers/auth_service';
+import './header.css';
 
-class Header extends Component {
-    constructor(props) {
-        super(props);
-        this.Auth = new AuthService();
-    }
+const {Header} = Layout;
+
+class MyHeader extends Component {
+    loginButton = () => {
+        if (AuthService.isLogged())
+            return (
+                <Link to='/' onClick={() => AuthService.logout()}>
+                    <div className='header__login'>
+                        <Icon type="logout" className='header__login--icon'/>
+                        <p className='header__login--text'>Log out</p>
+                    </div>
+                </Link>
+            );
+        else
+            return (
+                <a href="http://localhost:8080/login/facebook">
+                    <div className='header__login'>
+                        <Icon type="login" className='header__login--icon'/>
+                        <p className='header__login--text'>Log in</p>
+                    </div>
+                </a>
+            );
+    };
+
+    userInfo = () => {
+        if (AuthService.isLogged()) {
+            const decodedToken = AuthService.getDecodedToken();
+            console.log(decodedToken.pictureUrl);
+            return (
+                <Menu.Item className='header__avatar'>
+                    <Avatar src={decodedToken.pictureUrl} className='header__avatar--picture'/>
+                    <p className='header__avatar--username'>{decodedToken.username}</p>
+                </Menu.Item>
+
+            );
+        }
+    };
 
     render() {
-        let loginButton = '';
-        if (AuthService.isLogged())
-            loginButton =
-                (<Link to='/' className='header_nav-item' onClick={() => AuthService.logout()}>
-                    <i className="material-icons">exit_to_app</i>
-                    Sign out
-                </Link>);
-        else
-            loginButton =
-                <Link to='/login' className='header_nav-item'>
-                    <i className="material-icons">person</i>
-                    Sign in
-                </Link>;
         return (
-            <div className='header'>
-                <Link to='/' className='header__logo'>Dieme</Link>
-                <Link to='/' className='header_nav-item'>
-                    <i className="material-icons">home</i>Home
-                </Link>
-                <Link to='/products' className='header_nav-item'>
-                    <i className="material-icons">format_list_bulleted</i>
-                    Products
-                </Link>
-                <Link to='/products/new' className='header_nav-item'>
-                    <i className="material-icons">add_circle_outline</i>
-                    Add product
-                </Link>
-                {loginButton}
-            </div>
+            <Header className='header'>
+                <div>
+                    <Link to='/' className='header__logo'>Dieme</Link>
+                </div>
+
+                <Menu theme="dark"
+                      mode="horizontal"
+                      defaultSelectedKeys={[`${this.props.navSelectedItem}`]}
+                >
+                    <Menu.Item key="home" className='header__item'>
+                        <Link to='/' className='header__item--link'>
+                            <Icon type="home" className='header__item--icon'/>
+                            Home
+                        </Link>
+                    </Menu.Item>
+                    <Menu.Item key='product-list' className='header__item'>
+                        <Link to='/products' className='header__item--link'>
+                            <Icon type='bars' className='header__item--icon'/>
+                            Products
+                        </Link>
+                    </Menu.Item>
+                    <Menu.Item key='product-create' className='header__item'>
+                        <Link to='/products/new' className='header__item--link'>
+                            <Icon type="plus-circle-o" className='header__item--icon'/>
+                            Add product
+                        </Link>
+                    </Menu.Item>
+                    <Menu.Item className='header__login'>
+                        {this.loginButton()}
+                    </Menu.Item>
+                    {this.userInfo()}
+                </Menu>
+
+            </Header>
         );
     }
 }
 
-export default Header;
+
+export default MyHeader;
