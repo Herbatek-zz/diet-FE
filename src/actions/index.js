@@ -1,5 +1,5 @@
 import Request from '../helpers/request';
-import Cookies from 'js-cookie';
+import AuthService from "../helpers/auth_service";
 
 export const CREATE_PRODUCT = 'create_product';
 export const FETCH_PRODUCT = 'fetch_product';
@@ -7,7 +7,7 @@ export const FETCH_PRODUCTS = 'fetch_products';
 
 export function createProduct(values, callback) {
 
-    const userId = Cookies.get('id');
+    const userId = AuthService.getDecodedToken().sub;
     const request = Request.post(`/users/${userId}/products`, values)
         .then(() => callback());
 

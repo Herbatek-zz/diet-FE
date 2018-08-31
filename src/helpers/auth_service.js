@@ -21,8 +21,7 @@ export default class AuthService {
     }
 
     static getDecodedToken() {
-        const token = AuthService.getToken();
-        return decode(token);
+        return decode(AuthService.getToken());
     }
 
     static getToken() {
@@ -31,9 +30,5 @@ export default class AuthService {
 
     static logout() {
         Cookies.remove(TOKEN)
-    }
-
-    static getProfile() {
-        return decode(this.getToken());
     }
 }

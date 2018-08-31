@@ -17,12 +17,12 @@ class ProductCreate extends Component {
             this.props.history.replace('/');
     }
 
-    renderTextField(field) {
-        const {meta: {touched, error}} = field;
+    renderTextField({label, input, meta}) {
+        const {touched, error} = meta;
         return (
             <div>
-                <label>{field.label}</label>
-                <input type='text' placeholder={field.label} {...field.input}/>
+                <label>{label}</label>
+                <input type='text' placeholder={label} {...input}/>
                 <div className='form-error'>
                     {touched ? error : ''}
                 </div>
@@ -30,13 +30,13 @@ class ProductCreate extends Component {
         )
     }
 
-    renderNumberField(field) {
-        const {meta: {touched, error}} = field;
+    renderNumberField({label, input, meta}) {
+        const {touched, error} = meta;
 
         return (
             <div>
-                <label>{field.label}</label>
-                <input type='number' {...field.input}/>
+                <label>{label}</label>
+                <input type='number' {...input}/>
                 <div className='form-error'>
                     {touched ? error : ''}
                 </div>
@@ -44,13 +44,13 @@ class ProductCreate extends Component {
         )
     }
 
-    renderTextArea(field) {
-        const {meta: {touched, error}} = field;
+    renderTextArea({label, input, meta}) {
+        const {touched, error} = meta;
 
         return (
             <div>
-                <label>{field.label}</label>
-                <textarea {...field.input}/>
+                <label>{label}</label>
+                <textarea {...input}/>
                 <div className='form-error'>
                     {touched ? error : ''}
                 </div>
@@ -58,11 +58,11 @@ class ProductCreate extends Component {
         )
     }
 
-    onSubmit(values) {
+    onSubmit = (values) => {
         this.props.createProduct(values, () => {
             this.props.history.push('/products')
         });
-    }
+    };
 
     render() {
         const {handleSubmit} = this.props;
@@ -71,7 +71,7 @@ class ProductCreate extends Component {
             <Layout>
                 <Header navSelectedItem='product-create'/>
                 <div className='content'>
-                    <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
+                    <form onSubmit={handleSubmit(this.onSubmit)}>
                         <Field name='name' label='Name' component={this.renderTextField}/>
                         <Field name='description' label='Description' component={this.renderTextArea}/>
                         <Field name='imageUrl' label='Image' component={this.renderTextField}/>

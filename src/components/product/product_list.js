@@ -25,10 +25,6 @@ class ProductList extends Component {
     renderProducts() {
         return _.map(this.props.products, product => {
             return (
-                // <li className='list-group-item' key={product.id}>
-                //     <Link to={`/products/${product.id}`} className='list__item'>{product.name}</Link>
-                // </li>
-
                 <Panel
                     className='collapse__item'
                     key={product.id}
@@ -47,6 +43,7 @@ class ProductList extends Component {
         return (
             <Layout>
                 <Header navSelectedItem='product-list'/>
+
                 <div className='content'>
                     <Collapse className='collapse'>
                         {this.renderProducts()}

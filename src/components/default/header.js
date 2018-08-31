@@ -31,12 +31,10 @@ class MyHeader extends Component {
 
     userInfo = () => {
         if (AuthService.isLogged()) {
-            const decodedToken = AuthService.getDecodedToken();
-            console.log(decodedToken.pictureUrl);
             return (
                 <Menu.Item className='header__avatar'>
-                    <Avatar src={decodedToken.pictureUrl} className='header__avatar--picture'/>
-                    <p className='header__avatar--username'>{decodedToken.username}</p>
+                    <Avatar src={AuthService.getDecodedToken().pictureUrl} className='header__avatar--picture'/>
+                    <p className='header__avatar--username'>{AuthService.getDecodedToken().username}</p>
                 </Menu.Item>
 
             );

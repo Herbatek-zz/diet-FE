@@ -17,16 +17,21 @@ class ProductShow extends Component {
         const {product} = this.props;
 
         if (!product)
-            return <div>Loading...</div>;
+            return (
+                <div className='content'>
+                    <Header/>
+                    Loading...
+                    <Footer/>
+                </div>);
 
 
         return (
             <Layout>
-                <Header />
+                <Header/>
                 <div className='content'>
                     <h4>Name: {product.name}</h4>
                     <h5>Description: {product.description}</h5>
-                    <img src={product.imageUrl} alt='product' />
+                    <img src={product.imageUrl} alt='product'/>
                     <h5>Protein: {product.protein}</h5>
                     <h5>Carbohydrate: {product.carbohydrate}</h5>
                     <h5>Fat: {product.fat}</h5>
