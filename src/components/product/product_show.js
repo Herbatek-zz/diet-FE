@@ -47,7 +47,7 @@ class ProductShow extends Component {
 }
 
 function mapStateToProps({products}, ownProps) {
-    return {product: products[ownProps.match.params.id]};
+    return {product: products.content[ownProps.match.params.id]};
 }
 
 export default connect(mapStateToProps, {fetchProduct})(ProductShow);

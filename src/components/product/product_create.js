@@ -17,26 +17,12 @@ class ProductCreate extends Component {
             this.props.history.replace('/');
     }
 
-    renderTextField({label, input, meta}) {
+    renderInput({label, type,  input, meta}) {
         const {touched, error} = meta;
         return (
             <div>
                 <label>{label}</label>
-                <input type='text' placeholder={label} {...input}/>
-                <div className='form-error'>
-                    {touched ? error : ''}
-                </div>
-            </div>
-        )
-    }
-
-    renderNumberField({label, input, meta}) {
-        const {touched, error} = meta;
-
-        return (
-            <div>
-                <label>{label}</label>
-                <input type='number' {...input}/>
+                <input type={type} placeholder={label} {...input}/>
                 <div className='form-error'>
                     {touched ? error : ''}
                 </div>
@@ -72,14 +58,14 @@ class ProductCreate extends Component {
                 <Header navSelectedItem='product-create'/>
                 <div className='content'>
                     <form onSubmit={handleSubmit(this.onSubmit)}>
-                        <Field name='name' label='Name' component={this.renderTextField}/>
+                        <Field name='name' label='Name' type='text' component={this.renderInput}/>
                         <Field name='description' label='Description' component={this.renderTextArea}/>
-                        <Field name='imageUrl' label='Image' component={this.renderTextField}/>
-                        <Field name='protein' label='Protein' component={this.renderNumberField}/>
-                        <Field name='carbohydrate' label='Carbohydrate' component={this.renderNumberField}/>
-                        <Field name='fat' label='Fat' component={this.renderNumberField}/>
-                        <Field name='fibre' label='Fibre' component={this.renderNumberField}/>
-                        <Field name='kcal' label='Calories' component={this.renderNumberField}/>
+                        <Field name='imageUrl' label='Image' type='text' component={this.renderInput}/>
+                        <Field name='protein' label='Protein' type='number' component={this.renderInput}/>
+                        <Field name='carbohydrate' label='Carbohydrate' type='number' component={this.renderInput}/>
+                        <Field name='fat' label='Fat' type='number' component={this.renderInput}/>
+                        <Field name='fibre' label='Fibre' type='number' component={this.renderInput}/>
+                        <Field name='kcal' label='Calories' type='number' component={this.renderInput}/>
                         <Button type="primary" ghost htmlType='submit'>Submit</Button>
                     </form>
                 </div>

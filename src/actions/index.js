@@ -6,7 +6,6 @@ export const FETCH_PRODUCT = 'fetch_product';
 export const FETCH_PRODUCTS = 'fetch_products';
 
 export function createProduct(values, callback) {
-
     const userId = AuthService.getDecodedToken().sub;
     const request = Request.post(`/users/${userId}/products`, values)
         .then(() => callback());
@@ -26,8 +25,8 @@ export function fetchProduct(id) {
     };
 }
 
-export function fetchProducts() {
-    const request = Request.get('/products');
+export function fetchProducts(page) {
+    const request = Request.get(`/products?page=${page}`);
 
     return {
         type: FETCH_PRODUCTS,

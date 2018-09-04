@@ -11,19 +11,14 @@ import './product_list.css';
 
 const Panel = Collapse.Panel;
 
-const text = `
-  A dog is a type of domesticated animal.
-  Known for its loyalty and faithfulness,
-  it can be found as a welcome guest in many households across the world.
-`;
-
 class ProductList extends Component {
     componentDidMount() {
-        this.props.fetchProducts();
+        this.props.fetchProducts(0);
     }
 
-    renderProducts() {
-        return _.map(this.props.products, product => {
+    renderProducts = () => {
+        const {content} = this.props.products;
+        return _.map(content, (product) => {
             return (
                 <Panel
                     className='collapse__item'
@@ -32,14 +27,22 @@ class ProductList extends Component {
                         <div>
                             <h3>{product.name}</h3> <Link to={`/products/${product.id}`}> More</Link>
                         </div>}>
-                    <p>{product.description} + {text} + {text} + {text}+ {text}</p>
+                    <p>Description: {product.description}</p>
+                    <p>Calories: {product.kcal}</p>
+                    <img src={product.imageUrl} alt='product'/>
                 </Panel>
 
             );
         });
-    }
+    };
+
+    onChange = (page) => {
+        this.props.fetchProducts(page - 1);
+    };
 
     render() {
+        const {currentPage, totalElements} = this.props.products;
+
         return (
             <Layout>
                 <Header navSelectedItem='product-list'/>
@@ -48,7 +51,7 @@ class ProductList extends Component {
                     <Collapse className='collapse'>
                         {this.renderProducts()}
                     </Collapse>,
-                    <Pagination total={500}/>
+                    <Pagination current={currentPage + 1} total={totalElements} onChange={this.onChange}/>
                 </div>
 
                 <Footer/>

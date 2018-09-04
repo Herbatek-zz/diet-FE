@@ -13,7 +13,7 @@ class MyHeader extends Component {
             return (
                 <Link to='/' onClick={() => AuthService.logout()}>
                     <div className='header__login'>
-                        <Icon type="logout" className='header__login--icon'/>
+                        <Icon type='logout' className='header__login--icon'/>
                         <p className='header__login--text'>Log out</p>
                     </div>
                 </Link>
@@ -22,7 +22,7 @@ class MyHeader extends Component {
             return (
                 <a href="http://localhost:8080/login/facebook">
                     <div className='header__login'>
-                        <Icon type="login" className='header__login--icon'/>
+                        <Icon type='login' className='header__login--icon'/>
                         <p className='header__login--text'>Log in</p>
                     </div>
                 </a>
@@ -31,10 +31,11 @@ class MyHeader extends Component {
 
     userInfo = () => {
         if (AuthService.isLogged()) {
+            const {pictureUrl, username} = AuthService.getDecodedToken();
             return (
                 <Menu.Item className='header__avatar'>
-                    <Avatar src={AuthService.getDecodedToken().pictureUrl} className='header__avatar--picture'/>
-                    <p className='header__avatar--username'>{AuthService.getDecodedToken().username}</p>
+                    <Avatar src={pictureUrl} className='header__avatar--picture'/>
+                    <p className='header__avatar--username'>{username}</p>
                 </Menu.Item>
 
             );
@@ -49,12 +50,12 @@ class MyHeader extends Component {
                 </div>
 
                 <Menu theme="dark"
-                      mode="horizontal"
+                      mode='horizontal'
                       defaultSelectedKeys={[`${this.props.navSelectedItem}`]}
                 >
-                    <Menu.Item key="home" className='header__item'>
+                    <Menu.Item key='home' className='header__item'>
                         <Link to='/' className='header__item--link'>
-                            <Icon type="home" className='header__item--icon'/>
+                            <Icon type='home' className='header__item--icon'/>
                             Home
                         </Link>
                     </Menu.Item>
@@ -66,7 +67,7 @@ class MyHeader extends Component {
                     </Menu.Item>
                     <Menu.Item key='product-create' className='header__item'>
                         <Link to='/products/new' className='header__item--link'>
-                            <Icon type="plus-circle-o" className='header__item--icon'/>
+                            <Icon type='plus-circle-o' className='header__item--icon'/>
                             Add product
                         </Link>
                     </Menu.Item>

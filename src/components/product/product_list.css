@@ -4,6 +4,7 @@
   align-items: center;
   margin: auto;
   width: 70%;
+  min-height: 80vh;
 }
 
 .collapse {
