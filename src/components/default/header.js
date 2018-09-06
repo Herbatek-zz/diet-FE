@@ -65,10 +65,34 @@ class MyHeader extends Component {
                             Products
                         </Link>
                     </Menu.Item>
+                    <Menu.Item key='product-my-list' className='header__item'>
+                        <Link to='/products/my' className='header__item--link'>
+                            <Icon type='bars' className='header__item--icon'/>
+                            My products
+                        </Link>
+                    </Menu.Item>
                     <Menu.Item key='product-create' className='header__item'>
                         <Link to='/products/new' className='header__item--link'>
                             <Icon type='plus-circle-o' className='header__item--icon'/>
                             Add product
+                        </Link>
+                    </Menu.Item>
+                    <Menu.Item key='meal-list' className='header__item'>
+                        <Link to='/meals' className='header__item--link'>
+                            <Icon type='bars' className='header__item--icon'/>
+                            Meals
+                        </Link>
+                    </Menu.Item>
+                    <Menu.Item key='meal-create' className='header__item'>
+                        <Link to='/meals/new' className='header__item--link'>
+                            <Icon type='plus-circle-o' className='header__item--icon'/>
+                            Add meal
+                        </Link>
+                    </Menu.Item>
+                    <Menu.Item key='meal-my-list' className='header__item'>
+                        <Link to='/meals/my' className='header__item--link'>
+                            <Icon type='bars' className='header__item--icon'/>
+                            My meals
                         </Link>
                     </Menu.Item>
                     <Menu.Item className='header__login'>

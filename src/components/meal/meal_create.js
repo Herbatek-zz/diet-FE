@@ -4,13 +4,13 @@ import {connect} from 'react-redux';
 import {Button, Layout} from 'antd';
 
 import AuthService from '../../helpers/auth_service';
-import {createProduct} from "../../actions";
+import {createMeal} from "../../actions";
 import Header from '../default/header';
 import Footer from '../default/footer';
-import './product_create.css';
+import '../product/product_create.css';
 
 
-class ProductCreate extends Component {
+class MealCreate extends Component {
 
     componentWillMount() {
         if (!AuthService.isLogged())
@@ -45,8 +45,8 @@ class ProductCreate extends Component {
     }
 
     onSubmit = (values) => {
-        this.props.createProduct(values, () => {
-            alert("Poprawnie stworzono produkt");
+        this.props.createMeal(values, () => {
+            alert("Poprawnie stworzono posiłek");
         });
     };
 
@@ -55,11 +55,12 @@ class ProductCreate extends Component {
 
         return (
             <Layout>
-                <Header navSelectedItem='product-create'/>
+                <Header navSelectedItem='meal-create'/>
                 <div className='content'>
                     <form onSubmit={handleSubmit(this.onSubmit)}>
                         <Field name='name' label='Name' type='text' component={this.renderInput}/>
                         <Field name='description' label='Description' component={this.renderTextArea}/>
+                        <Field name='recipe' label='Recipe' component={this.renderTextArea}/>
                         <Field name='imageUrl' label='Image' type='text' component={this.renderInput}/>
                         <Field name='protein' label='Protein' type='number' component={this.renderInput}/>
                         <Field name='carbohydrate' label='Carbohydrate' type='number' component={this.renderInput}/>
@@ -99,7 +100,7 @@ function validate(values) {
 
 export default reduxForm({
     validate,
-    form: 'ProductNewForm'
+    form: 'MealNewForm'
 })(
-    connect(null, {createProduct})(ProductCreate)
+    connect(null, {createMeal})(MealCreate)
 );

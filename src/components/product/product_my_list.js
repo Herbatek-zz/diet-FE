@@ -4,19 +4,20 @@ import {Link} from 'react-router-dom';
 import _ from 'lodash';
 import {Pagination, Layout, Collapse} from 'antd';
 
-import {fetchProducts} from "../../actions";
+import {fetchMyProducts} from "../../actions";
 import Header from "../default/header";
 import Footer from '../default/footer';
 import './product_list.css';
 
-class ProductList extends Component {
+class ProductMyList extends Component {
     componentDidMount() {
-            this.props.fetchProducts(0);
+            this.props.fetchMyProducts(0);
     }
 
     renderProducts = () => {
-        const {content} = this.props.products;
         const {Panel} = Collapse;
+        const {content} = this.props.products;
+
 
         return _.map(content, (product) => {
             return (
@@ -37,7 +38,7 @@ class ProductList extends Component {
     };
 
     onChange = (page) => {
-        this.props.fetchProducts(page - 1);
+        this.props.fetchMyProducts(page - 1);
     };
 
     render() {
@@ -45,7 +46,7 @@ class ProductList extends Component {
 
         return (
             <Layout>
-                <Header navSelectedItem='product-list'/>
+                <Header navSelectedItem='product-my-list'/>
 
                 <div className='content'>
                     <Collapse className='collapse'>
@@ -64,4 +65,4 @@ function mapStateToProps(state) {
     return {products: state.products};
 }
 
-export default connect(mapStateToProps, {fetchProducts})(ProductList);
+export default connect(mapStateToProps, {fetchMyProducts})(ProductMyList);

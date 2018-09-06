@@ -1,11 +1,11 @@
 import _ from 'lodash';
 
-import {FETCH_PRODUCT, FETCH_PRODUCTS, FETCH_MY_PRODUCTS} from "../actions";
+import {FETCH_MEAL, FETCH_MEALS, FETCH_MY_MEALS} from "../actions";
 
 
 export default (state = {content: {}}, action) => {
     switch (action.type) {
-        case FETCH_PRODUCTS:
+        case FETCH_MEALS:
             return {
                 content: _.mapKeys(action.payload.data.content, 'id'),
                 currentPage: action.payload.data.pageNumber,
@@ -13,7 +13,7 @@ export default (state = {content: {}}, action) => {
                 totalElements: action.payload.data.totalElements
             };
 
-        case FETCH_MY_PRODUCTS:
+        case FETCH_MY_MEALS:
             return {
                 content: _.mapKeys(action.payload.data.content, 'id'),
                 currentPage: action.payload.data.pageNumber,
@@ -21,7 +21,7 @@ export default (state = {content: {}}, action) => {
                 totalElements: action.payload.data.totalElements
             };
 
-        case FETCH_PRODUCT:
+        case FETCH_MEAL:
             return {
                 ...state,
                 content: {

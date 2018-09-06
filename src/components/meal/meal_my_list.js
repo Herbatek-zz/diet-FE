@@ -4,32 +4,33 @@ import {Link} from 'react-router-dom';
 import _ from 'lodash';
 import {Pagination, Layout, Collapse} from 'antd';
 
-import {fetchProducts} from "../../actions";
+import {fetchMyMeals} from "../../actions";
 import Header from "../default/header";
 import Footer from '../default/footer';
-import './product_list.css';
+import '../product/product_list.css';
 
-class ProductList extends Component {
+class MealMyList extends Component {
     componentDidMount() {
-            this.props.fetchProducts(0);
+        this.props.fetchMyMeals(0);
     }
 
     renderProducts = () => {
-        const {content} = this.props.products;
         const {Panel} = Collapse;
+        const {content} = this.props.meals;
 
-        return _.map(content, (product) => {
+
+        return _.map(content, (meal) => {
             return (
                 <Panel
                     className='collapse__item'
-                    key={product.id}
+                    key={meal.id}
                     header={
                         <div>
-                            <h3>{product.name}</h3> <Link to={`/products/${product.id}`}> More</Link>
+                            <h3>{meal.name}</h3> <Link to={`/meals/${meal.id}`}> More</Link>
                         </div>}>
-                    <p>Description: {product.description}</p>
-                    <p>Calories: {product.kcal}</p>
-                    <img src={product.imageUrl} alt='product'/>
+                    <p>Description: {meal.description}</p>
+                    <p>Calories: {meal.kcal}</p>
+                    <img src={meal.imageUrl} alt='meal'/>
                 </Panel>
 
             );
@@ -37,15 +38,15 @@ class ProductList extends Component {
     };
 
     onChange = (page) => {
-        this.props.fetchProducts(page - 1);
+        this.props.fetchMyMeals(page - 1);
     };
 
     render() {
-        const {currentPage, totalElements} = this.props.products;
+        const {currentPage, totalElements} = this.props.meals;
 
         return (
             <Layout>
-                <Header navSelectedItem='product-list'/>
+                <Header navSelectedItem='product-my-list'/>
 
                 <div className='content'>
                     <Collapse className='collapse'>
@@ -61,7 +62,7 @@ class ProductList extends Component {
 }
 
 function mapStateToProps(state) {
-    return {products: state.products};
+    return {meals: state.meals};
 }
 
-export default connect(mapStateToProps, {fetchProducts})(ProductList);
+export default connect(mapStateToProps, {fetchMyMeals})(MealMyList);
