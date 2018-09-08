@@ -7,17 +7,12 @@ import AuthService from '../../helpers/auth_service';
 import {createMeal} from "../../actions";
 import Header from '../default/header';
 import Footer from '../default/footer';
-import '../product/product_create.css';
+import {NO_LOGIN_MESSAGE} from '../../helpers/messages';
 
 
 class MealCreate extends Component {
 
-    componentWillMount() {
-        if (!AuthService.isLogged())
-            this.props.history.replace('/');
-    }
-
-    renderInput({label, type,  input, meta}) {
+    renderInput({label, type, input, meta}) {
         const {touched, error} = meta;
         return (
             <div>
@@ -50,26 +45,33 @@ class MealCreate extends Component {
         });
     };
 
-    render() {
+    renderForm = () => {
         const {handleSubmit} = this.props;
+        return (
+            <div className='content'>
+                <form onSubmit={handleSubmit(this.onSubmit)}>
+                    <Field name='name' label='Name' type='text' component={this.renderInput}/>
+                    <Field name='description' label='Description' component={this.renderTextArea}/>
+                    <Field name='recipe' label='Recipe' component={this.renderTextArea}/>
+                    <Field name='imageUrl' label='Image' type='text' component={this.renderInput}/>
+                    <Field name='protein' label='Protein' type='number' component={this.renderInput}/>
+                    <Field name='carbohydrate' label='Carbohydrate' type='number' component={this.renderInput}/>
+                    <Field name='fat' label='Fat' type='number' component={this.renderInput}/>
+                    <Field name='fibre' label='Fibre' type='number' component={this.renderInput}/>
+                    <Field name='kcal' label='Calories' type='number' component={this.renderInput}/>
+                    <Button type="primary" ghost htmlType='submit'>Submit</Button>
+                </form>
+            </div>
+        )
+    };
 
+    render() {
         return (
             <Layout>
-                <Header navSelectedItem='meal-create'/>
-                <div className='content'>
-                    <form onSubmit={handleSubmit(this.onSubmit)}>
-                        <Field name='name' label='Name' type='text' component={this.renderInput}/>
-                        <Field name='description' label='Description' component={this.renderTextArea}/>
-                        <Field name='recipe' label='Recipe' component={this.renderTextArea}/>
-                        <Field name='imageUrl' label='Image' type='text' component={this.renderInput}/>
-                        <Field name='protein' label='Protein' type='number' component={this.renderInput}/>
-                        <Field name='carbohydrate' label='Carbohydrate' type='number' component={this.renderInput}/>
-                        <Field name='fat' label='Fat' type='number' component={this.renderInput}/>
-                        <Field name='fibre' label='Fibre' type='number' component={this.renderInput}/>
-                        <Field name='kcal' label='Calories' type='number' component={this.renderInput}/>
-                        <Button type="primary" ghost htmlType='submit'>Submit</Button>
-                    </form>
-                </div>
+                <Header menuSelectedItem='meal-create'/>
+
+                {AuthService.isLogged() ? this.renderForm() : NO_LOGIN_MESSAGE}
+
                 <Footer/>
             </Layout>
         );

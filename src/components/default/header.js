@@ -1,110 +1,94 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
-import {Layout, Menu, Icon, Avatar} from 'antd';
+import {Menu, Icon, Avatar} from 'antd';
 
 import AuthService from '../../helpers/auth_service';
 import './header.css';
 
-const {Header} = Layout;
+const {SubMenu, Item} = Menu;
 
 class MyHeader extends Component {
-    loginButton = () => {
-        if (AuthService.isLogged())
-            return (
-                <Link to='/' onClick={() => AuthService.logout()}>
-                    <div className='header__login'>
-                        <Icon type='logout' className='header__login--icon'/>
-                        <p className='header__login--text'>Log out</p>
-                    </div>
-                </Link>
-            );
-        else
-            return (
-                <a href="http://localhost:8080/login/facebook">
-                    <div className='header__login'>
-                        <Icon type='login' className='header__login--icon'/>
-                        <p className='header__login--text'>Log in</p>
-                    </div>
-                </a>
-            );
-    };
 
-    userInfo = () => {
+    loginAvatar = () => {
         if (AuthService.isLogged()) {
             const {pictureUrl, username} = AuthService.getDecodedToken();
             return (
-                <Menu.Item className='header__avatar'>
-                    <Avatar src={pictureUrl} className='header__avatar--picture'/>
-                    <p className='header__avatar--username'>{username}</p>
-                </Menu.Item>
-
+                <SubMenu title={<span className="submenu__avatar"><Avatar src={pictureUrl}/>{username}</span>}
+                         key='avatar' className='loginAvatar'>
+                    <Item key='logout'>
+                        <Link to='/' onClick={() => AuthService.logout()} className='avatar__link'>
+                            <Icon type='logout' className='header__menu--icon'/>
+                            Log out
+                        </Link>
+                    </Item>
+                </SubMenu>
             );
         }
+        else
+            return (
+                <Item key='logout' className='loginAvatar'>
+                    <a href="http://localhost:8080/login/facebook" className='header__icon'>
+                        <div className='header__login'>
+                            <Icon type='login' className='header__icon'/>
+                        </div>
+                    </a>
+                </Item>
+            );
     };
 
     render() {
         return (
-            <Header className='header'>
-                <div>
-                    <Link to='/' className='header__logo'>Dieme</Link>
-                </div>
+            <Menu defaultSelectedKeys={[`${this.props.menuSelectedItem}`]} mode="horizontal">
+                <Item key='home'>
+                    <Link to='/' className='header__icon'><Icon type='home'/></Link>
+                </Item>
 
-                <Menu theme="dark"
-                      mode='horizontal'
-                      defaultSelectedKeys={[`${this.props.navSelectedItem}`]}
-                >
-                    <Menu.Item key='home' className='header__item'>
-                        <Link to='/' className='header__item--link'>
-                            <Icon type='home' className='header__item--icon'/>
-                            Home
+                <SubMenu title={<span className="submenu-title-wrapper"><Icon type="setting"/>Products</span>}
+                         key='products'>
+                    <Item key='product-list'>
+                        <Link to='/products'>
+                            <Icon type='bars' className='header__menu--icon'/>
+                            All Products
                         </Link>
-                    </Menu.Item>
-                    <Menu.Item key='product-list' className='header__item'>
-                        <Link to='/products' className='header__item--link'>
-                            <Icon type='bars' className='header__item--icon'/>
-                            Products
-                        </Link>
-                    </Menu.Item>
-                    <Menu.Item key='product-my-list' className='header__item'>
-                        <Link to='/products/my' className='header__item--link'>
-                            <Icon type='bars' className='header__item--icon'/>
+                    </Item>
+                    <Item key='product-my-list'>
+                        <Link to='/products/my'>
+                            <Icon type='bars' className='header__menu--icon'/>
                             My products
                         </Link>
-                    </Menu.Item>
-                    <Menu.Item key='product-create' className='header__item'>
-                        <Link to='/products/new' className='header__item--link'>
-                            <Icon type='plus-circle-o' className='header__item--icon'/>
+                    </Item>
+                    <Item key='product-create'>
+                        <Link to='/products/new'>
+                            <Icon type='plus-circle-o' className='header__menu--icon'/>
                             Add product
                         </Link>
-                    </Menu.Item>
-                    <Menu.Item key='meal-list' className='header__item'>
-                        <Link to='/meals' className='header__item--link'>
-                            <Icon type='bars' className='header__item--icon'/>
-                            Meals
+                    </Item>
+                </SubMenu>
+
+                <SubMenu title={<span className="submenu-title-wrapper"><Icon type="setting"/>Meals</span>} key='meals'>
+                    <Item key='meal-list'>
+                        <Link to='/meals'>
+                            <Icon type='bars' className='header__menu--icon'/>
+                            All Meals
                         </Link>
-                    </Menu.Item>
-                    <Menu.Item key='meal-create' className='header__item'>
-                        <Link to='/meals/new' className='header__item--link'>
-                            <Icon type='plus-circle-o' className='header__item--icon'/>
-                            Add meal
-                        </Link>
-                    </Menu.Item>
-                    <Menu.Item key='meal-my-list' className='header__item'>
-                        <Link to='/meals/my' className='header__item--link'>
-                            <Icon type='bars' className='header__item--icon'/>
+                    </Item>
+                    <Item key='meal-my-list'>
+                        <Link to='/meals/my'>
+                            <Icon type='bars' className='header__menu--icon'/>
                             My meals
                         </Link>
-                    </Menu.Item>
-                    <Menu.Item className='header__login'>
-                        {this.loginButton()}
-                    </Menu.Item>
-                    {this.userInfo()}
-                </Menu>
-
-            </Header>
+                    </Item>
+                    <Item key='meal-create'>
+                        <Link to='/meals/new'>
+                            <Icon type='plus-circle-o' className='header__menu--icon'/>
+                            Add meal
+                        </Link>
+                    </Item>
+                </SubMenu>
+                {this.loginAvatar()}
+            </Menu>
         );
     }
 }
-
 
 export default MyHeader;

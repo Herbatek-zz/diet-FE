@@ -7,34 +7,44 @@ import {Pagination, Layout, Collapse} from 'antd';
 import {fetchMyMeals} from "../../actions";
 import Header from "../default/header";
 import Footer from '../default/footer';
-import '../product/product_list.css';
+import AuthService from "../../helpers/auth_service";
+import {NO_LOGIN_MESSAGE} from "../../helpers/messages";
 
 class MealMyList extends Component {
+
     componentDidMount() {
-        this.props.fetchMyMeals(0);
+        if (AuthService.isLogged())
+            this.props.fetchMyMeals(0);
     }
 
     renderProducts = () => {
         const {Panel} = Collapse;
-        const {content} = this.props.meals;
+        const {content, currentPage, totalElements} = this.props.meals;
 
+        return (
+            <div className='content'>
+                <Collapse className='collapse'>
+                    {
+                        _.map(content, (meal) => {
+                            const header = (
+                                <div>
+                                    <h3>{meal.name}</h3> <Link to={`/meals/${meal.id}`}> More</Link>
+                                </div>
+                            );
 
-        return _.map(content, (meal) => {
-            return (
-                <Panel
-                    className='collapse__item'
-                    key={meal.id}
-                    header={
-                        <div>
-                            <h3>{meal.name}</h3> <Link to={`/meals/${meal.id}`}> More</Link>
-                        </div>}>
-                    <p>Description: {meal.description}</p>
-                    <p>Calories: {meal.kcal}</p>
-                    <img src={meal.imageUrl} alt='meal'/>
-                </Panel>
-
-            );
-        });
+                            return (
+                                <Panel className='collapse__item' key={meal.id} header={header}>
+                                    <p>Description: {meal.description}</p>
+                                    <p>Calories: {meal.kcal}</p>
+                                    <img src={meal.imageUrl} alt='a meal'/>
+                                </Panel>
+                            )
+                        })
+                    }
+                </Collapse>,
+                <Pagination current={currentPage + 1} total={totalElements} onChange={this.onChange}/>
+            </div>
+        )
     };
 
     onChange = (page) => {
@@ -42,27 +52,20 @@ class MealMyList extends Component {
     };
 
     render() {
-        const {currentPage, totalElements} = this.props.meals;
-
         return (
             <Layout>
-                <Header navSelectedItem='product-my-list'/>
-
-                <div className='content'>
-                    <Collapse className='collapse'>
-                        {this.renderProducts()}
-                    </Collapse>,
-                    <Pagination current={currentPage + 1} total={totalElements} onChange={this.onChange}/>
-                </div>
-
+                <Header menuSelectedItem='meal-my-list'/>
+                {AuthService.isLogged() ? this.renderProducts() : NO_LOGIN_MESSAGE}
                 <Footer/>
             </Layout>
         );
     }
 }
 
-function mapStateToProps(state) {
-    return {meals: state.meals};
-}
+const mapStateToProps = ({meals}) => {
+    return {
+        meals
+    }
+};
 
 export default connect(mapStateToProps, {fetchMyMeals})(MealMyList);

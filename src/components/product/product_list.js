@@ -7,11 +7,10 @@ import {Pagination, Layout, Collapse} from 'antd';
 import {fetchProducts} from "../../actions";
 import Header from "../default/header";
 import Footer from '../default/footer';
-import './product_list.css';
 
 class ProductList extends Component {
     componentDidMount() {
-            this.props.fetchProducts(0);
+        this.props.fetchProducts(0);
     }
 
     renderProducts = () => {
@@ -45,7 +44,7 @@ class ProductList extends Component {
 
         return (
             <Layout>
-                <Header navSelectedItem='product-list'/>
+                <Header menuSelectedItem='product-list'/>
 
                 <div className='content'>
                     <Collapse className='collapse'>
@@ -60,8 +59,10 @@ class ProductList extends Component {
     }
 }
 
-function mapStateToProps(state) {
-    return {products: state.products};
-}
+const mapStateToProps = ({products}) => {
+    return {
+        products
+    }
+};
 
 export default connect(mapStateToProps, {fetchProducts})(ProductList);

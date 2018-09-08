@@ -1,73 +1,24 @@
-.header {
+.ant-menu {
     margin-bottom: 50px;
 }
 
-.header__logo {
-    color: #f5f5f5;
-    font-weight: bold;
-    font-size: 2.5rem;
-    margin: 0 3% 0 10px;
-    float: left;
-}
-
-.header__item {
-    display: flex;
-    align-items: center;
-    height: 64px;
-}
-
-.header__item--link {
-    display: flex;
-    align-items: center;
-}
-
-.header__item--icon {
-    font-size: 1.8rem;
-}
-
-.header__avatar {
+.submenu__avatar {
     display: flex;
     flex-direction: column;
     align-items: center;
-    cursor: pointer;
+    line-height: 14px;
+    font-size: 0.7rem;
+}
+
+.header__icon {
+    margin: 3px 0 0 0;
+}
+
+.ant-menu-submenu-title {
+    margin-top: 3px;
+}
+
+.loginAvatar {
     float: right !important;
-    margin: 0 25px 0 0;
-}
-
-.header__avatar:hover {
-    color: #fff;
-}
-
-.header__avatar--picture {
-    margin-top: 8px;
-}
-
-.header__avatar--username {
-    line-height: 24px;
-    margin: 0;
-}
-
-.header__login {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    cursor: pointer;
-    float: right !important;
-    height: 64px;
-    color: rgba(255, 255, 255, 0.65);
-    margin-top: 6px;
-}
-
-.header__login:hover {
-    color: #fff;
-}
-
-.header__login--icon {
-    margin: 0 !important;
-    font-size: 2rem;
-}
-
-.header__login--text {
-    line-height: 24px;
-    margin: 0;
+    margin-right: 30px;
 }

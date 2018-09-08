@@ -28,6 +28,7 @@ class ProductShow extends Component {
         return (
             <Layout>
                 <Header/>
+
                 <div className='content'>
                     <h4>Name: {product.name}</h4>
                     <h5>Description: {product.description}</h5>
@@ -40,14 +41,17 @@ class ProductShow extends Component {
                     <h5>CE: {product.carbohydrateExchange}</h5>
                     <h5>PAFE: {product.proteinAndFatEquivalent}</h5>
                 </div>
+
                 <Footer/>
             </Layout>
         );
     }
 }
 
-function mapStateToProps({products}, ownProps) {
-    return {product: products.content[ownProps.match.params.id]};
-}
+const mapStateToProps = ({products}, ownProps) => {
+    return {
+        product: products.content[ownProps.match.params.id]
+    }
+};
 
 export default connect(mapStateToProps, {fetchProduct})(ProductShow);

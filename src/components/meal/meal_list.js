@@ -7,7 +7,6 @@ import {Pagination, Layout, Collapse} from 'antd';
 import {fetchMeals} from "../../actions";
 import Header from "../default/header";
 import Footer from '../default/footer';
-import '../product/product_list.css';
 
 class MealList extends Component {
     componentDidMount() {
@@ -46,7 +45,7 @@ class MealList extends Component {
 
         return (
             <Layout>
-                <Header navSelectedItem='meal-list'/>
+                <Header menuSelectedItem='meal-list'/>
 
                 <div className='content'>
                     <Collapse className='collapse'>
@@ -61,8 +60,10 @@ class MealList extends Component {
     }
 }
 
-function mapStateToProps(state) {
-    return {meals: state.meals};
-}
+const mapStateToProps = ({meals}) => {
+    return {
+        meals
+    }
+};
 
 export default connect(mapStateToProps, {fetchMeals})(MealList);

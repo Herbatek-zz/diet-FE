@@ -7,34 +7,42 @@ import {Pagination, Layout, Collapse} from 'antd';
 import {fetchMyProducts} from "../../actions";
 import Header from "../default/header";
 import Footer from '../default/footer';
-import './product_list.css';
+import AuthService from "../../helpers/auth_service";
+import {NO_LOGIN_MESSAGE} from "../../helpers/messages";
 
 class ProductMyList extends Component {
     componentDidMount() {
-            this.props.fetchMyProducts(0);
+        if (AuthService.isLogged())
+            this.props.fetchMyProducts(0)
     }
 
     renderProducts = () => {
         const {Panel} = Collapse;
-        const {content} = this.props.products;
+        const {content, currentPage, totalElements} = this.props.products;
 
-
-        return _.map(content, (product) => {
-            return (
-                <Panel
-                    className='collapse__item'
-                    key={product.id}
-                    header={
-                        <div>
-                            <h3>{product.name}</h3> <Link to={`/products/${product.id}`}> More</Link>
-                        </div>}>
-                    <p>Description: {product.description}</p>
-                    <p>Calories: {product.kcal}</p>
-                    <img src={product.imageUrl} alt='product'/>
-                </Panel>
-
-            );
-        });
+        return (
+            <div className='content'>
+                <Collapse className='collapse'>
+                    {
+                        _.map(content, (product) => {
+                            const header = (
+                                <div>
+                                    <h3>{product.name}</h3> <Link to={`/products/${product.id}`}> More</Link>
+                                </div>
+                            );
+                            return (
+                                <Panel className='collapse__item' key={product.id} header={header}>
+                                    <p>Description: {product.description}</p>
+                                    <p>Calories: {product.kcal}</p>
+                                    <img src={product.imageUrl} alt='product'/>
+                                </Panel>
+                            );
+                        })
+                    }
+                </Collapse>,
+                <Pagination current={currentPage + 1} total={totalElements} onChange={this.onChange}/>
+            </div>
+        )
     };
 
     onChange = (page) => {
@@ -42,18 +50,11 @@ class ProductMyList extends Component {
     };
 
     render() {
-        const {currentPage, totalElements} = this.props.products;
-
         return (
             <Layout>
-                <Header navSelectedItem='product-my-list'/>
+                <Header menuSelectedItem='product-my-list'/>
 
-                <div className='content'>
-                    <Collapse className='collapse'>
-                        {this.renderProducts()}
-                    </Collapse>,
-                    <Pagination current={currentPage + 1} total={totalElements} onChange={this.onChange}/>
-                </div>
+                {AuthService.isLogged() ? this.renderProducts() : NO_LOGIN_MESSAGE}
 
                 <Footer/>
             </Layout>
@@ -61,8 +62,10 @@ class ProductMyList extends Component {
     }
 }
 
-function mapStateToProps(state) {
-    return {products: state.products};
-}
+const mapStateToProps = ({products}) => {
+    return {
+        products
+    }
+};
 
 export default connect(mapStateToProps, {fetchMyProducts})(ProductMyList);

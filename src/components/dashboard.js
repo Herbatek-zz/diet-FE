@@ -11,7 +11,6 @@ class Dashboard extends Component {
             <Layout>
                 <Header navSelectedItem='home'/>
                 <div className='content'>
-                    content
                 </div>
                 <Footer/>
             </Layout>

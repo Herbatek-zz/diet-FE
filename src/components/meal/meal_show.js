@@ -27,7 +27,7 @@ class MealShow extends Component {
 
         return (
             <Layout>
-                <Header/>
+                <Header />
                 <div className='content'>
                     <h4>Name: {meal.name}</h4>
                     <h5>Description: {meal.description}</h5>
@@ -47,8 +47,10 @@ class MealShow extends Component {
     }
 }
 
-function mapStateToProps({meals}, ownProps) {
-    return {meal: meals.content[ownProps.match.params.id]};
-}
+const mapStateToProps = ({meals}, ownProps) => {
+    return {
+        meal: meals.content[ownProps.match.params.id]
+    }
+};
 
 export default connect(mapStateToProps, {fetchMeal})(MealShow);
