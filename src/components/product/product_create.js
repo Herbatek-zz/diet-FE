@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Field, reduxForm} from 'redux-form';
+import {TextField, TextAreaField, NumberField} from 'redux-form-antd'
 import {connect} from 'react-redux';
 import {Button, Layout} from 'antd';
 
@@ -8,35 +9,19 @@ import {createProduct} from "../../actions";
 import Header from '../default/header';
 import Footer from '../default/footer';
 import {NO_LOGIN_MESSAGE} from "../../helpers/messages";
+import './product_create.css';
 
 class ProductCreate extends Component {
-
-    renderInput({label, type, input, meta}) {
-        const {touched, error} = meta;
-        return (
-            <div>
-                <label>{label}</label>
-                <input type={type} placeholder={label} {...input}/>
-                <div className='form-error'>
-                    {touched ? error : ''}
-                </div>
-            </div>
-        )
+    componentWillMount() {
+        this.props.initialize({
+            protein: 0,
+            carbohydrate: 0,
+            fat: 0,
+            fibre: 0,
+            kcal: 0
+        });
     }
 
-    renderTextArea({label, input, meta}) {
-        const {touched, error} = meta;
-
-        return (
-            <div>
-                <label>{label}</label>
-                <textarea {...input}/>
-                <div className='form-error'>
-                    {touched ? error : ''}
-                </div>
-            </div>
-        )
-    }
 
     onSubmit = (values) => {
         this.props.createProduct(values, () => {
@@ -49,16 +34,18 @@ class ProductCreate extends Component {
 
         return (
             <div className='content'>
-                <form onSubmit={handleSubmit(this.onSubmit)}>
-                    <Field name='name' label='Name' type='text' component={this.renderInput}/>
-                    <Field name='description' label='Description' component={this.renderTextArea}/>
-                    <Field name='imageUrl' label='Image' type='text' component={this.renderInput}/>
-                    <Field name='protein' label='Protein' type='number' component={this.renderInput}/>
-                    <Field name='carbohydrate' label='Carbohydrate' type='number' component={this.renderInput}/>
-                    <Field name='fat' label='Fat' type='number' component={this.renderInput}/>
-                    <Field name='fibre' label='Fibre' type='number' component={this.renderInput}/>
-                    <Field name='kcal' label='Calories' type='number' component={this.renderInput}/>
+                <form onSubmit={handleSubmit(this.onSubmit)} className='form' autoComplete='off'>
+
+                    <Field name='name' label="Name" component={TextField}/>
+                    <Field name='description' label="Description" component={TextAreaField}/>
+                    <Field name='imageUrl' label="Image" component={TextField}/>
+                    <Field name='protein' label="Protein" component={NumberField}/>
+                    <Field name='carbohydrate' label="Carbohydrate" component={NumberField}/>
+                    <Field name='fat' label="Fat" component={NumberField}/>
+                    <Field name='fibre' label="Fibre" component={NumberField}/>
+                    <Field name='kcal' label="Calories" component={NumberField}/>
                     <Button type="primary" ghost htmlType='submit'>Submit</Button>
+
                 </form>
             </div>
         )
@@ -67,7 +54,7 @@ class ProductCreate extends Component {
     render() {
         return (
             <Layout>
-                <Header menuSelectedItem='product-create' />
+                <Header menuSelectedItem='product-create'/>
 
                 {AuthService.isLogged() ? this.renderForm() : NO_LOGIN_MESSAGE}
 
@@ -78,23 +65,44 @@ class ProductCreate extends Component {
 
 }
 
-function validate(values) {
+function validate({name, imageUrl, protein, carbohydrate, fat, fibre, kcal}) {
     const errors = {};
 
-    if (!values.name)
-        errors.name = 'You have to enter a name of product';
-    if (!values.imageUrl)
+    if (!name)
+        errors.name = 'Product has to have a name';
+    else if (!name.trim())
+        errors.name = 'Product name cannot be empty';
+    else if (name.trim().length < 2 || name.trim().length > 80)
+        errors.name = 'Product name length has to be between 2 and 80 characters';
+
+    if (!imageUrl)
         errors.imageUrl = 'You have to add a link';
-    if (values.protein < 0)
-        errors.protein = 'Protein can not be lower than 0';
-    if (values.carbohydrate < 0)
-        errors.carbohydrate = 'Carbohydrate can not be lower than 0';
-    if (values.fat < 0)
-        errors.fat = 'Fat can not be lower than 0';
-    if (values.fibre < 0)
-        errors.fibre = 'Fibre can not be lower than 0';
-    if (values.kcal < 0)
-        errors.kcal = 'Kcal can not be lower than 0';
+
+    if(!protein && protein !== 0)
+        errors.protein = 'Protein has to have a value';
+    else if (protein < 0)
+        errors.protein = 'Protein cannot be lower than 0';
+
+    if(!carbohydrate && carbohydrate !== 0)
+        errors.carbohydrate = 'Carbohydrate has to have a value';
+    else if (carbohydrate < 0)
+        errors.carbohydrate = 'Carbohydrate cannot be lower than 0';
+
+    if(!fat && fat !== 0)
+        errors.fat = 'Fat has to have a value';
+    else if (fat < 0)
+        errors.fat = 'Fat cannot be lower than 0';
+
+    if(!fibre && fibre !== 0)
+        errors.fibre = 'Fibre has to have a value';
+    else if (fibre < 0)
+        errors.fibre = 'Fibre cannot be lower than 0';
+
+    if(!kcal && kcal !== 0)
+        errors.kcal = 'Kcal has to have a value';
+    else if (kcal < 0)
+        errors.kcal = 'Kcal cannot be lower than 0';
+
 
     return errors;
 }

@@ -1,56 +1,66 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
-import _ from 'lodash';
-import {Pagination, Layout, Collapse} from 'antd';
+import {Layout, List, Icon} from 'antd';
 
 import {fetchProducts} from "../../actions";
 import Header from "../default/header";
 import Footer from '../default/footer';
+import './product_list.css';
+
+const IconText = ({type, text}) => (
+    <span>
+    <Icon type={type} style={{marginRight: 8}}/>
+        {text}
+  </span>
+);
 
 class ProductList extends Component {
     componentDidMount() {
         this.props.fetchProducts(0);
     }
 
-    renderProducts = () => {
-        const {content} = this.props.products;
-        const {Panel} = Collapse;
-
-        return _.map(content, (product) => {
-            return (
-                <Panel
-                    className='collapse__item'
-                    key={product.id}
-                    header={
-                        <div>
-                            <h3>{product.name}</h3> <Link to={`/products/${product.id}`}> More</Link>
-                        </div>}>
-                    <p>Description: {product.description}</p>
-                    <p>Calories: {product.kcal}</p>
-                    <img src={product.imageUrl} alt='product'/>
-                </Panel>
-
-            );
-        });
-    };
-
     onChange = (page) => {
         this.props.fetchProducts(page - 1);
     };
 
     render() {
-        const {currentPage, totalElements} = this.props.products;
+        const {currentPage, totalElements, content} = this.props.products;
 
         return (
             <Layout>
                 <Header menuSelectedItem='product-list'/>
 
                 <div className='content'>
-                    <Collapse className='collapse'>
-                        {this.renderProducts()}
-                    </Collapse>,
-                    <Pagination current={currentPage + 1} total={totalElements} onChange={this.onChange}/>
+                    <List
+                        itemLayout="vertical"
+                        size="large"
+
+                        pagination={{
+                            onChange: this.onChange,
+                            total: totalElements,
+                            current: currentPage + 1,
+                            pageSize: 5,
+                        }}
+                        dataSource={Object.values(content)}
+                        renderItem={item => (
+                            <List.Item
+                                key={item.id}
+                                actions={[<IconText type="star-o" text="156"/>, <IconText type="like-o" text="156"/>,
+                                    <IconText type="message" text="2"/>]}
+                                extra={
+                                    <div className='list__image--container'>
+                                        <img width={272} alt="logo" src={item.imageUrl} className='list__image'/>
+                                    </div>}
+                            >
+                                <List.Item.Meta
+                                    title={<Link to={`/products/${item.id}`}>{item.name}</Link>}
+                                    description={item.description}
+                                />
+                                {item.content}
+                            </List.Item>
+                        )}
+                    />
                 </div>
 
                 <Footer/>

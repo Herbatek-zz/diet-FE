@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Layout} from 'antd';
+import {Layout, Spin} from 'antd';
 
 import {fetchMeal} from "../../actions";
 import Header from '../default/header';
@@ -18,16 +18,18 @@ class MealShow extends Component {
 
         if (!meal)
             return (
-                <div className='content'>
+                <Layout>
                     <Header/>
-                    Loading...
+                    <div className='content loading-spin'>
+                        <Spin size='large'/>
+                    </div>
                     <Footer/>
-                </div>);
+                </Layout>);
 
 
         return (
             <Layout>
-                <Header />
+                <Header/>
                 <div className='content'>
                     <h4>Name: {meal.name}</h4>
                     <h5>Description: {meal.description}</h5>

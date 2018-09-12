@@ -54,11 +54,6 @@ class MealCreate extends Component {
                     <Field name='description' label='Description' component={this.renderTextArea}/>
                     <Field name='recipe' label='Recipe' component={this.renderTextArea}/>
                     <Field name='imageUrl' label='Image' type='text' component={this.renderInput}/>
-                    <Field name='protein' label='Protein' type='number' component={this.renderInput}/>
-                    <Field name='carbohydrate' label='Carbohydrate' type='number' component={this.renderInput}/>
-                    <Field name='fat' label='Fat' type='number' component={this.renderInput}/>
-                    <Field name='fibre' label='Fibre' type='number' component={this.renderInput}/>
-                    <Field name='kcal' label='Calories' type='number' component={this.renderInput}/>
                     <Button type="primary" ghost htmlType='submit'>Submit</Button>
                 </form>
             </div>

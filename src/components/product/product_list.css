@@ -1,0 +1,27 @@
+@media (min-width: 600px) {
+    .content {
+        width: 80%;
+    }
+
+    .list__image {
+    }
+
+    .list__image--container {
+        max-height: 200px;
+        overflow: hidden;
+    }
+
+    .ant-list-item-main {
+        max-width: 400px;
+    }
+
+    .ant-list-item-meta-description {
+        display: block;
+        text-overflow: ellipsis;
+        max-width: 400px;
+        overflow: hidden;
+        word-wrap: break-word;
+        max-height: 100px;
+        line-height: 20px;
+    }
+}

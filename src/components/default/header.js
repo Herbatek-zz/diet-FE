@@ -13,12 +13,15 @@ class MyHeader extends Component {
         if (AuthService.isLogged()) {
             const {pictureUrl, username} = AuthService.getDecodedToken();
             return (
-                <SubMenu title={<span className="submenu__avatar"><Avatar src={pictureUrl}/>{username}</span>}
+                <SubMenu title={
+                    <span className="menu__avatar">
+                        <Avatar src={pictureUrl}/>{username}
+                    </span>
+                }
                          key='avatar' className='loginAvatar'>
                     <Item key='logout'>
-                        <Link to='/' onClick={() => AuthService.logout()} className='avatar__link'>
-                            <Icon type='logout' className='header__menu--icon'/>
-                            Log out
+                        <Link to='/' onClick={() => AuthService.logout()}>
+                            <Icon type='logout'/>Log out
                         </Link>
                     </Item>
                 </SubMenu>
@@ -28,9 +31,7 @@ class MyHeader extends Component {
             return (
                 <Item key='logout' className='loginAvatar'>
                     <a href="http://localhost:8080/login/facebook" className='header__icon'>
-                        <div className='header__login'>
-                            <Icon type='login' className='header__icon'/>
-                        </div>
+                        <Icon type='login' className='no-margin'/>
                     </a>
                 </Item>
             );
@@ -39,49 +40,47 @@ class MyHeader extends Component {
     render() {
         return (
             <Menu defaultSelectedKeys={[`${this.props.menuSelectedItem}`]} mode="horizontal">
-                <Item key='home'>
-                    <Link to='/' className='header__icon'><Icon type='home'/></Link>
+
+                <Item key='logo' className='menu__logo'>
+                    <Link to='/'/>
                 </Item>
 
-                <SubMenu title={<span className="submenu-title-wrapper"><Icon type="setting"/>Products</span>}
-                         key='products'>
+                <Item key='home'>
+                    <Link to='/'><Icon type='home' className='no-margin'/></Link>
+                </Item>
+
+                <SubMenu title={<span><Icon type="setting"/>Products</span>} key='products'>
                     <Item key='product-list'>
                         <Link to='/products'>
-                            <Icon type='bars' className='header__menu--icon'/>
-                            All Products
+                            <Icon type='bars'/>All Products
                         </Link>
                     </Item>
                     <Item key='product-my-list'>
                         <Link to='/products/my'>
-                            <Icon type='bars' className='header__menu--icon'/>
-                            My products
+                            <Icon type='bars'/>My products
                         </Link>
                     </Item>
                     <Item key='product-create'>
                         <Link to='/products/new'>
-                            <Icon type='plus-circle-o' className='header__menu--icon'/>
-                            Add product
+                            <Icon type='plus-circle-o'/>Add product
                         </Link>
                     </Item>
                 </SubMenu>
 
-                <SubMenu title={<span className="submenu-title-wrapper"><Icon type="setting"/>Meals</span>} key='meals'>
+                <SubMenu title={<span><Icon type="setting"/>Meals</span>} key='meals'>
                     <Item key='meal-list'>
                         <Link to='/meals'>
-                            <Icon type='bars' className='header__menu--icon'/>
-                            All Meals
+                            <Icon type='bars'/>All Meals
                         </Link>
                     </Item>
                     <Item key='meal-my-list'>
                         <Link to='/meals/my'>
-                            <Icon type='bars' className='header__menu--icon'/>
-                            My meals
+                            <Icon type='bars'/>My meals
                         </Link>
                     </Item>
                     <Item key='meal-create'>
                         <Link to='/meals/new'>
-                            <Icon type='plus-circle-o' className='header__menu--icon'/>
-                            Add meal
+                            <Icon type='plus-circle-o'/>Add meal
                         </Link>
                     </Item>
                 </SubMenu>

@@ -1,8 +1,17 @@
-.ant-menu {
-    margin-bottom: 50px;
+.ant-menu-horizontal {
+    display: flex;
+    margin-bottom: 8px;
 }
 
-.submenu__avatar {
+.menu__logo {
+    padding: 0;
+}
+
+.ant-menu-submenu-title {
+    padding: 0 1rem;
+}
+
+.menu__avatar {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -10,15 +19,38 @@
     font-size: 0.7rem;
 }
 
-.header__icon {
-    margin: 3px 0 0 0;
+.no-margin {
+    margin: 0 !important;
 }
-
-.ant-menu-submenu-title {
-    margin-top: 3px;
-}
-
 .loginAvatar {
-    float: right !important;
-    margin-right: 30px;
+    margin-left: auto;
+}
+
+@media (min-width: 600px) {
+
+    .ant-menu-horizontal {
+        margin-bottom: 50px;
+    }
+
+    .ant-menu-horizontal > .ant-menu-item, .ant-menu-horizontal > .ant-menu-submenu {
+        display: flex;
+    }
+
+    .menu__logo {
+        padding: 0 20px;
+    }
+
+    .menu__logo:before {
+        content: 'Dieme';
+        font-size: 1.9rem;
+    }
+
+    .ant-menu-submenu-title {
+        padding: 0 20px;
+    }
+
+    .loginAvatar {
+        padding-top: 2px;
+        margin-left: auto;
+    }
 }

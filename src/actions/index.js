@@ -32,7 +32,7 @@ export function fetchProduct(id) {
 }
 
 export function fetchProducts(page) {
-    const request = Request.get(`/products?page=${page}`);
+    const request = Request.get(`/products?page=${page}&size=5`);
 
     return {
         type: FETCH_PRODUCTS,

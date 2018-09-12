@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Layout} from 'antd';
+import {Layout, Spin} from 'antd';
 
 import {fetchProduct} from "../../actions";
 import Header from '../default/header';
@@ -18,11 +18,13 @@ class ProductShow extends Component {
 
         if (!product)
             return (
-                <div className='content'>
+                <Layout>
                     <Header/>
-                    Loading...
+                    <div className='content loading-spin'>
+                        <Spin size="large"/>
+                    </div>
                     <Footer/>
-                </div>);
+                </Layout>);
 
 
         return (
@@ -32,7 +34,7 @@ class ProductShow extends Component {
                 <div className='content'>
                     <h4>Name: {product.name}</h4>
                     <h5>Description: {product.description}</h5>
-                    <img src={product.imageUrl} alt='product'/>
+                    <img src={product.imageUrl} alt='product' className='image-border-shadow'/>
                     <h5>Protein: {product.protein}</h5>
                     <h5>Carbohydrate: {product.carbohydrate}</h5>
                     <h5>Fat: {product.fat}</h5>

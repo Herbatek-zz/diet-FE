@@ -1,0 +1,11 @@
+.has-error {
+    color: #d9534f;
+}
+
+.has-error .ant-input {
+    border: 1px solid #d9534f;
+}
+
+.has-success {
+    color: #5cb85c;
+}
