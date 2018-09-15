@@ -11,6 +11,8 @@ export const FETCH_MEAL = 'fetch_meal';
 export const FETCH_MEALS = 'fetch_meals';
 export const FETCH_MY_MEALS = 'fetch_my_meals';
 
+export const SELECT_MENU_ITEM = 'select_menu_item';
+
 export function createProduct(values, callback) {
     const userId = AuthService.getDecodedToken().sub;
     const request = Request.post(`/users/${userId}/products`, values)
@@ -19,7 +21,7 @@ export function createProduct(values, callback) {
     return {
         type: CREATE_PRODUCT,
         payload: request
-    };
+    }
 }
 
 export function fetchProduct(id) {
@@ -28,7 +30,7 @@ export function fetchProduct(id) {
     return {
         type: FETCH_PRODUCT,
         payload: request
-    };
+    }
 }
 
 export function fetchProducts(page) {
@@ -37,7 +39,7 @@ export function fetchProducts(page) {
     return {
         type: FETCH_PRODUCTS,
         payload: request
-    };
+    }
 }
 
 export function fetchMyProducts(page) {
@@ -47,7 +49,7 @@ export function fetchMyProducts(page) {
     return {
         type: FETCH_MY_PRODUCTS,
         payload: request
-    };
+    }
 }
 
 
@@ -59,7 +61,7 @@ export function createMeal(values, callback) {
     return {
         type: CREATE_MEAL,
         payload: request
-    };
+    }
 }
 
 export function fetchMeal(id) {
@@ -68,7 +70,7 @@ export function fetchMeal(id) {
     return {
         type: FETCH_MEAL,
         payload: request
-    };
+    }
 }
 
 export function fetchMeals(page) {
@@ -77,7 +79,7 @@ export function fetchMeals(page) {
     return {
         type: FETCH_MEALS,
         payload: request
-    };
+    }
 }
 
 export function fetchMyMeals(page) {
@@ -87,6 +89,13 @@ export function fetchMyMeals(page) {
     return {
         type: FETCH_MY_MEALS,
         payload: request
-    };
+    }
+}
+
+export function setMenuItem(menuItem) {
+    return {
+        type: SELECT_MENU_ITEM,
+        payload: menuItem
+    }
 }
 

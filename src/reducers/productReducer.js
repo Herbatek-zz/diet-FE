@@ -23,7 +23,7 @@ export default (state = {content: {}}, action) => {
 
         case FETCH_PRODUCT:
             return {
-                ...state,
+                ...state.products,
                 content: {
                     ...state.content,
                     [action.payload.data.id]: action.payload.data

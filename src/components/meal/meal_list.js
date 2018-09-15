@@ -2,14 +2,13 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import _ from 'lodash';
-import {Pagination, Layout, Collapse} from 'antd';
+import {Pagination, Collapse} from 'antd';
 
-import {fetchMeals} from "../../actions";
-import Header from "../default/header";
-import Footer from '../default/footer';
+import {fetchMeals, setMenuItem} from "../../actions";
 
 class MealList extends Component {
     componentDidMount() {
+        this.props.setMenuItem('meal-list');
         this.props.fetchMeals(0);
     }
 
@@ -44,18 +43,12 @@ class MealList extends Component {
         const {currentPage, totalElements} = this.props.meals;
 
         return (
-            <Layout>
-                <Header menuSelectedItem='meal-list'/>
-
                 <div className='content'>
                     <Collapse className='collapse'>
                         {this.renderMeals()}
                     </Collapse>,
                     <Pagination current={currentPage + 1} total={totalElements} onChange={this.onChange}/>
                 </div>
-
-                <Footer/>
-            </Layout>
         );
     }
 }
@@ -66,4 +59,4 @@ const mapStateToProps = ({meals}) => {
     }
 };
 
-export default connect(mapStateToProps, {fetchMeals})(MealList);
+export default connect(mapStateToProps, {fetchMeals, setMenuItem})(MealList);

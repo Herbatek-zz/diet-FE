@@ -1,16 +1,17 @@
 import React, {Component} from 'react';
 import {Field, reduxForm} from 'redux-form';
 import {connect} from 'react-redux';
-import {Button, Layout} from 'antd';
+import {Button} from 'antd';
 
 import AuthService from '../../helpers/auth_service';
-import {createMeal} from "../../actions";
-import Header from '../default/header';
-import Footer from '../default/footer';
+import {createMeal, setMenuItem} from "../../actions";
 import {NO_LOGIN_MESSAGE} from '../../helpers/messages';
 
 
 class MealCreate extends Component {
+    componentDidMount() {
+        this.props.setMenuItem('meal-create');
+    }
 
     renderInput({label, type, input, meta}) {
         const {touched, error} = meta;
@@ -42,34 +43,29 @@ class MealCreate extends Component {
     onSubmit = (values) => {
         this.props.createMeal(values, () => {
             alert("Poprawnie stworzono posiłek");
+            this.props.history.push('/meals/add-products')
         });
     };
 
     renderForm = () => {
         const {handleSubmit} = this.props;
         return (
-            <div className='content'>
-                <form onSubmit={handleSubmit(this.onSubmit)}>
-                    <Field name='name' label='Name' type='text' component={this.renderInput}/>
-                    <Field name='description' label='Description' component={this.renderTextArea}/>
-                    <Field name='recipe' label='Recipe' component={this.renderTextArea}/>
-                    <Field name='imageUrl' label='Image' type='text' component={this.renderInput}/>
-                    <Button type="primary" ghost htmlType='submit'>Submit</Button>
-                </form>
-            </div>
+            <form onSubmit={handleSubmit(this.onSubmit)}>
+                <Field name='name' label='Name' type='text' component={this.renderInput}/>
+                <Field name='description' label='Description' component={this.renderTextArea}/>
+                <Field name='recipe' label='Recipe' component={this.renderTextArea}/>
+                <Field name='imageUrl' label='Image' type='text' component={this.renderInput}/>
+                <Button type="primary" ghost htmlType='submit'>Submit</Button>
+            </form>
         )
     };
 
     render() {
         return (
-            <Layout>
-                <Header menuSelectedItem='meal-create'/>
-
+            <div className='content'>
                 {AuthService.isLogged() ? this.renderForm() : NO_LOGIN_MESSAGE}
-
-                <Footer/>
-            </Layout>
-        );
+            </div>
+        )
     }
 
 }
@@ -99,5 +95,5 @@ export default reduxForm({
     validate,
     form: 'MealNewForm'
 })(
-    connect(null, {createMeal})(MealCreate)
+    connect(null, {createMeal, setMenuItem})(MealCreate)
 );

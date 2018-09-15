@@ -4,6 +4,7 @@ import {Menu, Icon, Avatar} from 'antd';
 
 import AuthService from '../../helpers/auth_service';
 import './header.css';
+import connect from "react-redux/es/connect/connect";
 
 const {SubMenu, Item} = Menu;
 
@@ -39,7 +40,7 @@ class MyHeader extends Component {
 
     render() {
         return (
-            <Menu defaultSelectedKeys={[`${this.props.menuSelectedItem}`]} mode="horizontal">
+            <Menu defaultSelectedKeys={[this.props.selectedMenuItem]} mode="horizontal">
 
                 <Item key='logo' className='menu__logo'>
                     <Link to='/'/>
@@ -90,4 +91,10 @@ class MyHeader extends Component {
     }
 }
 
-export default MyHeader;
+const mapStateToProps = ({selectedMenuItem}) => {
+    return {
+        selectedMenuItem
+    }
+};
+
+export default connect(mapStateToProps, null)(MyHeader);

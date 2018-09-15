@@ -2,17 +2,16 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import _ from 'lodash';
-import {Pagination, Layout, Collapse} from 'antd';
+import {Pagination, Collapse} from 'antd';
 
-import {fetchMyMeals} from "../../actions";
-import Header from "../default/header";
-import Footer from '../default/footer';
+import {fetchMyMeals, setMenuItem} from "../../actions";
 import AuthService from "../../helpers/auth_service";
 import {NO_LOGIN_MESSAGE} from "../../helpers/messages";
 
 class MealMyList extends Component {
-
     componentDidMount() {
+        this.props.setMenuItem('meal-my-list');
+
         if (AuthService.isLogged())
             this.props.fetchMyMeals(0);
     }
@@ -28,7 +27,9 @@ class MealMyList extends Component {
                         _.map(content, (meal) => {
                             const header = (
                                 <div>
-                                    <h3>{meal.name}</h3> <Link to={`/meals/${meal.id}`}> More</Link>
+                                    <h3>{meal.name}</h3>
+                                    <Link to={`/meals/${meal.id}`}> More</Link>
+                                    <Link to={`/meals/${meal.id}/edit`}> Edit</Link>
                                 </div>
                             );
 
@@ -53,11 +54,9 @@ class MealMyList extends Component {
 
     render() {
         return (
-            <Layout>
-                <Header menuSelectedItem='meal-my-list'/>
+            <div className='content'>
                 {AuthService.isLogged() ? this.renderProducts() : NO_LOGIN_MESSAGE}
-                <Footer/>
-            </Layout>
+            </div>
         );
     }
 }
@@ -68,4 +67,4 @@ const mapStateToProps = ({meals}) => {
     }
 };
 
-export default connect(mapStateToProps, {fetchMyMeals})(MealMyList);
+export default connect(mapStateToProps, {fetchMyMeals, setMenuItem})(MealMyList);

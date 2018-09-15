@@ -23,7 +23,7 @@ export default (state = {content: {}}, action) => {
 
         case FETCH_MEAL:
             return {
-                ...state,
+                ...state.meals,
                 content: {
                     ...state.content,
                     [action.payload.data.id]: action.payload.data

@@ -2,16 +2,15 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import _ from 'lodash';
-import {Pagination, Layout, Collapse} from 'antd';
+import {Pagination, Collapse} from 'antd';
 
-import {fetchMyProducts} from "../../actions";
-import Header from "../default/header";
-import Footer from '../default/footer';
+import {fetchMyProducts, setMenuItem} from "../../actions";
 import AuthService from "../../helpers/auth_service";
 import {NO_LOGIN_MESSAGE} from "../../helpers/messages";
 
 class ProductMyList extends Component {
     componentDidMount() {
+        this.props.setMenuItem('product-my-list');
         if (AuthService.isLogged())
             this.props.fetchMyProducts(0)
     }
@@ -21,7 +20,7 @@ class ProductMyList extends Component {
         const {content, currentPage, totalElements} = this.props.products;
 
         return (
-            <div className='content'>
+            <div>
                 <Collapse className='collapse'>
                     {
                         _.map(content, (product) => {
@@ -39,7 +38,7 @@ class ProductMyList extends Component {
                             );
                         })
                     }
-                </Collapse>,
+                </Collapse>
                 <Pagination current={currentPage + 1} total={totalElements} onChange={this.onChange}/>
             </div>
         )
@@ -51,13 +50,9 @@ class ProductMyList extends Component {
 
     render() {
         return (
-            <Layout>
-                <Header menuSelectedItem='product-my-list'/>
-
+            <div className='content'>
                 {AuthService.isLogged() ? this.renderProducts() : NO_LOGIN_MESSAGE}
-
-                <Footer/>
-            </Layout>
+            </div>
         );
     }
 }
@@ -68,4 +63,4 @@ const mapStateToProps = ({products}) => {
     }
 };
 
-export default connect(mapStateToProps, {fetchMyProducts})(ProductMyList);
+export default connect(mapStateToProps, {fetchMyProducts, setMenuItem})(ProductMyList);
