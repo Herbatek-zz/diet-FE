@@ -8,6 +8,7 @@ import {fetchMyProducts, setMenuItem} from "../../actions";
 import AuthService from "../../helpers/auth_service";
 import {NO_LOGIN_MESSAGE} from "../../helpers/messages";
 
+
 class ProductMyList extends Component {
     componentDidMount() {
         this.props.setMenuItem('product-my-list');
@@ -20,7 +21,7 @@ class ProductMyList extends Component {
         const {content, currentPage, totalElements} = this.props.products;
 
         return (
-            <div>
+            <div className='content'>
                 <Collapse className='collapse'>
                     {
                         _.map(content, (product) => {
@@ -51,6 +52,7 @@ class ProductMyList extends Component {
     render() {
         return (
             <div className='content'>
+                <h1>My products</h1>
                 {AuthService.isLogged() ? this.renderProducts() : NO_LOGIN_MESSAGE}
             </div>
         );

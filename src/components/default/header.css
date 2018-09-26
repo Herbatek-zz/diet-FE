@@ -1,56 +1,64 @@
 .ant-menu-horizontal {
     display: flex;
-    margin-bottom: 8px;
+    margin-bottom: 25px !important;
 }
 
 .menu__logo {
-    padding: 0;
+    padding: 0 !important;
 }
 
-.ant-menu-submenu-title {
-    padding: 0 1rem;
+.menu__home {
+    padding: 0 11px !important;
+}
+
+.menu__login {
+    position: absolute !important;
+    right: 20px;
 }
 
 .menu__avatar {
+    margin-left: auto;
+    padding-top: 3px;
+}
+
+.menu__avatar--span {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    line-height: 14px;
-    font-size: 0.7rem;
+    flex-direction: column;
+    line-height: 10px;
+    font-size: 10px;
+}
+
+.ant-menu-submenu-title {
+    padding: 0 11px !important;
 }
 
 .no-margin {
     margin: 0 !important;
 }
-.loginAvatar {
-    margin-left: auto;
-}
 
 @media (min-width: 600px) {
 
-    .ant-menu-horizontal {
-        margin-bottom: 50px;
-    }
-
-    .ant-menu-horizontal > .ant-menu-item, .ant-menu-horizontal > .ant-menu-submenu {
-        display: flex;
-    }
-
     .menu__logo {
-        padding: 0 20px;
+        line-height: 0;
+        padding: 0 20px !important;
     }
 
     .menu__logo:before {
         content: 'Dieme';
         font-size: 1.9rem;
+        position: relative;
+        line-height: 46px;
     }
 
-    .ant-menu-submenu-title {
-        padding: 0 20px;
+    .menu__login {
+        right: 40px;
     }
 
-    .loginAvatar {
-        padding-top: 2px;
-        margin-left: auto;
+    .menu__login--icon:after {
+        content: "Login";
+        margin-left: 8px;
+        position: relative;
+        bottom: 2px;
     }
 }

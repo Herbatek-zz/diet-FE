@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 import {List, Icon} from 'antd';
 
 import {fetchProducts, setMenuItem} from "../../actions";
-import './product_list.css';
+
 
 const IconText = ({type, text}) => (
     <span>
@@ -28,6 +28,7 @@ class ProductList extends Component {
 
         return (
             <div className='content'>
+                <h1>Products</h1>
                 <List
                     itemLayout="vertical"
                     size="large"

@@ -1,4 +1,5 @@
 import Request from '../helpers/request';
+import SecuredRequest from '../helpers/secured_request';
 import AuthService from "../helpers/auth_service";
 
 export const CREATE_PRODUCT = 'create_product';
@@ -15,7 +16,7 @@ export const SELECT_MENU_ITEM = 'select_menu_item';
 
 export function createProduct(values, callback) {
     const userId = AuthService.getDecodedToken().sub;
-    const request = Request.post(`/users/${userId}/products`, values)
+    const request = SecuredRequest.post(`/users/${userId}/products`, values)
         .then(() => callback());
 
     return {
@@ -55,7 +56,7 @@ export function fetchMyProducts(page) {
 
 export function createMeal(values, callback) {
     const userId = AuthService.getDecodedToken().sub;
-    const request = Request.post(`/users/${userId}/meals`, values)
+    const request = SecuredRequest.post(`/users/${userId}/meals`, values)
         .then(() => callback());
 
     return {

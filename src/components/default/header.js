@@ -9,33 +9,51 @@ import connect from "react-redux/es/connect/connect";
 const {SubMenu, Item} = Menu;
 
 class MyHeader extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            pictureUrl: '',
+            username: '',
+            logged: false
+        };
+    }
 
-    loginAvatar = () => {
+    componentDidMount() {
         if (AuthService.isLogged()) {
             const {pictureUrl, username} = AuthService.getDecodedToken();
-            return (
-                <SubMenu title={
-                    <span className="menu__avatar">
-                        <Avatar src={pictureUrl}/>{username}
-                    </span>
-                }
-                         key='avatar' className='loginAvatar'>
-                    <Item key='logout'>
-                        <Link to='/' onClick={() => AuthService.logout()}>
-                            <Icon type='logout'/>Log out
-                        </Link>
-                    </Item>
-                </SubMenu>
-            );
+            this.setState({pictureUrl, username, logged: true});
         }
-        else
-            return (
-                <Item key='logout' className='loginAvatar'>
-                    <a href="http://localhost:8080/login/facebook" className='header__icon'>
-                        <Icon type='login' className='no-margin'/>
-                    </a>
+        else {
+            this.setState({logged: false})
+        }
+    }
+
+    loginButton = () => {
+        return (
+            <Item key='logout' className='menu__login'>
+                <a href="http://localhost:8080/login/facebook">
+                    <span><Icon type='login' className='no-margin menu__login--icon'/></span>
+                </a>
+            </Item>
+        );
+    };
+
+    avatar = () => {
+        return (
+            <SubMenu
+                className='menu__avatar'
+                title={<span className='menu__avatar--span'><Avatar src={this.state.pictureUrl}/>{this.state.username}</span>}
+                key='avatar'>
+                <Item key='logout'>
+                    <Link to='/' onClick={() => {
+                        AuthService.logout();
+                        this.setState({logged: false})
+                    }}>
+                        <Icon type='logout'/>Log out
+                    </Link>
                 </Item>
-            );
+            </SubMenu>
+        );
     };
 
     render() {
@@ -46,7 +64,7 @@ class MyHeader extends Component {
                     <Link to='/'/>
                 </Item>
 
-                <Item key='home'>
+                <Item key='home' className='menu__home'>
                     <Link to='/'><Icon type='home' className='no-margin'/></Link>
                 </Item>
 
@@ -85,16 +103,14 @@ class MyHeader extends Component {
                         </Link>
                     </Item>
                 </SubMenu>
-                {this.loginAvatar()}
+                {this.state.logged ? this.avatar() : this.loginButton()}
             </Menu>
         );
     }
 }
 
 const mapStateToProps = ({selectedMenuItem}) => {
-    return {
-        selectedMenuItem
-    }
+    return {selectedMenuItem}
 };
 
 export default connect(mapStateToProps, null)(MyHeader);

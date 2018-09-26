@@ -1,8 +1,26 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Spin} from 'antd';
+import {Spin, Icon} from 'antd';
+import {Link} from "react-router-dom";
 
 import {fetchMeal, setMenuItem} from "../../actions";
+import AuthService from "../../helpers/auth_service";
+import MealDescription from './common_components/meal_description';
+import MealRecipe from './common_components/meal_recipe';
+import MealInfo from './common_components/meal_info';
+import MealProducts from "./common_components/meal_products";
+import {
+    MealHeader,
+    HeaderTitle,
+    HeaderMenu,
+    Span,
+    MealBody,
+    LeftPanel,
+    ImageContainer,
+    RightPanel,
+    RightPanelBottom,
+    Image
+} from './meal_show_style';
 
 
 class MealShow extends Component {
@@ -15,6 +33,33 @@ class MealShow extends Component {
 
     render() {
         const {meal} = this.props;
+        let editIcon;
+        let hearthIcon;
+
+        if (meal && AuthService.isLogged()) {
+            const {sub} = AuthService.getDecodedToken();
+
+            hearthIcon = (
+                <a href='#'>
+                    <Span>
+                        <Icon type="heart" theme="twoTone" twoToneColor="#eb2f96" fill="currentColor" style={{fontSize: '30px'}}/>
+                        Favourite
+                    </Span>
+                </a>
+            );
+
+            editIcon = (() => {
+                if (sub === meal.userId)
+                    return (
+                        <Link to={`/meals/${meal.id}/edit`}>
+                            <Span>
+                                <Icon type="setting" style={{fontSize: '30px'}}/>
+                                Edit
+                            </Span>
+                        </Link>
+                    );
+            })();
+        }
 
         if (!meal)
             return (
@@ -26,17 +71,28 @@ class MealShow extends Component {
 
         return (
             <div className='content'>
-                <h4>Name: {meal.name}</h4>
-                <h5>Description: {meal.description}</h5>
-                <h5>Recipe: {meal.recipe}</h5>
-                <img src={meal.imageUrl} alt='meal'/>
-                <h5>Protein: {meal.protein}</h5>
-                <h5>Carbohydrate: {meal.carbohydrate}</h5>
-                <h5>Fat: {meal.fat}</h5>
-                <h5>Fibre: {meal.fibre}</h5>
-                <h5>Kcal: {meal.kcal}</h5>
-                <h5>CE: {meal.carbohydrateExchange}</h5>
-                <h5>PAFE: {meal.proteinAndFatEquivalent}</h5>
+                <MealHeader>
+                    <HeaderTitle>{meal.name}</HeaderTitle>
+                    <HeaderMenu>
+                        {hearthIcon}
+                        {editIcon}
+                    </HeaderMenu>
+                </MealHeader>
+                <MealBody>
+                    <LeftPanel>
+                        <ImageContainer>
+                            <Image src={meal.imageUrl} alt={meal.name}/>
+                        </ImageContainer>
+                        <MealProducts products={meal.products}/>
+                    </LeftPanel>
+                    <RightPanel>
+                        <MealDescription description={meal.description}/>
+                        <RightPanelBottom>
+                            <MealRecipe recipe={meal.recipe}/>
+                            <MealInfo meal={meal}/>
+                        </RightPanelBottom>
+                    </RightPanel>
+                </MealBody>
             </div>
         );
     }

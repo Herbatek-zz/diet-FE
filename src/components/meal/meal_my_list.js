@@ -8,6 +8,7 @@ import {fetchMyMeals, setMenuItem} from "../../actions";
 import AuthService from "../../helpers/auth_service";
 import {NO_LOGIN_MESSAGE} from "../../helpers/messages";
 
+
 class MealMyList extends Component {
     componentDidMount() {
         this.props.setMenuItem('meal-my-list');
@@ -24,7 +25,7 @@ class MealMyList extends Component {
             <div className='content'>
                 <Collapse className='collapse'>
                     {
-                        _.map(content, (meal) => {
+                        _.map(content, meal => {
                             const header = (
                                 <div>
                                     <h3>{meal.name}</h3>
@@ -42,7 +43,7 @@ class MealMyList extends Component {
                             )
                         })
                     }
-                </Collapse>,
+                </Collapse>
                 <Pagination current={currentPage + 1} total={totalElements} onChange={this.onChange}/>
             </div>
         )
@@ -55,6 +56,7 @@ class MealMyList extends Component {
     render() {
         return (
             <div className='content'>
+                <h1>My meals</h1>
                 {AuthService.isLogged() ? this.renderProducts() : NO_LOGIN_MESSAGE}
             </div>
         );

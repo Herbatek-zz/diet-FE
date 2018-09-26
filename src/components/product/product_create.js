@@ -7,7 +7,7 @@ import {Button} from 'antd';
 import AuthService from '../../helpers/auth_service';
 import {createProduct, setMenuItem} from "../../actions";
 import {NO_LOGIN_MESSAGE} from "../../helpers/messages";
-import './product_create.css';
+
 
 class ProductCreate extends Component {
     componentWillMount() {
@@ -36,14 +36,53 @@ class ProductCreate extends Component {
 
             <form onSubmit={handleSubmit(this.onSubmit)} className='form' autoComplete='off'>
 
-                <Field name='name' label="Name" component={TextField}/>
-                <Field name='description' label="Description" component={TextAreaField}/>
-                <Field name='imageUrl' label="Image" component={TextField}/>
-                <Field name='protein' label="Protein" component={NumberField}/>
-                <Field name='carbohydrate' label="Carbohydrate" component={NumberField}/>
-                <Field name='fat' label="Fat" component={NumberField}/>
-                <Field name='fibre' label="Fibre" component={NumberField}/>
-                <Field name='kcal' label="Calories" component={NumberField}/>
+                <Field
+                    name='name'
+                    component={TextField}
+                    placeholder='Name'/>
+                <Field
+                    name='imageUrl'
+                    component={TextField}
+                    placeholder='Image'/>
+                <Field
+                    name='description'
+                    component={TextAreaField}
+                    placeholder='Description'/>
+                <Field
+                    name='protein'
+                    label="Protein"
+                    component={NumberField}
+                    min={0}
+                    max={100}
+                    step={0.1}/>
+                <Field
+                    name='carbohydrate'
+                    label="Carbohydrate"
+                    component={NumberField}
+                    min={0}
+                    max={100}
+                    step={0.1}/>
+                <Field
+                    name='fat'
+                    label="Fat"
+                    component={NumberField}
+                    min={0}
+                    max={100}
+                    step={0.1}/>
+                <Field
+                    name='fibre'
+                    label="Fibre"
+                    component={NumberField}
+                    min={0}
+                    max={100}
+                    step={0.1}/>
+                <Field
+                    name='kcal'
+                    label="Calories"
+                    component={NumberField}
+                    min={0}
+                    max={900}
+                    step={1}/>
                 <Button type="primary" ghost htmlType='submit'>Submit</Button>
 
             </form>
@@ -53,6 +92,7 @@ class ProductCreate extends Component {
     render() {
         return (
             <div className='content'>
+                <h1>Create a new product</h1>
                 {AuthService.isLogged() ? this.renderForm() : NO_LOGIN_MESSAGE}
             </div>
         );

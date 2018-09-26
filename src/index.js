@@ -19,30 +19,30 @@ import MealMyList from './components/meal/meal_my_list';
 import MealCreate from './components/meal/meal_create';
 import MealEdit from './components/meal/meal_edit';
 import reducers from './reducers';
+import './index.css';
 
 const createStoreWithMiddleware = applyMiddleware(promise)(createStore);
 
 ReactDOM.render(
-    <Provider store={createStoreWithMiddleware(reducers)}>
+    <Provider
+        store={createStoreWithMiddleware(reducers, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())}>
         <BrowserRouter>
-            <div>
-                <Layout>
-                    <Header/>
-                    <Switch>
-                        <Route path='/meals/:id/edit' component={MealEdit}/>
-                        <Route path='/meals/my' component={MealMyList}/>
-                        <Route path='/meals/new' component={MealCreate}/>
-                        <Route path='/meals/:id' component={MealShow}/>
-                        <Route path='/meals' component={MealList}/>
-                        <Route path='/products/my' component={ProductMyList}/>
-                        <Route path='/products/new' component={ProductCreate}/>
-                        <Route path='/products/:id' component={ProductShow}/>
-                        <Route path='/products' component={ProductList}/>
-                        <Route path='/' component={Dashboard}/>
-                    </Switch>
-                    <Footer/>
-                </Layout>
-            </div>
+            <Layout>
+                <Header/>
+                <Switch>
+                    <Route path='/meals/:id/edit' component={MealEdit}/>
+                    <Route path='/meals/my' component={MealMyList}/>
+                    <Route path='/meals/new' component={MealCreate}/>
+                    <Route path='/meals/:id' component={MealShow}/>
+                    <Route path='/meals' component={MealList}/>
+                    <Route path='/products/my' component={ProductMyList}/>
+                    <Route path='/products/new' component={ProductCreate}/>
+                    <Route path='/products/:id' component={ProductShow}/>
+                    <Route path='/products' component={ProductList}/>
+                    <Route path='/' component={Dashboard}/>
+                </Switch>
+                <Footer/>
+            </Layout>
         </BrowserRouter>
     </Provider>,
     document.querySelector('#root'));

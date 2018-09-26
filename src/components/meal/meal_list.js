@@ -6,6 +6,7 @@ import {Pagination, Collapse} from 'antd';
 
 import {fetchMeals, setMenuItem} from "../../actions";
 
+
 class MealList extends Component {
     componentDidMount() {
         this.props.setMenuItem('meal-list');
@@ -16,23 +17,20 @@ class MealList extends Component {
         const {content} = this.props.meals;
         const {Panel} = Collapse;
 
-        return _.map(content, (meal) => {
-            return (
-                <Panel
-                    className='collapse__item'
-                    key={meal.id}
-                    header={
-                        <div>
-                            <h3>{meal.name}</h3>
-                            <Link to={`/meals/${meal.id}`}> More</Link>
-                        </div>}>
-                    <p>Description: {meal.description}</p>
-                    <p>Calories: {meal.kcal}</p>
-                    <img src={meal.imageUrl} alt='meal'/>
-                </Panel>
-
-            );
-        });
+        return _.map(content, meal =>
+            <Panel
+                className='collapse__item'
+                key={meal.id}
+                header={
+                    <div>
+                        <h3>{meal.name}</h3>
+                        <Link to={`/meals/${meal.id}`}> More</Link>
+                    </div>}>
+                <p>Description: {meal.description}</p>
+                <p>Calories: {meal.kcal}</p>
+                <img src={meal.imageUrl} alt='meal'/>
+            </Panel>
+        );
     };
 
     onChange = (page) => {
@@ -43,12 +41,13 @@ class MealList extends Component {
         const {currentPage, totalElements} = this.props.meals;
 
         return (
-                <div className='content'>
-                    <Collapse className='collapse'>
-                        {this.renderMeals()}
-                    </Collapse>,
-                    <Pagination current={currentPage + 1} total={totalElements} onChange={this.onChange}/>
-                </div>
+            <div className='content'>
+                <h1>Meals</h1>
+                <Collapse className='collapse'>
+                    {this.renderMeals()}
+                </Collapse>,
+                <Pagination current={currentPage + 1} total={totalElements} onChange={this.onChange}/>
+            </div>
         );
     }
 }
