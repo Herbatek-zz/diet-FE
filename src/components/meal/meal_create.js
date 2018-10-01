@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 import {Field, reduxForm} from 'redux-form';
 import {connect} from 'react-redux';
-import {Button} from 'antd';
+import {Button, message} from 'antd';
 import {TextField, TextAreaField} from 'redux-form-antd';
 
 import AuthService from '../../helpers/auth_service';
 import {createMeal, setMenuItem} from "../../actions";
 import {NO_LOGIN_MESSAGE} from '../../helpers/messages';
+import '../default/form.css';
 
 class MealCreate extends Component {
     componentDidMount() {
@@ -15,40 +16,44 @@ class MealCreate extends Component {
 
     onSubmit = (values) => {
         this.props.createMeal(values, () => {
-            alert("Poprawnie stworzono posiłek");
-            this.props.history.push('/')
+            this.props.reset();
+            message.success('Meal has been created');
         });
     };
 
     renderForm = () => {
         const {handleSubmit} = this.props;
         return (
-            <form onSubmit={handleSubmit(this.onSubmit)} className='form'>
-                <Field
-                    name='name'
-                    component={TextField}
-                    placeholder='Name'/>
-                <Field
-                    name='imageUrl'
-                    component={TextField}
-                    placeholder='Image'/>
-                <Field
-                    name='description'
-                    component={TextAreaField}
-                    placeholder='Description'/>
-                <Field
-                    name='recipe'
-                    component={TextAreaField}
-                    placeholder='Recipe'/>
-                <Button type="primary" ghost htmlType='submit'>Submit</Button>
-            </form>
+            <div className='meal-create__contentWrap'>
+                <h1 className='meal-create__title'>Create a new meal</h1>
+                <form onSubmit={handleSubmit(this.onSubmit)} className='form'>
+                    <Field
+                        name='name'
+                        component={TextField}
+                        placeholder='Name'/>
+                    <Field
+                        name='imageUrl'
+                        component={TextField}
+                        placeholder='Image'/>
+                    <Field
+                        name='description'
+                        rows={4}
+                        component={TextAreaField}
+                        placeholder='Description'/>
+                    <Field
+                        name='recipe'
+                        rows={6}
+                        component={TextAreaField}
+                        placeholder='Recipe'/>
+                    <Button className='form__button' type="primary" ghost htmlType='submit'>Submit</Button>
+                </form>
+            </div>
         )
     };
 
     render() {
         return (
             <div className='content'>
-                <h1>Create a new meal</h1>
                 {AuthService.isLogged() ? this.renderForm() : NO_LOGIN_MESSAGE}
             </div>
         )

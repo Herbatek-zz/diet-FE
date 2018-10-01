@@ -2,11 +2,12 @@ import React, {Component} from 'react';
 import {Field, reduxForm} from 'redux-form';
 import {TextField, TextAreaField, NumberField} from 'redux-form-antd'
 import {connect} from 'react-redux';
-import {Button} from 'antd';
+import {Button, message} from 'antd';
 
 import AuthService from '../../helpers/auth_service';
 import {createProduct, setMenuItem} from "../../actions";
 import {NO_LOGIN_MESSAGE} from "../../helpers/messages";
+import '../default/form.css';
 
 
 class ProductCreate extends Component {
@@ -25,7 +26,8 @@ class ProductCreate extends Component {
 
     onSubmit = (values) => {
         this.props.createProduct(values, () => {
-            alert("Poprawnie stworzono produkt");
+            this.props.reset();
+            message.success('Product has been created');
         });
     };
 
@@ -46,44 +48,56 @@ class ProductCreate extends Component {
                     placeholder='Image'/>
                 <Field
                     name='description'
+                    rows={4}
                     component={TextAreaField}
                     placeholder='Description'/>
-                <Field
-                    name='protein'
-                    label="Protein"
-                    component={NumberField}
-                    min={0}
-                    max={100}
-                    step={0.1}/>
-                <Field
-                    name='carbohydrate'
-                    label="Carbohydrate"
-                    component={NumberField}
-                    min={0}
-                    max={100}
-                    step={0.1}/>
-                <Field
-                    name='fat'
-                    label="Fat"
-                    component={NumberField}
-                    min={0}
-                    max={100}
-                    step={0.1}/>
-                <Field
-                    name='fibre'
-                    label="Fibre"
-                    component={NumberField}
-                    min={0}
-                    max={100}
-                    step={0.1}/>
-                <Field
-                    name='kcal'
-                    label="Calories"
-                    component={NumberField}
-                    min={0}
-                    max={900}
-                    step={1}/>
-                <Button type="primary" ghost htmlType='submit'>Submit</Button>
+                <div className='form__numberItem'>
+                    <label className='form__numberItem--label'>Protein:</label>
+                    <Field
+                        name='protein'
+                        component={NumberField}
+                        min={0}
+                        max={100}
+                        step={0.1}/>
+                </div>
+                <div className='form__numberItem'>
+                    <label className='form__numberItem--label'>Carbohydrate:</label>
+                    <Field
+                        name='carbohydrate'
+                        component={NumberField}
+                        min={0}
+                        max={100}
+                        step={0.1}/>
+                </div>
+
+                <div className='form__numberItem'>
+                    <label className='form__numberItem--label'>Fat:</label>
+                    <Field
+                        name='fat'
+                        component={NumberField}
+                        min={0}
+                        max={100}
+                        step={0.1}/>
+                </div>
+                <div className='form__numberItem'>
+                    <label className='form__numberItem--label'>Fibre:</label>
+                    <Field
+                        name='fibre'
+                        component={NumberField}
+                        min={0}
+                        max={100}
+                        step={0.1}/>
+                </div>
+                <div className='form__numberItem'>
+                    <label className='form__numberItem--label'>Kcal:</label>
+                    <Field
+                        name='kcal'
+                        component={NumberField}
+                        min={0}
+                        max={900}
+                        step={1}/>
+                </div>
+                <Button className='form__button' type="primary" ghost htmlType='submit'>Submit</Button>
 
             </form>
         )

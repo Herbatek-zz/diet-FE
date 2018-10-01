@@ -4,9 +4,11 @@ import styled from "styled-components";
 const Description = styled.div `
     border 1px solid rgba(87, 87, 87, 0.2);
     border-radius: 5px;
-    min-height: 30%;
     padding 10px;
     margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
 `;
 
 class MealDescription extends Component {
@@ -17,7 +19,7 @@ class MealDescription extends Component {
         return (
             <Description>
                 <h2>Description</h2>
-                <h4>{description}</h4>
+                <h4 className='description'>{description}</h4>
             </Description>
         )
     }

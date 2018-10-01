@@ -1,67 +1,80 @@
-import styled from "styled-components";
+.content__wrap {
+    width: 80%;
+}
 
-export const MealHeader = styled.div `
+.meal__head {
     display: flex;
     justify-content: space-between;
     width: 100%;
     position: relative;
-`;
+}
 
-export const HeaderTitle = styled.h1 `
+.meal__head--title {
     margin-left: 10px;
-`;
+}
 
-export const HeaderMenu = styled.div `
+.meal__head--menu {
     font-size: 10px;
     display: flex;
-`;
+}
 
-export const Span = styled.span `
-    display:flex;
+.meal__head--span {
+    display: flex;
     flex-direction: column;
     align-items: center;
     cursor: pointer;
     margin-right: 30px;
-`;
+}
 
-export const MealBody = styled.div `
+.meal__body {
     display: flex;
     width: 100%;
     position: relative;
-`;
+}
 
-export const LeftPanel = styled.div `
-    min-height: 100%;
+.meal__leftPanel {
+    display: flex;
+    flex-direction: column;
     width: 41%;
     padding: 10px;
     position: relative;
-`;
+}
 
-export const ImageContainer = styled.div `
+.meal__imageContainer {
     width: 612px;
     height: 366px;
     margin-bottom: 12px;
     border-radius: 5px;
     border: 1px solid cornflowerblue;
-`;
+}
 
-export const  Image = styled.img `
+.meal__image {
     width: 100%;
     height: 100%;
     border-radius: 5px;
-`;
+}
 
-export const RightPanel = styled.div `
+.meal__rightPanel {
     min-height: 100%;
     width: 59%;
     display: flex;
     flex-direction: column;
     position: relative;
-    padding 10px;
-`;
+    padding: 10px;
+}
 
-export const RightPanelBottom = styled.div `
+.meal__rightPanelBottom {
     display: flex;
     position: relative;
     height: 100%;
-`;
+}
+
+.description {
+    display: flex;
+    white-space: pre-wrap;
+    position: relative;
+}
+
+.recipe {
+    white-space: pre-wrap;
+}

@@ -3,9 +3,10 @@ import styled from "styled-components";
 
 const Recipe = styled.div `
     width: 50%;
-    height: 100%;
     border: 1px solid rgba(87, 87, 87, 0.2);
     border-radius: 5px;
+    display: flex;
+    flex-direction: column;
     position: relative;
     padding: 10px;
     margin-right: 10px;
@@ -19,7 +20,7 @@ class MealRecipe extends Component {
         return (
             <Recipe>
                 <h2>Recipe</h2>
-                <h4>{recipe}</h4>
+                <h4 className='recipe'>{recipe}</h4>
             </Recipe>
         )
     }

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
-import {Menu, Icon, Avatar} from 'antd';
+import {Menu, Icon, Avatar, message} from 'antd';
 
 import AuthService from '../../helpers/auth_service';
 import './header.css';
@@ -31,8 +31,10 @@ class MyHeader extends Component {
     loginButton = () => {
         return (
             <Item key='logout' className='menu__login'>
-                <a href="http://localhost:8080/login/facebook">
-                    <span><Icon type='login' className='no-margin menu__login--icon'/></span>
+                <a href="https://localhost:8443/login/facebook">
+                    <span>
+                        <Icon type='login' className='no-margin menu__login--icon'/>
+                    </span>
                 </a>
             </Item>
         );
@@ -47,6 +49,7 @@ class MyHeader extends Component {
                 <Item key='logout'>
                     <Link to='/' onClick={() => {
                         AuthService.logout();
+                        message.success("Successfully logged out");
                         this.setState({logged: false})
                     }}>
                         <Icon type='logout'/>Log out
@@ -103,7 +106,9 @@ class MyHeader extends Component {
                         </Link>
                     </Item>
                 </SubMenu>
+
                 {this.state.logged ? this.avatar() : this.loginButton()}
+
             </Menu>
         );
     }

@@ -2,12 +2,21 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import _ from 'lodash';
-import {Pagination, Collapse} from 'antd';
+import {Pagination, Collapse, Input} from 'antd';
 
-import {fetchMeals, setMenuItem} from "../../actions";
+import {fetchMeals, searchMeals, setMenuItem} from "../../actions";
 
 
 class MealList extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            searched: false,
+            value: ''
+        }
+    }
+
     componentDidMount() {
         this.props.setMenuItem('meal-list');
         this.props.fetchMeals(0);
@@ -34,18 +43,34 @@ class MealList extends Component {
     };
 
     onChange = (page) => {
-        this.props.fetchMeals(page - 1);
+        const {searched, value} = this.state;
+        const {fetchMeals, searchMeals} = this.props;
+        searched ? searchMeals(value, page - 1) : fetchMeals(page - 1);
     };
 
     render() {
         const {currentPage, totalElements} = this.props.meals;
+        const {Search} = Input;
+        const {value} = this.state;
 
         return (
             <div className='content'>
                 <h1>Meals</h1>
+                <Search
+                    placeholder="Search meal"
+                    onSearch={value => {
+                        this.props.searchMeals(value, 0);
+                        this.setState({
+                            searched: true
+                        });
+                    }}
+                    onChange={(e) => this.setState({value: e.target.value})}
+                    value={value}
+                    enterButton
+                />
                 <Collapse className='collapse'>
                     {this.renderMeals()}
-                </Collapse>,
+                </Collapse>
                 <Pagination current={currentPage + 1} total={totalElements} onChange={this.onChange}/>
             </div>
         );
@@ -58,4 +83,4 @@ const mapStateToProps = ({meals}) => {
     }
 };
 
-export default connect(mapStateToProps, {fetchMeals, setMenuItem})(MealList);
+export default connect(mapStateToProps, {fetchMeals, searchMeals, setMenuItem})(MealList);

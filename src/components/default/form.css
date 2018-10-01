@@ -1,0 +1,53 @@
+.meal-create__contentWrap {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-repeat: no-repeat;
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.8) 100%), url('food.jpg');;
+    background-size: cover;
+    background-position: center;
+}
+
+.meal-create__title {
+    font-size: 33px;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 0 10px;
+    border-radius: 4px;
+    margin-top: 20px;
+}
+
+.form {
+    background-color: rgba(255, 255, 255, 0.75);
+    border-radius: 10px;
+    width: 35%;
+    padding: 2% 4%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    margin: 0 0 100px 0;
+}
+
+.form__numberItem {
+    display: flex;
+    align-items: center;
+}
+
+.form__numberItem--label {
+    margin-bottom: 24px;
+    margin-right: 8px;
+}
+
+.form__button {
+    max-width: 25%;
+    margin: auto;
+}
+
+.meal__form--background {
+    position: absolute;
+    width: 150%;
+    left: -50px;
+    top: -60px;
+    opacity: 0.5;
+}
