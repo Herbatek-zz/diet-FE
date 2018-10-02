@@ -1,0 +1,15 @@
+.productsList__menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+    width: 100%;
+}
+
+.products__list {
+    margin: 20px 0;
+}
+
+.content__wrap--productList {
+    width: 40%;
+}

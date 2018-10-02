@@ -1,24 +1,24 @@
-.content__wrap {
+.content__wrap--mealShow {
     width: 80%;
 }
 
-.meal__head {
+.head {
     display: flex;
     justify-content: space-between;
     width: 100%;
     position: relative;
 }
 
-.meal__head--title {
+.head__title {
     margin-left: 10px;
 }
 
-.meal__head--menu {
+.head__menu {
     font-size: 10px;
     display: flex;
 }
 
-.meal__head--span {
+.head__span {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -26,13 +26,13 @@
     margin-right: 30px;
 }
 
-.meal__body {
+.body {
     display: flex;
     width: 100%;
     position: relative;
 }
 
-.meal__leftPanel {
+.leftPanel {
     display: flex;
     flex-direction: column;
     width: 41%;
@@ -40,7 +40,7 @@
     position: relative;
 }
 
-.meal__imageContainer {
+.leftPanel__imageContainer {
     width: 612px;
     height: 366px;
     margin-bottom: 12px;
@@ -48,13 +48,13 @@
     border: 1px solid cornflowerblue;
 }
 
-.meal__image {
+.leftPanel__imageContainer--image {
     width: 100%;
     height: 100%;
     border-radius: 5px;
 }
 
-.meal__rightPanel {
+.rightPanel {
     min-height: 100%;
     width: 59%;
     display: flex;
@@ -63,7 +63,7 @@
     padding: 10px;
 }
 
-.meal__rightPanelBottom {
+.rightPanel__bottom {
     display: flex;
     position: relative;
     height: 100%;

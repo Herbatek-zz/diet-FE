@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-import {FETCH_PRODUCT, FETCH_PRODUCTS, FETCH_MY_PRODUCTS} from "../actions";
+import {FETCH_PRODUCT, FETCH_PRODUCTS, FETCH_MY_PRODUCTS, SEARCH_PRODUCTS} from "../actions";
 
 
 export default (state = {content: {}}, action) => {
@@ -29,6 +29,15 @@ export default (state = {content: {}}, action) => {
                     [action.payload.data.id]: action.payload.data
                 }
             };
+
+        case SEARCH_PRODUCTS: {
+            return {
+                content: _.mapKeys(action.payload.data.content, 'id'),
+                currentPage: action.payload.data.pageNumber,
+                pageSize: action.payload.data.pageSize,
+                totalElements: action.payload.data.totalElements
+            }
+        }
 
         default:
             return state;

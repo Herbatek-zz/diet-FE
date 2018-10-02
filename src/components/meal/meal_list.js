@@ -5,6 +5,7 @@ import _ from 'lodash';
 import {Pagination, Collapse, Input} from 'antd';
 
 import {fetchMeals, searchMeals, setMenuItem} from "../../actions";
+import './meal_list.css';
 
 
 class MealList extends Component {
@@ -55,23 +56,32 @@ class MealList extends Component {
 
         return (
             <div className='content'>
-                <h1>Meals</h1>
-                <Search
-                    placeholder="Search meal"
-                    onSearch={value => {
-                        this.props.searchMeals(value, 0);
-                        this.setState({
-                            searched: true
-                        });
-                    }}
-                    onChange={(e) => this.setState({value: e.target.value})}
-                    value={value}
-                    enterButton
-                />
-                <Collapse className='collapse'>
-                    {this.renderMeals()}
-                </Collapse>
-                <Pagination current={currentPage + 1} total={totalElements} onChange={this.onChange}/>
+                <div className='content__wrap--mealList'>
+                    <div className='header'>
+                        <h1>Meal list</h1>
+                        <Search
+                            placeholder="Search meals"
+                            onSearch={value => {
+                                this.props.searchMeals(value, 0);
+                                this.setState({
+                                    searched: true
+                                });
+                            }}
+                            onChange={(e) => this.setState({value: e.target.value})}
+                            value={value}
+                            enterButton
+                            size="large"
+                        />
+                    </div>
+                    <div className='collapse-list'>
+                        <Collapse>
+                            {this.renderMeals()}
+                        </Collapse>
+                    </div>
+                    <div className='pagination'>
+                        <Pagination current={currentPage + 1} total={totalElements} onChange={this.onChange}/>
+                    </div>
+                </div>
             </div>
         );
     }

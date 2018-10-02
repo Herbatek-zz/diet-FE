@@ -55,6 +55,15 @@ export function fetchMyProducts(page) {
     }
 }
 
+export function searchProducts(query, page) {
+    const request = Request.get(`/products/search?query=${query}&page=${page}`);
+
+    return {
+        type: SEARCH_PRODUCTS,
+        payload: request
+    }
+}
+
 
 export function createMeal(values, callback) {
     const userId = AuthService.getDecodedToken().sub;
