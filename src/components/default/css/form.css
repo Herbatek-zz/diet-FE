@@ -4,7 +4,7 @@
     flex-direction: column;
     align-items: center;
     background-repeat: no-repeat;
-    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.8) 100%), url('food.jpg');;
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.8) 100%), url('../../../img/food.jpg');;
     background-size: cover;
     background-position: center;
 }

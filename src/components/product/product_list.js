@@ -4,8 +4,9 @@ import {Link} from 'react-router-dom';
 import {List, Icon, Input} from 'antd';
 
 import {fetchProducts, searchProducts, setMenuItem} from "../../actions";
-import './product_list.css';
+import './css/product_list.css';
 
+const pageSize = 5;
 
 const IconText = ({type, text}) => (
     <span>
@@ -15,22 +16,20 @@ const IconText = ({type, text}) => (
 );
 
 class ProductList extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            searched: false,
-            value: ''
-        }
-    }
+    state = {
+        searched: false,
+        value: ''
+    };
 
     componentDidMount() {
         this.props.setMenuItem('product-list');
-        this.props.fetchProducts(0);
+        this.props.fetchProducts(0, pageSize);
     }
 
     onChange = (page) => {
-        this.props.fetchProducts(page - 1);
+        const {searched, value} = this.state;
+        const {fetchProducts, searchProducts} = this.props;
+        searched ? searchProducts(value, page - 1, pageSize) : fetchProducts(page - 1, pageSize);
     };
 
     render() {
@@ -46,7 +45,7 @@ class ProductList extends Component {
                         <Search
                             placeholder="Search products"
                             onSearch={value => {
-                                this.props.searchProducts(value, 0);
+                                this.props.searchProducts(value, 0, pageSize);
                                 this.setState({
                                     searched: true
                                 });

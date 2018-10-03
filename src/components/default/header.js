@@ -3,20 +3,17 @@ import {Link} from 'react-router-dom';
 import {Menu, Icon, Avatar, message} from 'antd';
 
 import AuthService from '../../helpers/auth_service';
-import './header.css';
+import './css/header.css';
 import connect from "react-redux/es/connect/connect";
 
 const {SubMenu, Item} = Menu;
 
 class MyHeader extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            pictureUrl: '',
-            username: '',
-            logged: false
-        };
-    }
+    state = {
+        pictureUrl: '',
+        username: '',
+        logged: false
+    };
 
     componentDidMount() {
         if (AuthService.isLogged()) {

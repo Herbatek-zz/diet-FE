@@ -2,30 +2,24 @@ import React, {Component} from 'react';
 import _ from "lodash";
 import {Tag} from "antd";
 import {Link} from "react-router-dom";
-import styled from "styled-components";
 
-export const Products = styled.div `
-    border: 1px solid rgba(87, 87, 87, 0.2);
-    border-radius: 5px;
-    padding: 10px;
-`;
 
-class MealProducts extends Component {
+class EditMealProducts extends Component {
     render() {
 
         const {products} = this.props;
 
         return (
-            <Products>
+            <div>
                 <h2>Products</h2>
                 {_.map(products, product =>
-                    <Tag key={product.id} style={{marginBottom: '5px'}}>
+                    <Tag key={product.id} style={{marginBottom: '5px'}} closable >
                         <Link to={`/products/${product.id}`}>{product.name}</Link>
                     </Tag>
                 )}
-            </Products>
+            </div>
         )
     }
 }
 
-export default MealProducts;
+export default EditMealProducts;

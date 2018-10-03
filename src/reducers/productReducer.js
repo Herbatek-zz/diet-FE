@@ -1,6 +1,13 @@
 import _ from 'lodash';
 
-import {FETCH_PRODUCT, FETCH_PRODUCTS, FETCH_MY_PRODUCTS, SEARCH_PRODUCTS} from "../actions";
+import {
+    FETCH_PRODUCT,
+    FETCH_PRODUCTS,
+    FETCH_MY_PRODUCTS,
+    SEARCH_PRODUCTS,
+    FETCH_PRODUCTS_INFINITY,
+    SEARCH_PRODUCTS_INFINITY
+} from "../actions";
 
 
 export default (state = {content: {}}, action) => {
@@ -10,7 +17,17 @@ export default (state = {content: {}}, action) => {
                 content: _.mapKeys(action.payload.data.content, 'id'),
                 currentPage: action.payload.data.pageNumber,
                 pageSize: action.payload.data.pageSize,
-                totalElements: action.payload.data.totalElements
+                totalElements: action.payload.data.totalElements,
+                last: action.payload.data.last
+            };
+
+        case FETCH_PRODUCTS_INFINITY:
+            return {
+                content: {...state.content, ...(_.mapKeys(action.payload.data.content, 'id'))},
+                currentPage: action.payload.data.pageNumber,
+                pageSize: action.payload.data.pageSize,
+                totalElements: action.payload.data.totalElements,
+                last: action.payload.data.last
             };
 
         case FETCH_MY_PRODUCTS:
@@ -18,7 +35,8 @@ export default (state = {content: {}}, action) => {
                 content: _.mapKeys(action.payload.data.content, 'id'),
                 currentPage: action.payload.data.pageNumber,
                 pageSize: action.payload.data.pageSize,
-                totalElements: action.payload.data.totalElements
+                totalElements: action.payload.data.totalElements,
+                last: action.payload.data.last
             };
 
         case FETCH_PRODUCT:
@@ -35,7 +53,18 @@ export default (state = {content: {}}, action) => {
                 content: _.mapKeys(action.payload.data.content, 'id'),
                 currentPage: action.payload.data.pageNumber,
                 pageSize: action.payload.data.pageSize,
-                totalElements: action.payload.data.totalElements
+                totalElements: action.payload.data.totalElements,
+                last: action.payload.data.last
+            }
+        }
+
+        case SEARCH_PRODUCTS_INFINITY: {
+            return {
+                content: {...state.content, ...(_.mapKeys(action.payload.data.content, 'id'))},
+                currentPage: action.payload.data.pageNumber,
+                pageSize: action.payload.data.pageSize,
+                totalElements: action.payload.data.totalElements,
+                last: action.payload.data.last
             }
         }
 

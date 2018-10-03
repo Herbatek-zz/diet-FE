@@ -7,7 +7,7 @@ import {Button, message} from 'antd';
 import AuthService from '../../helpers/auth_service';
 import {createProduct, setMenuItem} from "../../actions";
 import {NO_LOGIN_MESSAGE} from "../../helpers/messages";
-import '../default/form.css';
+import '../default/css/form.css';
 
 
 class ProductCreate extends Component {

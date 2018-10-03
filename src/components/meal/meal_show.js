@@ -8,8 +8,8 @@ import AuthService from "../../helpers/auth_service";
 import MealDescription from './common_components/meal_description';
 import MealRecipe from './common_components/meal_recipe';
 import MealInfo from './common_components/meal_info';
-import MealProducts from "./common_components/meal_products";
-import './meal_show.css';
+import MealProducts from "./common_components/show_meal_products";
+import './css/meal_show.css';
 
 
 class MealShow extends Component {
@@ -73,13 +73,21 @@ class MealShow extends Component {
                             <div className='leftPanel__imageContainer'>
                                 <img src={meal.imageUrl} alt={meal.name} className='leftPanel__imageContainer--image'/>
                             </div>
-                            <MealProducts products={meal.products}/>
+                            <div className='show__mealProducts'>
+                                <MealProducts products={meal.products}/>
+                            </div>
                         </div>
                         <div className='rightPanel'>
-                            <MealDescription description={meal.description}/>
+                            <div className='show__mealDescription'>
+                                <MealDescription description={meal.description}/>
+                            </div>
                             <div className='rightPanel__bottom'>
-                                <MealRecipe recipe={meal.recipe}/>
-                                <MealInfo meal={meal}/>
+                                <div className='show__mealRecipe'>
+                                    <MealRecipe recipe={meal.recipe}/>
+                                </div>
+                                <div className='show__mealInfo'>
+                                    <MealInfo meal={meal}/>
+                                </div>
                             </div>
                         </div>
                     </div>

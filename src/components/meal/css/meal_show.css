@@ -54,6 +54,12 @@
     border-radius: 5px;
 }
 
+.show__mealProducts {
+    border: 1px solid rgba(87, 87, 87, 0.2);
+    border-radius: 5px;
+    padding: 10px;
+}
+
 .rightPanel {
     min-height: 100%;
     width: 59%;
@@ -63,10 +69,38 @@
     padding: 10px;
 }
 
+.show__mealDescription {
+    border: 1px solid rgba(87, 87, 87, 0.2);
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
 .rightPanel__bottom {
     display: flex;
     position: relative;
     height: 100%;
+}
+
+.show__mealRecipe {
+    width: 50%;
+    border: 1px solid rgba(87, 87, 87, 0.2);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding: 10px;
+    margin-right: 10px;
+}
+
+.show__mealInfo {
+    border: 1px solid rgba(87, 87, 87, 0.2);
+    border-radius: 5px;
+    padding: 10px;
+    width: 50%;
 }
 
 .description {

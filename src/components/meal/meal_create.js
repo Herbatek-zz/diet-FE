@@ -7,7 +7,7 @@ import {TextField, TextAreaField} from 'redux-form-antd';
 import AuthService from '../../helpers/auth_service';
 import {createMeal, setMenuItem} from "../../actions";
 import {NO_LOGIN_MESSAGE} from '../../helpers/messages';
-import '../default/form.css';
+import '../default/css/form.css';
 
 class MealCreate extends Component {
     componentDidMount() {

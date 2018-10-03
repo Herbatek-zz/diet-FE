@@ -5,8 +5,10 @@ import AuthService from "../helpers/auth_service";
 export const CREATE_PRODUCT = 'create_product';
 export const FETCH_PRODUCT = 'fetch_product';
 export const FETCH_PRODUCTS = 'fetch_products';
+export const FETCH_PRODUCTS_INFINITY = 'fetch_products_infinty';
 export const FETCH_MY_PRODUCTS = 'fetch_my_products';
 export const SEARCH_PRODUCTS = 'search_products';
+export const SEARCH_PRODUCTS_INFINITY = 'search_products_infinity';
 
 export const CREATE_MEAL = 'create_meal';
 export const FETCH_MEAL = 'fetch_meal';
@@ -36,11 +38,20 @@ export function fetchProduct(id) {
     }
 }
 
-export function fetchProducts(page) {
-    const request = Request.get(`/products?page=${page}&size=5`);
+export function fetchProducts(page, pageSize) {
+    const request = Request.get(`/products?page=${page}&size=${pageSize}`);
 
     return {
         type: FETCH_PRODUCTS,
+        payload: request
+    }
+}
+
+export function fetchProductsInfinity(page, pageSize) {
+    const request = Request.get(`/products?page=${page}&size=${pageSize}`);
+
+    return {
+        type: FETCH_PRODUCTS_INFINITY,
         payload: request
     }
 }
@@ -55,11 +66,20 @@ export function fetchMyProducts(page) {
     }
 }
 
-export function searchProducts(query, page) {
-    const request = Request.get(`/products/search?query=${query}&page=${page}`);
+export function searchProducts(query, page, pageSize) {
+    const request = Request.get(`/products/search?query=${query}&page=${page}&size=${pageSize}`);
 
     return {
         type: SEARCH_PRODUCTS,
+        payload: request
+    }
+}
+
+export function searchProductsInfinity(query, page, pageSize) {
+    const request = Request.get(`/products/search?query=${query}&page=${page}&size=${pageSize}`);
+
+    return {
+        type: SEARCH_PRODUCTS_INFINITY,
         payload: request
     }
 }

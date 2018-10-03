@@ -5,18 +5,14 @@ import _ from 'lodash';
 import {Pagination, Collapse, Input} from 'antd';
 
 import {fetchMeals, searchMeals, setMenuItem} from "../../actions";
-import './meal_list.css';
+import './css/meal_list.css';
 
 
 class MealList extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            searched: false,
-            value: ''
-        }
-    }
+    state = {
+        searched: false,
+        value: ''
+    };
 
     componentDidMount() {
         this.props.setMenuItem('meal-list');
