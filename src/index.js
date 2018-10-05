@@ -18,6 +18,7 @@ import MealShow from './components/meal/meal_show';
 import MealMyList from './components/meal/meal_my_list';
 import MealCreate from './components/meal/meal_create';
 import MealEdit from './components/meal/meal_edit';
+import MealFavourite from './components/meal/meal_favourite';
 import reducers from './reducers';
 import './index.css';
 
@@ -30,6 +31,7 @@ ReactDOM.render(
             <Layout>
                 <Header/>
                 <Switch>
+                    <Route path='/meals/favourite' component={MealFavourite} />
                     <Route path='/meals/:id/edit' component={MealEdit}/>
                     <Route path='/meals/my' component={MealMyList}/>
                     <Route path='/meals/new' component={MealCreate}/>

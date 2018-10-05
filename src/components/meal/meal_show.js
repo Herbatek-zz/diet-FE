@@ -11,18 +11,18 @@ import MealInfo from './common/meal_info';
 import ShowMealProducts from "./common/show_meal_products";
 import './css/meal_show.css';
 import {SHOW_LOADING_SPIN} from "../../helpers/messages";
+import SecuredRequest from '../../helpers/secured_request';
 
 
 class MealShow extends Component {
     state = {
-        isLoggedIn: AuthService.isLogged()
+        isLoggedIn: AuthService.isLogged(),
+        mealId: this.props.match.params.id
     };
 
     componentDidMount() {
         this.props.setMenuItem('');
-
-        const {id} = this.props.match.params;
-        this.props.fetchMeal(id);
+        this.props.fetchMeal(this.state.mealId);
     }
 
     render() {
@@ -34,12 +34,10 @@ class MealShow extends Component {
             const {sub} = AuthService.getDecodedToken();
 
             hearthIcon = (
-                <a href='#'>
-                    <span className='head__span'>
+                <span className='head__span' onClick={() => SecuredRequest.post(`/users/${sub}/favourite/meals/${this.state.mealId}`, {})}>
                         <Icon type="heart" theme="twoTone" twoToneColor="#eb2f96" fill="currentColor" style={{fontSize: '30px'}}/>
                         Favourite
-                    </span>
-                </a>
+                </span>
             );
 
             editIcon = (() => {

@@ -36,16 +36,17 @@ class MealEdit extends Component {
         const {id} = this.props.match.params;
         this.props.fetchMeal(id);
         this.props.fetchProducts(0, this.state.pageSize);
+        console.log(this.props)
     }
 
     handleInfiniteOnLoad = () => {
-        const {content, currentPage, totalElements, last} = this.props.products;
+        const {content, currentPage, totalElements, isLast} = this.props.products;
         const {searched} = this.state;
         const {searchProductsInfinity, fetchProductsInfinity} = this.props;
         const {searchValue, pageSize} = this.state;
         this.setState({loading: true});
 
-        if (Object.values(content).length >= totalElements && last) {
+        if (Object.values(content).length >= totalElements && isLast) {
             this.setState({loading: false});
             return;
         }
@@ -54,7 +55,7 @@ class MealEdit extends Component {
     };
 
     renderCollapse = () => {
-        const {content, last} = this.props.products;
+        const {content, isLast} = this.props.products;
         const {Item} = List;
         const {loading} = this.state;
 
@@ -64,13 +65,13 @@ class MealEdit extends Component {
                     initialLoad={false}
                     pageStart={0}
                     loadMore={this.handleInfiniteOnLoad}
-                    hasMore={!this.state.loading && !last}
+                    hasMore={!this.state.loading && !isLast}
                     useWindow={false}
                 >
                     <List
                         dataSource={Object.values(content)}
                         renderItem={item => (
-                            <Tooltip placement="bottom" title='Click to add' arrowPointAtCenter='true' mouseEnterDelay='0.6'>
+                            <Tooltip placement="bottom" title='Click to add' arrowPointAtCenter='true' mouseEnterDelay={0.6}>
                                 <Item key={item.id} onClick={() => console.log("działam")} className='edit__search--item'>
                                     <Item.Meta
                                         avatar={<Avatar src={item.imageUrl}/>}
@@ -81,7 +82,7 @@ class MealEdit extends Component {
                             </Tooltip>
                         )}
                     >
-                        {loading && !last && (
+                        {loading && !isLast && (
                             <div className="loading-container">
                                 <Spin/>
                             </div>

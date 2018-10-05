@@ -15,6 +15,7 @@ export const FETCH_MEAL = 'fetch_meal';
 export const FETCH_MEALS = 'fetch_meals';
 export const FETCH_MY_MEALS = 'fetch_my_meals';
 export const SEARCH_MEALS = 'search_meals';
+export const FETCH_FAVOURITE_MEALS = 'fetch_favourite_meals';
 
 export const SELECT_MENU_ITEM = 'select_menu_item';
 
@@ -133,6 +134,15 @@ export function searchMeals(query, page, pageSize) {
     }
 }
 
+export function fetchFavouriteMeals(page, pageSize) {
+    const userId = AuthService.getDecodedToken().sub;
+    const request = Request.get(`/users/${userId}/favourite/meals`);
+
+    return {
+        type: FETCH_FAVOURITE_MEALS,
+        payload: request
+    }
+}
 
 
 export function setMenuItem(menuItem) {

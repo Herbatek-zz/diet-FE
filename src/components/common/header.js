@@ -97,6 +97,11 @@ class MyHeader extends Component {
                             <Icon type='bars'/>My meals
                         </Link>
                     </Item>
+                    <Item key='meal-favourite'>
+                        <Link to='/meals/favourite'>
+                            <Icon type='bars'/>Favourite meals
+                        </Link>
+                    </Item>
                     <Item key='meal-create'>
                         <Link to='/meals/new'>
                             <Icon type='plus-circle-o'/>Add meal
