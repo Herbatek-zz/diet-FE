@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Icon} from 'antd';
+import {Icon, Tooltip} from 'antd';
 import {Link} from "react-router-dom";
 
-import {fetchMeal, setMenuItem} from "../../actions";
+import {fetchMeal, setMenuItem, isFavouriteMeal, addMealToFavourites, removeMealFromFavourites} from "../../actions";
 import AuthService from "../../helpers/auth_service";
 import MealDescription from './common/meal_description';
 import MealRecipe from './common/meal_recipe';
@@ -17,13 +17,17 @@ import SecuredRequest from '../../helpers/secured_request';
 class MealShow extends Component {
     state = {
         isLoggedIn: AuthService.isLogged(),
-        mealId: this.props.match.params.id
+        mealId: this.props.match.params.id,
     };
 
     componentDidMount() {
         this.props.setMenuItem('');
         this.props.fetchMeal(this.state.mealId);
+        if (this.state.isLoggedIn)
+            this.props.isFavouriteMeal(this.state.mealId);
+
     }
+
 
     render() {
         const {meal} = this.props;
@@ -33,12 +37,25 @@ class MealShow extends Component {
         if (meal && this.state.isLoggedIn) {
             const {sub} = AuthService.getDecodedToken();
 
-            hearthIcon = (
-                <span className='head__span' onClick={() => SecuredRequest.post(`/users/${sub}/favourite/meals/${this.state.mealId}`, {})}>
-                        <Icon type="heart" theme="twoTone" twoToneColor="#eb2f96" fill="currentColor" style={{fontSize: '30px'}}/>
-                        Favourite
+            hearthIcon = (() => {
+                if (this.props.isFavourite) {
+                    return <Tooltip placement="top" title='Remove from favourites' arrowPointAtCenter='true'>
+                <span className='head__span'
+                      onClick={() => this.props.removeMealFromFavourites(this.state.mealId)}>
+                        <Icon type="heart" theme="filled" twoToneColor="#eb2f96" style={{fontSize: '30px', color: '#eb2f96'}}/>
+                        Favourites
                 </span>
-            );
+                    </Tooltip>;
+                } else {
+                    return <Tooltip placement="top" title='Add to favourites' arrowPointAtCenter='true'>
+                <span className='head__span'
+                      onClick={() => this.props.addMealToFavourites(this.state.mealId)}>
+                        <Icon type="heart" theme="outlined" twoToneColor="#eb2f96" style={{fontSize: '30px', color: '#eb2f96'}}/>
+                        Favourites
+                </span>
+                    </Tooltip>
+                }
+            })();
 
             editIcon = (() => {
                 if (sub === meal.userId)
@@ -98,8 +115,15 @@ class MealShow extends Component {
 
 const mapStateToProps = ({meals}, ownProps) => {
     return {
-        meal: meals.content[ownProps.match.params.id]
+        meal: meals.content[ownProps.match.params.id],
+        isFavourite: meals.isFavourite
     }
 };
 
-export default connect(mapStateToProps, {fetchMeal, setMenuItem})(MealShow);
+export default connect(mapStateToProps, {
+    fetchMeal,
+    setMenuItem,
+    isFavouriteMeal,
+    addMealToFavourites,
+    removeMealFromFavourites
+})(MealShow);

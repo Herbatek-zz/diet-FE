@@ -16,6 +16,9 @@ export const FETCH_MEALS = 'fetch_meals';
 export const FETCH_MY_MEALS = 'fetch_my_meals';
 export const SEARCH_MEALS = 'search_meals';
 export const FETCH_FAVOURITE_MEALS = 'fetch_favourite_meals';
+export const IS_FAVOURITE_MEAL = 'is_favourite_meal';
+export const ADD_MEAL_TO_FAVOURITES = 'add_meal_to_favourites';
+export const REMOVE_MEAL_FROM_FAVOURITES = 'remove_meal_from_favourites';
 
 export const SELECT_MENU_ITEM = 'select_menu_item';
 
@@ -136,10 +139,40 @@ export function searchMeals(query, page, pageSize) {
 
 export function fetchFavouriteMeals(page, pageSize) {
     const userId = AuthService.getDecodedToken().sub;
-    const request = Request.get(`/users/${userId}/favourite/meals`);
+    const request = Request.get(`/users/${userId}/favourite/meals?page=${page}&size=${pageSize}`);
 
     return {
         type: FETCH_FAVOURITE_MEALS,
+        payload: request
+    }
+}
+
+export function isFavouriteMeal(mealId) {
+    const userId = AuthService.getDecodedToken().sub;
+    const request = SecuredRequest.get(`/users/${userId}/meals/${mealId}`);
+
+    return {
+        type: IS_FAVOURITE_MEAL,
+        payload: request
+    }
+}
+
+export function addMealToFavourites(mealId) {
+    const userId = AuthService.getDecodedToken().sub;
+    const request = SecuredRequest.post(`/users/${userId}/favourite/meals/${mealId}`)
+
+    return {
+        type: ADD_MEAL_TO_FAVOURITES,
+        payload: request
+    }
+}
+
+export function removeMealFromFavourites(mealId) {
+    const userId = AuthService.getDecodedToken().sub;
+    const request = SecuredRequest.delete(`/users/${userId}/favourite/meals/${mealId}`);
+
+    return {
+        type: REMOVE_MEAL_FROM_FAVOURITES,
         payload: request
     }
 }
