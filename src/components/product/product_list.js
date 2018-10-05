@@ -1,41 +1,27 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Link} from 'react-router-dom';
-import {List, Icon, Input} from 'antd';
+import {Input} from 'antd';
 
 import {fetchProducts, searchProducts, setMenuItem} from "../../actions";
+import ShowProductList from '../common/show_product_list';
+import {SHOW_LOADING_SPIN} from '../../helpers/messages';
 import './css/product_list.css';
-
-const pageSize = 5;
-
-const IconText = ({type, text}) => (
-    <span>
-    <Icon type={type} style={{marginRight: 8}}/>
-        {text}
-  </span>
-);
 
 class ProductList extends Component {
     state = {
         searched: false,
-        value: ''
+        searchValue: '',
+        pageSize: 5
     };
 
     componentDidMount() {
         this.props.setMenuItem('product-list');
-        this.props.fetchProducts(0, pageSize);
+        this.props.fetchProducts(0, this.state.pageSize);
     }
 
-    onChange = (page) => {
-        const {searched, value} = this.state;
-        const {fetchProducts, searchProducts} = this.props;
-        searched ? searchProducts(value, page - 1, pageSize) : fetchProducts(page - 1, pageSize);
-    };
-
     render() {
-        const {currentPage, totalElements, content} = this.props.products;
         const {Search} = Input;
-        const {value} = this.state;
+        const {searchValue, pageSize} = this.state;
 
         return (
             <div className='content'>
@@ -50,46 +36,25 @@ class ProductList extends Component {
                                     searched: true
                                 });
                             }}
-                            onChange={(e) => this.setState({value: e.target.value})}
-                            value={value}
+                            onChange={(e) => this.setState({searchValue: e.target.value})}
+                            value={searchValue}
                             enterButton
                             size="large"
                         />
                     </div>
                     <div className='products__list'>
-                        <List
-                            itemLayout="vertical"
-                            size="large"
-                            pagination={{
-                                onChange: this.onChange,
-                                total: totalElements,
-                                current: currentPage + 1,
-                                pageSize: 5,
-                            }}
-                            dataSource={Object.values(content)}
-                            renderItem={item => (
-                                <List.Item
-                                    key={item.id}
-                                    actions={[<IconText type="star-o" text="156"/>, <IconText type="like-o" text="156"/>,
-                                        <IconText type="message" text="2"/>]}
-                                    extra={
-                                        <div className='list__image--container'>
-                                            <img width={272} alt="logo" src={item.imageUrl} className='list__image'/>
-                                        </div>}
-                                >
-                                    <List.Item.Meta
-                                        title={<Link to={`/products/${item.id}`}>{item.name}</Link>}
-                                        description={item.description}
-                                    />
-                                    {item.content}
-                                </List.Item>
-                            )}
-                        />
+                        {Object.keys(this.props.products.content).length === 0 ? SHOW_LOADING_SPIN :
+                            <ShowProductList products={this.props.products} onChange={this.onChange}/>}
                     </div>
                 </div>
             </div>
         );
     }
+
+    onChange = page => {
+        const {searched, searchValue, pageSize} = this.state;
+        searched ? this.props.searchProducts(searchValue, page - 1, pageSize) : this.props.fetchProducts(page - 1, pageSize);
+    };
 }
 
 const mapStateToProps = ({products}) => {

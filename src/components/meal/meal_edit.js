@@ -12,11 +12,13 @@ import {
     searchProductsInfinity,
     setMenuItem
 } from "../../actions";
-import MealDescription from './common_components/meal_description';
-import MealRecipe from './common_components/meal_recipe';
-import MealInfo from './common_components/meal_info';
-import EditMealProducts from "./common_components/edit_meal_products";
+import MealDescription from './common/meal_description';
+import MealRecipe from './common/meal_recipe';
+import MealInfo from './common/meal_info';
+import EditMealProducts from "./common/edit_meal_products";
 import './css/meal_edit.css';
+import AuthService from "../../helpers/auth_service";
+import {SHOW_LOADING_SPIN} from "../../helpers/messages";
 
 
 const searchProductSize = 12;
@@ -25,7 +27,8 @@ class MealEdit extends Component {
     state = {
         searched: false,
         value: '',
-        loading: false
+        loading: false,
+        isLoggedIn: AuthService.isLogged()
     };
 
     componentDidMount() {
@@ -97,11 +100,7 @@ class MealEdit extends Component {
         const {content} = this.props.products;
 
         if (!meal)
-            return (
-                <div className='content loading-spin'>
-                    <Spin size='large'/>
-                </div>
-            );
+            return SHOW_LOADING_SPIN;
 
         return (
             <div className='content'>

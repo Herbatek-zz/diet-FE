@@ -1,54 +1,33 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Link} from 'react-router-dom';
-import _ from 'lodash';
-import {Pagination, Collapse, Input} from 'antd';
+import {Input} from 'antd';
 
 import {fetchMeals, searchMeals, setMenuItem} from "../../actions";
 import './css/meal_list.css';
+import {SHOW_LOADING_SPIN} from "../../helpers/messages";
+import ShowMealList from "../common/show_meal_list";
 
 
 class MealList extends Component {
     state = {
         searched: false,
-        value: ''
+        searchValue: '',
+        pageSize: 5
     };
 
     componentDidMount() {
         this.props.setMenuItem('meal-list');
-        this.props.fetchMeals(0);
+        this.props.fetchMeals(0, this.state.pageSize);
     }
 
-    renderMeals = () => {
-        const {content} = this.props.meals;
-        const {Panel} = Collapse;
-
-        return _.map(content, meal =>
-            <Panel
-                className='collapse__item'
-                key={meal.id}
-                header={
-                    <div>
-                        <h3>{meal.name}</h3>
-                        <Link to={`/meals/${meal.id}`}> More</Link>
-                    </div>}>
-                <p>Description: {meal.description}</p>
-                <p>Calories: {meal.kcal}</p>
-                <img src={meal.imageUrl} alt='meal'/>
-            </Panel>
-        );
-    };
-
-    onChange = (page) => {
-        const {searched, value} = this.state;
-        const {fetchMeals, searchMeals} = this.props;
-        searched ? searchMeals(value, page - 1) : fetchMeals(page - 1);
+    onChange = page => {
+        const {searched, searchValue, pageSize} = this.state;
+        searched ? this.props.searchMeals(searchValue, page - 1, pageSize) : this.props.fetchMeals(page - 1, pageSize);
     };
 
     render() {
-        const {currentPage, totalElements} = this.props.meals;
         const {Search} = Input;
-        const {value} = this.state;
+        const {searchValue, pageSize} = this.state;
 
         return (
             <div className='content'>
@@ -58,24 +37,20 @@ class MealList extends Component {
                         <Search
                             placeholder="Search meals"
                             onSearch={value => {
-                                this.props.searchMeals(value, 0);
+                                this.props.searchMeals(value, 0, pageSize);
                                 this.setState({
                                     searched: true
                                 });
                             }}
-                            onChange={(e) => this.setState({value: e.target.value})}
-                            value={value}
+                            onChange={e => this.setState({searchValue: e.target.value})}
+                            value={searchValue}
                             enterButton
                             size="large"
                         />
                     </div>
-                    <div className='collapse-list'>
-                        <Collapse>
-                            {this.renderMeals()}
-                        </Collapse>
-                    </div>
-                    <div className='pagination'>
-                        <Pagination current={currentPage + 1} total={totalElements} onChange={this.onChange}/>
+                    <div className='meal-list'>
+                        {Object.keys(this.props.meals.content).length === 0 ? SHOW_LOADING_SPIN :
+                            <ShowMealList meals={this.props.meals} onChange={this.onChange}/>}
                     </div>
                 </div>
             </div>

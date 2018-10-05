@@ -6,7 +6,6 @@ import {Link} from "react-router-dom";
 
 class ShowMealProducts extends Component {
     render() {
-
         const {products} = this.props;
 
         return (

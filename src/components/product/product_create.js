@@ -7,10 +7,14 @@ import {Button, message} from 'antd';
 import AuthService from '../../helpers/auth_service';
 import {createProduct, setMenuItem} from "../../actions";
 import {NO_LOGIN_MESSAGE} from "../../helpers/messages";
-import '../default/css/form.css';
+import '../common/css/form.css';
 
 
 class ProductCreate extends Component {
+    state = {
+        isLoggedIn: AuthService.isLogged()
+    };
+
     componentWillMount() {
         this.props.setMenuItem('product-create');
 
@@ -23,6 +27,77 @@ class ProductCreate extends Component {
         });
     }
 
+    render() {
+        if (!this.state.isLoggedIn)
+            return <div className='content'>{NO_LOGIN_MESSAGE}</div>;
+
+        return (
+            <div className='content'>
+                <h1>Create a new product</h1>
+                <form onSubmit={this.props.handleSubmit(this.onSubmit)} className='form' autoComplete='off'>
+                    <Field
+                        name='name'
+                        component={TextField}
+                        placeholder='Name'/>
+                    <Field
+                        name='imageUrl'
+                        component={TextField}
+                        placeholder='Image'/>
+                    <Field
+                        name='description'
+                        rows={4}
+                        component={TextAreaField}
+                        placeholder='Description'/>
+                    <div className='form__numberItem'>
+                        <label className='form__numberItem--label'>Protein:</label>
+                        <Field
+                            name='protein'
+                            component={NumberField}
+                            min={0}
+                            max={100}
+                            step={0.1}/>
+                    </div>
+                    <div className='form__numberItem'>
+                        <label className='form__numberItem--label'>Carbohydrate:</label>
+                        <Field
+                            name='carbohydrate'
+                            component={NumberField}
+                            min={0}
+                            max={100}
+                            step={0.1}/>
+                    </div>
+                    <div className='form__numberItem'>
+                        <label className='form__numberItem--label'>Fat:</label>
+                        <Field
+                            name='fat'
+                            component={NumberField}
+                            min={0}
+                            max={100}
+                            step={0.1}/>
+                    </div>
+                    <div className='form__numberItem'>
+                        <label className='form__numberItem--label'>Fibre:</label>
+                        <Field
+                            name='fibre'
+                            component={NumberField}
+                            min={0}
+                            max={100}
+                            step={0.1}/>
+                    </div>
+                    <div className='form__numberItem'>
+                        <label className='form__numberItem--label'>Kcal:</label>
+                        <Field
+                            name='kcal'
+                            component={NumberField}
+                            min={0}
+                            max={900}
+                            step={1}/>
+                    </div>
+                    <Button className='form__button' type="primary" ghost htmlType='submit'>Submit</Button>
+                </form>
+            </div>
+        );
+    }
 
     onSubmit = (values) => {
         this.props.createProduct(values, () => {
@@ -30,87 +105,6 @@ class ProductCreate extends Component {
             message.success('Product has been created');
         });
     };
-
-    renderForm = () => {
-        const {handleSubmit} = this.props;
-
-        return (
-
-            <form onSubmit={handleSubmit(this.onSubmit)} className='form' autoComplete='off'>
-
-                <Field
-                    name='name'
-                    component={TextField}
-                    placeholder='Name'/>
-                <Field
-                    name='imageUrl'
-                    component={TextField}
-                    placeholder='Image'/>
-                <Field
-                    name='description'
-                    rows={4}
-                    component={TextAreaField}
-                    placeholder='Description'/>
-                <div className='form__numberItem'>
-                    <label className='form__numberItem--label'>Protein:</label>
-                    <Field
-                        name='protein'
-                        component={NumberField}
-                        min={0}
-                        max={100}
-                        step={0.1}/>
-                </div>
-                <div className='form__numberItem'>
-                    <label className='form__numberItem--label'>Carbohydrate:</label>
-                    <Field
-                        name='carbohydrate'
-                        component={NumberField}
-                        min={0}
-                        max={100}
-                        step={0.1}/>
-                </div>
-
-                <div className='form__numberItem'>
-                    <label className='form__numberItem--label'>Fat:</label>
-                    <Field
-                        name='fat'
-                        component={NumberField}
-                        min={0}
-                        max={100}
-                        step={0.1}/>
-                </div>
-                <div className='form__numberItem'>
-                    <label className='form__numberItem--label'>Fibre:</label>
-                    <Field
-                        name='fibre'
-                        component={NumberField}
-                        min={0}
-                        max={100}
-                        step={0.1}/>
-                </div>
-                <div className='form__numberItem'>
-                    <label className='form__numberItem--label'>Kcal:</label>
-                    <Field
-                        name='kcal'
-                        component={NumberField}
-                        min={0}
-                        max={900}
-                        step={1}/>
-                </div>
-                <Button className='form__button' type="primary" ghost htmlType='submit'>Submit</Button>
-
-            </form>
-        )
-    };
-
-    render() {
-        return (
-            <div className='content'>
-                <h1>Create a new product</h1>
-                {AuthService.isLogged() ? this.renderForm() : NO_LOGIN_MESSAGE}
-            </div>
-        );
-    }
 
 }
 
@@ -151,7 +145,6 @@ function validate({name, imageUrl, protein, carbohydrate, fat, fibre, kcal}) {
         errors.kcal = 'Kcal has to have a value';
     else if (kcal < 0)
         errors.kcal = 'Kcal cannot be lower than 0';
-
 
     return errors;
 }

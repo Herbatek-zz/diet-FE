@@ -1,27 +1,21 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Spin} from 'antd';
 
 import {fetchProduct, setMenuItem} from "../../actions";
+import {SHOW_LOADING_SPIN} from "../../helpers/messages";
 
 
 class ProductShow extends Component {
     componentDidMount() {
         this.props.setMenuItem('');
-
-        const {id} = this.props.match.params;
-        this.props.fetchProduct(id);
+        this.props.fetchProduct(this.props.match.params.id);
     }
 
     render() {
         const {product} = this.props;
 
         if (!product)
-            return (
-                <div className='content loading-spin'>
-                    <Spin size="large"/>
-                </div>
-            );
+            return SHOW_LOADING_SPIN;
 
 
         return (

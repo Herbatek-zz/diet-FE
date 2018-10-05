@@ -56,9 +56,9 @@ export function fetchProductsInfinity(page, pageSize) {
     }
 }
 
-export function fetchMyProducts(page) {
+export function fetchMyProducts(page, pageSize) {
     const userId = AuthService.getDecodedToken().sub;
-    const request = Request.get(`/users/${userId}/products?page=${page}`);
+    const request = Request.get(`/users/${userId}/products?page=${page}&size=${pageSize}`);
 
     return {
         type: FETCH_MY_PRODUCTS,
@@ -105,8 +105,8 @@ export function fetchMeal(id) {
     }
 }
 
-export function fetchMeals(page) {
-    const request = Request.get(`/meals?page=${page}`);
+export function fetchMeals(page, pageSize) {
+    const request = Request.get(`/meals?page=${page}&size=${pageSize}`);
 
     return {
         type: FETCH_MEALS,
@@ -114,9 +114,9 @@ export function fetchMeals(page) {
     }
 }
 
-export function fetchMyMeals(page) {
+export function fetchMyMeals(page, pageSize) {
     const userId = AuthService.getDecodedToken().sub;
-    const request = Request.get(`/users/${userId}/meals?page=${page}`);
+    const request = Request.get(`/users/${userId}/meals?page=${page}&size=${pageSize}`);
 
     return {
         type: FETCH_MY_MEALS,
@@ -124,8 +124,8 @@ export function fetchMyMeals(page) {
     }
 }
 
-export function searchMeals(query, page) {
-    const request = Request.get(`/meals/search?query=${query}&page=${page}`);
+export function searchMeals(query, page, pageSize) {
+    const request = Request.get(`/meals/search?query=${query}&page=${page}&size=${pageSize}`);
 
     return {
         type: SEARCH_MEALS,

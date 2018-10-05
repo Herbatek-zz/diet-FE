@@ -396,7 +396,7 @@ class Button extends Component {
   }
 }
 
-export default Button; // Don’t forget to use export default!
+export default Button; common
 ```
 
 ### `DangerButton.js`
@@ -780,7 +780,7 @@ Import Bootstrap CSS and optionally Bootstrap theme CSS in the beginning of your
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 // Put any other imports below so that CSS from your
-// components takes precedence over default styles.
+common
 ```
 
 Import required React Bootstrap components within ```src/App.js``` file or your custom component files:

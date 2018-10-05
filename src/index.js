@@ -6,8 +6,8 @@ import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import promise from 'redux-promise';
 import {Layout} from 'antd';
 
-import Footer from './components/default/footer';
-import Header from './components/default/header';
+import Footer from './components/common/footer';
+import Header from './components/common/header';
 import Dashboard from './components/dashboard';
 import ProductShow from './components/product/product_show';
 import ProductCreate from './components/product/product_create';

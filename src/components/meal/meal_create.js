@@ -7,9 +7,13 @@ import {TextField, TextAreaField} from 'redux-form-antd';
 import AuthService from '../../helpers/auth_service';
 import {createMeal, setMenuItem} from "../../actions";
 import {NO_LOGIN_MESSAGE} from '../../helpers/messages';
-import '../default/css/form.css';
+import '../common/css/form.css';
 
 class MealCreate extends Component {
+    state = {
+        isLoggedIn: AuthService.isLogged()
+    };
+
     componentDidMount() {
         this.props.setMenuItem('meal-create');
     }
@@ -21,40 +25,36 @@ class MealCreate extends Component {
         });
     };
 
-    renderForm = () => {
-        const {handleSubmit} = this.props;
-        return (
-            <div className='meal-create__contentWrap'>
-                <h1 className='meal-create__title'>Create a new meal</h1>
-                <form onSubmit={handleSubmit(this.onSubmit)} className='form'>
-                    <Field
-                        name='name'
-                        component={TextField}
-                        placeholder='Name'/>
-                    <Field
-                        name='imageUrl'
-                        component={TextField}
-                        placeholder='Image'/>
-                    <Field
-                        name='description'
-                        rows={4}
-                        component={TextAreaField}
-                        placeholder='Description'/>
-                    <Field
-                        name='recipe'
-                        rows={6}
-                        component={TextAreaField}
-                        placeholder='Recipe'/>
-                    <Button className='form__button' type="primary" ghost htmlType='submit'>Submit</Button>
-                </form>
-            </div>
-        )
-    };
-
     render() {
+        if (!this.state.isLoggedIn)
+            return <div className='content'>{NO_LOGIN_MESSAGE}</div>;
+
         return (
             <div className='content'>
-                {AuthService.isLogged() ? this.renderForm() : NO_LOGIN_MESSAGE}
+                <div className='meal-create__contentWrap'>
+                    <h1 className='meal-create__title'>Create a new meal</h1>
+                    <form onSubmit={this.props.handleSubmit(this.onSubmit)} className='form' autoComplete='off'>
+                        <Field
+                            name='name'
+                            component={TextField}
+                            placeholder='Name'/>
+                        <Field
+                            name='imageUrl'
+                            component={TextField}
+                            placeholder='Image'/>
+                        <Field
+                            name='description'
+                            rows={4}
+                            component={TextAreaField}
+                            placeholder='Description'/>
+                        <Field
+                            name='recipe'
+                            rows={6}
+                            component={TextAreaField}
+                            placeholder='Recipe'/>
+                        <Button className='form__button' type="primary" ghost htmlType='submit'>Submit</Button>
+                    </form>
+                </div>
             </div>
         )
     }

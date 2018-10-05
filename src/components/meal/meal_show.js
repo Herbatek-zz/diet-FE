@@ -1,18 +1,23 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Spin, Icon} from 'antd';
+import {Icon} from 'antd';
 import {Link} from "react-router-dom";
 
 import {fetchMeal, setMenuItem} from "../../actions";
 import AuthService from "../../helpers/auth_service";
-import MealDescription from './common_components/meal_description';
-import MealRecipe from './common_components/meal_recipe';
-import MealInfo from './common_components/meal_info';
-import MealProducts from "./common_components/show_meal_products";
+import MealDescription from './common/meal_description';
+import MealRecipe from './common/meal_recipe';
+import MealInfo from './common/meal_info';
+import ShowMealProducts from "./common/show_meal_products";
 import './css/meal_show.css';
+import {SHOW_LOADING_SPIN} from "../../helpers/messages";
 
 
 class MealShow extends Component {
+    state = {
+        isLoggedIn: AuthService.isLogged()
+    };
+
     componentDidMount() {
         this.props.setMenuItem('');
 
@@ -25,7 +30,7 @@ class MealShow extends Component {
         let editIcon;
         let hearthIcon;
 
-        if (meal && AuthService.isLogged()) {
+        if (meal && this.state.isLoggedIn) {
             const {sub} = AuthService.getDecodedToken();
 
             hearthIcon = (
@@ -51,11 +56,7 @@ class MealShow extends Component {
         }
 
         if (!meal)
-            return (
-                <div className='content loading-spin'>
-                    <Spin size='large'/>
-                </div>
-            );
+            return SHOW_LOADING_SPIN;
 
 
         return (
@@ -74,7 +75,7 @@ class MealShow extends Component {
                                 <img src={meal.imageUrl} alt={meal.name} className='leftPanel__imageContainer--image'/>
                             </div>
                             <div className='show__mealProducts'>
-                                <MealProducts products={meal.products}/>
+                                <ShowMealProducts products={meal.products}/>
                             </div>
                         </div>
                         <div className='rightPanel'>

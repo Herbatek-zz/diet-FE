@@ -1,62 +1,42 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Link} from 'react-router-dom';
-import _ from 'lodash';
-import {Pagination, Collapse} from 'antd';
 
 import {fetchMyProducts, setMenuItem} from "../../actions";
 import AuthService from "../../helpers/auth_service";
-import {NO_LOGIN_MESSAGE} from "../../helpers/messages";
+import {NO_LOGIN_MESSAGE, SHOW_LOADING_SPIN} from "../../helpers/messages";
+import ShowProductList from "../common/show_product_list";
 
 
 class ProductMyList extends Component {
+    state = {
+        pageSize: 5,
+        isLoggedIn: AuthService.isLogged()
+    };
+
     componentDidMount() {
         this.props.setMenuItem('product-my-list');
-        if (AuthService.isLogged())
-            this.props.fetchMyProducts(0)
+        if (this.state.isLoggedIn)
+            this.props.fetchMyProducts(0, this.state.pageSize)
     }
 
-    renderProducts = () => {
-        const {Panel} = Collapse;
-        const {content, currentPage, totalElements} = this.props.products;
-
-        return (
-            <div className='content'>
-                <Collapse className='collapse'>
-                    {
-                        _.map(content, (product) => {
-                            const header = (
-                                <div>
-                                    <h3>{product.name}</h3> <Link to={`/products/${product.id}`}> More</Link>
-                                </div>
-                            );
-                            return (
-                                <Panel className='collapse__item' key={product.id} header={header}>
-                                    <p>Description: {product.description}</p>
-                                    <p>Calories: {product.kcal}</p>
-                                    <img src={product.imageUrl} alt='product'/>
-                                </Panel>
-                            );
-                        })
-                    }
-                </Collapse>
-                <Pagination current={currentPage + 1} total={totalElements} onChange={this.onChange}/>
-            </div>
-        )
-    };
-
-    onChange = (page) => {
-        this.props.fetchMyProducts(page - 1);
-    };
-
     render() {
+        if (!this.state.isLoggedIn)
+            return <div className='content'>{NO_LOGIN_MESSAGE}</div>;
+
         return (
             <div className='content'>
-                <h1>My products</h1>
-                {AuthService.isLogged() ? this.renderProducts() : NO_LOGIN_MESSAGE}
+                <div className='content__wrap--productList'>
+                    <h1>My products</h1>
+                    <div className='products__list'>
+                        {Object.keys(this.props.products.content).length === 0 ? SHOW_LOADING_SPIN :
+                            <ShowProductList products={this.props.products} onChange={this.onChange}/>}
+                    </div>
+                </div>
             </div>
         );
     }
+
+    onChange = page => this.props.fetchMyProducts(page - 1, this.state.pageSize);
 }
 
 const mapStateToProps = ({products}) => {
