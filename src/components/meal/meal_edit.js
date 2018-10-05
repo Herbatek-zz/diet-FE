@@ -21,14 +21,13 @@ import AuthService from "../../helpers/auth_service";
 import {SHOW_LOADING_SPIN} from "../../helpers/messages";
 
 
-const searchProductSize = 12;
-
 class MealEdit extends Component {
     state = {
         searched: false,
-        value: '',
+        searchValue: '',
         loading: false,
-        isLoggedIn: AuthService.isLogged()
+        isLoggedIn: AuthService.isLogged(),
+        pageSize: 12
     };
 
     componentDidMount() {
@@ -36,21 +35,21 @@ class MealEdit extends Component {
 
         const {id} = this.props.match.params;
         this.props.fetchMeal(id);
-        this.props.fetchProducts(0, searchProductSize);
+        this.props.fetchProducts(0, this.state.pageSize);
     }
 
     handleInfiniteOnLoad = () => {
         const {content, currentPage, totalElements, last} = this.props.products;
         const {searched} = this.state;
         const {searchProductsInfinity, fetchProductsInfinity} = this.props;
-        const {value} = this.state;
+        const {searchValue, pageSize} = this.state;
         this.setState({loading: true});
 
         if (Object.values(content).length >= totalElements && last) {
             this.setState({loading: false});
             return;
         }
-        searched ? searchProductsInfinity(value, currentPage + 1, searchProductSize) : fetchProductsInfinity(currentPage + 1, searchProductSize);
+        searched ? searchProductsInfinity(searchValue, currentPage + 1, pageSize) : fetchProductsInfinity(currentPage + 1, pageSize);
         this.setState({loading: false});
     };
 
@@ -96,7 +95,7 @@ class MealEdit extends Component {
     render() {
         const {meal} = this.props;
         const {Search} = Input;
-        const {value} = this.state;
+        const {searchValue, pageSize} = this.state;
         const {content} = this.props.products;
 
         if (!meal)
@@ -135,14 +134,14 @@ class MealEdit extends Component {
                         <div className='edit__rightPanel'>
                             <Search
                                 placeholder="Search products"
-                                onSearch={value => {
-                                    this.props.searchProducts(value, 0, searchProductSize);
+                                onSearch={searchValue => {
+                                    this.props.searchProducts(searchValue, 0, pageSize);
                                     this.setState({
                                         searched: true
                                     });
                                 }}
-                                onChange={(e) => this.setState({value: e.target.value})}
-                                value={value}
+                                onChange={(e) => this.setState({searchValue: e.target.value})}
+                                value={searchValue}
                                 enterButton
                                 size="large"
                                 className='search'
