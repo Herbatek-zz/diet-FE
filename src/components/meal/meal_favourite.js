@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 
 import {fetchFavouriteMeals, setMenuItem} from "../../actions";
 import AuthService from "../../helpers/auth_service";
-import {NO_LOGIN_MESSAGE, SHOW_LOADING_SPIN} from "../../helpers/messages";
+import {NO_LOGGED_MESSAGE} from "../../helpers/messages";
 import ShowMealList from "../common/show_meal_list";
 
 
@@ -21,7 +21,7 @@ class MealFavourite extends Component {
 
     render() {
         if (!this.state.isLoggedIn)
-            return <div className='content'>{NO_LOGIN_MESSAGE}</div>;
+            return <div className='content'>{NO_LOGGED_MESSAGE}</div>;
 
         console.log(this.props);
         return (
@@ -29,7 +29,7 @@ class MealFavourite extends Component {
                 <div className='content__wrap--productList'>
                     <h1>Favourite meals</h1>
                     <div className='products__list'>
-                        {Object.keys(this.props.meals.content).length === 0 ? SHOW_LOADING_SPIN :
+                        {Object.keys(this.props.meals.content).length === 0 ? "No data to display" :
                             <ShowMealList meals={this.props.meals} onChange={this.onChange}/>}
                     </div>
                 </div>

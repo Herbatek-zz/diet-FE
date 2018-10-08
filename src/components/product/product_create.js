@@ -6,7 +6,7 @@ import {Button, message} from 'antd';
 
 import AuthService from '../../helpers/auth_service';
 import {createProduct, setMenuItem} from "../../actions";
-import {NO_LOGIN_MESSAGE} from "../../helpers/messages";
+import {NO_LOGGED_MESSAGE} from "../../helpers/messages";
 import '../common/css/form.css';
 
 
@@ -29,7 +29,7 @@ class ProductCreate extends Component {
 
     render() {
         if (!this.state.isLoggedIn)
-            return <div className='content'>{NO_LOGIN_MESSAGE}</div>;
+            return <div className='content'>{NO_LOGGED_MESSAGE}</div>;
 
         return (
             <div className='content'>

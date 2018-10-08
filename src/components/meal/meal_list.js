@@ -4,7 +4,7 @@ import {Input} from 'antd';
 
 import {fetchMeals, searchMeals, setMenuItem} from "../../actions";
 import './css/meal_list.css';
-import {SHOW_LOADING_SPIN} from "../../helpers/messages";
+import {LOADING_SPIN} from "../../helpers/messages";
 import ShowMealList from "../common/show_meal_list";
 
 
@@ -49,7 +49,7 @@ class MealList extends Component {
                         />
                     </div>
                     <div className='meal-list'>
-                        {Object.keys(this.props.meals.content).length === 0 ? SHOW_LOADING_SPIN :
+                        {Object.keys(this.props.meals.content).length === 0 ? LOADING_SPIN :
                             <ShowMealList meals={this.props.meals} onChange={this.onChange}/>}
                     </div>
                 </div>

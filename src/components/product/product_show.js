@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
 import {fetchProduct, setMenuItem} from "../../actions";
-import {SHOW_LOADING_SPIN} from "../../helpers/messages";
+import {LOADING_SPIN} from "../../helpers/messages";
 
 
 class ProductShow extends Component {
@@ -15,7 +15,7 @@ class ProductShow extends Component {
         const {product} = this.props;
 
         if (!product)
-            return SHOW_LOADING_SPIN;
+            return LOADING_SPIN;
 
 
         return (

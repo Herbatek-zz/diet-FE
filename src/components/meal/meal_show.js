@@ -3,15 +3,14 @@ import {connect} from 'react-redux';
 import {Icon, Tooltip} from 'antd';
 import {Link} from "react-router-dom";
 
-import {fetchMeal, setMenuItem, isFavouriteMeal, addMealToFavourites, removeMealFromFavourites} from "../../actions";
+import {fetchMeal, setMenuItem, isFavouriteMeal, addMealToFavourites, removeMealFromFavourites, deleteMeal} from "../../actions";
 import AuthService from "../../helpers/auth_service";
 import MealDescription from './common/meal_description';
 import MealRecipe from './common/meal_recipe';
 import MealInfo from './common/meal_info';
 import ShowMealProducts from "./common/show_meal_products";
 import './css/meal_show.css';
-import {SHOW_LOADING_SPIN} from "../../helpers/messages";
-import SecuredRequest from '../../helpers/secured_request';
+import {LOADING_SPIN} from "../../helpers/messages";
 
 
 class MealShow extends Component {
@@ -33,6 +32,7 @@ class MealShow extends Component {
         const {meal} = this.props;
         let editIcon;
         let hearthIcon;
+        let deleteIcon;
 
         if (meal && this.state.isLoggedIn) {
             const {sub} = AuthService.getDecodedToken();
@@ -68,10 +68,20 @@ class MealShow extends Component {
                         </Link>
                     );
             })();
+
+            deleteIcon = (() => {
+                if (sub === meal.userId)
+                    return (
+                        <span className='head__span' onClick={() => deleteMeal(this.state.mealId, () => this.props.history.push('/meals/my'))}>
+                                <Icon type="delete" theme="outlined" style={{fontSize: '30px'}}/>
+                                Delete
+                        </span>
+                    );
+            })();
         }
 
         if (!meal)
-            return SHOW_LOADING_SPIN;
+            return LOADING_SPIN;
 
 
         return (
@@ -82,6 +92,7 @@ class MealShow extends Component {
                         <div className='head__menu'>
                             {hearthIcon}
                             {editIcon}
+                            {deleteIcon}
                         </div>
                     </div>
                     <div className='body'>
@@ -125,5 +136,6 @@ export default connect(mapStateToProps, {
     setMenuItem,
     isFavouriteMeal,
     addMealToFavourites,
-    removeMealFromFavourites
+    removeMealFromFavourites,
+    deleteMeal
 })(MealShow);

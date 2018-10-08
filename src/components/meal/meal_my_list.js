@@ -6,7 +6,7 @@ import {Pagination, Collapse} from 'antd';
 
 import {fetchMyMeals, setMenuItem} from "../../actions";
 import AuthService from "../../helpers/auth_service";
-import {NO_LOGIN_MESSAGE} from "../../helpers/messages";
+import {NO_LOGGED_MESSAGE} from "../../helpers/messages";
 
 
 class MealMyList extends Component {
@@ -26,7 +26,7 @@ class MealMyList extends Component {
 
     render() {
         if (!this.state.isLoggedIn)
-            return <div className='content'>{NO_LOGIN_MESSAGE}</div>;
+            return <div className='content'>{NO_LOGGED_MESSAGE}</div>;
 
         const {Panel} = Collapse;
         const {content, currentPage, totalElements} = this.props.meals;

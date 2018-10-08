@@ -2,6 +2,7 @@ import _ from 'lodash';
 
 import {
     FETCH_PRODUCT,
+    DELETE_PRODUCT,
     FETCH_PRODUCTS,
     FETCH_MY_PRODUCTS,
     SEARCH_PRODUCTS,
@@ -19,6 +20,12 @@ export default (state = {content: {}}, action) => {
                 pageSize: action.payload.data.pageSize,
                 totalElements: action.payload.data.totalElements,
                 last: action.payload.data.last
+            };
+
+        case DELETE_PRODUCT:
+            return {
+                ...state.products,
+                content: _.omit(state.products.content, action.payload)
             };
 
         case FETCH_PRODUCTS_INFINITY:

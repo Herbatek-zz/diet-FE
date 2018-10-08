@@ -4,6 +4,7 @@ import AuthService from "../helpers/auth_service";
 
 export const CREATE_PRODUCT = 'create_product';
 export const FETCH_PRODUCT = 'fetch_product';
+export const DELETE_PRODUCT = 'delete_product';
 export const FETCH_PRODUCTS = 'fetch_products';
 export const FETCH_PRODUCTS_INFINITY = 'fetch_products_infinty';
 export const FETCH_MY_PRODUCTS = 'fetch_my_products';
@@ -12,13 +13,14 @@ export const SEARCH_PRODUCTS_INFINITY = 'search_products_infinity';
 
 export const CREATE_MEAL = 'create_meal';
 export const FETCH_MEAL = 'fetch_meal';
+export const DELETE_MEAL = 'delete_meal';
 export const FETCH_MEALS = 'fetch_meals';
 export const FETCH_MY_MEALS = 'fetch_my_meals';
-export const SEARCH_MEALS = 'search_meals';
 export const FETCH_FAVOURITE_MEALS = 'fetch_favourite_meals';
 export const IS_FAVOURITE_MEAL = 'is_favourite_meal';
 export const ADD_MEAL_TO_FAVOURITES = 'add_meal_to_favourites';
 export const REMOVE_MEAL_FROM_FAVOURITES = 'remove_meal_from_favourites';
+export const SEARCH_MEALS = 'search_meals';
 
 export const SELECT_MENU_ITEM = 'select_menu_item';
 
@@ -39,6 +41,16 @@ export function fetchProduct(id) {
     return {
         type: FETCH_PRODUCT,
         payload: request
+    }
+}
+
+export function deleteProduct(id, callback) {
+    SecuredRequest.delete(`/products/${id}`)
+        .then(() => callback());
+
+    return {
+        type: DELETE_PRODUCT,
+        payload: id
     }
 }
 
@@ -97,6 +109,16 @@ export function createMeal(values, callback) {
     return {
         type: CREATE_MEAL,
         payload: request
+    }
+}
+
+export function deleteMeal(id, callback) {
+    SecuredRequest.delete(`/meals/${id}`)
+        .then(() => callback());
+
+    return {
+        type: DELETE_MEAL,
+        payload: id
     }
 }
 

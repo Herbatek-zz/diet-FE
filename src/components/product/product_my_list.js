@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 
 import {fetchMyProducts, setMenuItem} from "../../actions";
 import AuthService from "../../helpers/auth_service";
-import {NO_LOGIN_MESSAGE, SHOW_LOADING_SPIN} from "../../helpers/messages";
+import {NO_LOGGED_MESSAGE} from "../../helpers/messages";
 import ShowProductList from "../common/show_product_list";
 
 
@@ -21,14 +21,14 @@ class ProductMyList extends Component {
 
     render() {
         if (!this.state.isLoggedIn)
-            return <div className='content'>{NO_LOGIN_MESSAGE}</div>;
+            return <div className='content'>{NO_LOGGED_MESSAGE}</div>;
 
         return (
             <div className='content'>
                 <div className='content__wrap--productList'>
                     <h1>My products</h1>
                     <div className='products__list'>
-                        {Object.keys(this.props.products.content).length === 0 ? SHOW_LOADING_SPIN :
+                        {Object.keys(this.props.products.content).length === 0 ? "No data to display" :
                             <ShowProductList products={this.props.products} onChange={this.onChange}/>}
                     </div>
                 </div>

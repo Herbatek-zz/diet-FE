@@ -6,7 +6,7 @@ import {TextField, TextAreaField} from 'redux-form-antd';
 
 import AuthService from '../../helpers/auth_service';
 import {createMeal, setMenuItem} from "../../actions";
-import {NO_LOGIN_MESSAGE} from '../../helpers/messages';
+import {NO_LOGGED_MESSAGE} from '../../helpers/messages';
 import '../common/css/form.css';
 
 class MealCreate extends Component {
@@ -27,12 +27,12 @@ class MealCreate extends Component {
 
     render() {
         if (!this.state.isLoggedIn)
-            return <div className='content'>{NO_LOGIN_MESSAGE}</div>;
+            return <div className='content'>{NO_LOGGED_MESSAGE}</div>;
 
         return (
             <div className='content'>
-                <div className='meal-create__contentWrap'>
-                    <h1 className='meal-create__title'>Create a new meal</h1>
+                <div className='content__mealCreate'>
+                    <h1 className='mealCreate__title'>Create a new meal</h1>
                     <form onSubmit={this.props.handleSubmit(this.onSubmit)} className='form' autoComplete='off'>
                         <Field
                             name='name'

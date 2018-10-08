@@ -18,7 +18,7 @@ import MealInfo from './common/meal_info';
 import EditMealProducts from "./common/edit_meal_products";
 import './css/meal_edit.css';
 import AuthService from "../../helpers/auth_service";
-import {SHOW_LOADING_SPIN} from "../../helpers/messages";
+import {LOADING_SPIN} from "../../helpers/messages";
 
 
 class MealEdit extends Component {
@@ -100,11 +100,11 @@ class MealEdit extends Component {
         const {content} = this.props.products;
 
         if (!meal)
-            return SHOW_LOADING_SPIN;
+            return LOADING_SPIN;
 
         return (
             <div className='content'>
-                <div className='content__wrap--edit'>
+                <div className='content__mealEdit'>
                     <div className='head'>
                         <h1 className='head__title'>Edit {meal.name}</h1>
                     </div>

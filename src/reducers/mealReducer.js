@@ -3,12 +3,13 @@ import _ from 'lodash';
 import {
     FETCH_MEAL,
     FETCH_MEALS,
+    DELETE_MEAL,
     FETCH_MY_MEALS,
     SEARCH_MEALS,
     FETCH_FAVOURITE_MEALS,
     IS_FAVOURITE_MEAL,
     ADD_MEAL_TO_FAVOURITES,
-    REMOVE_MEAL_FROM_FAVOURITES
+    REMOVE_MEAL_FROM_FAVOURITES,
 } from "../actions";
 
 
@@ -20,6 +21,12 @@ export default (state = {content: {}}, action) => {
                 currentPage: action.payload.data.pageNumber,
                 pageSize: action.payload.data.pageSize,
                 totalElements: action.payload.data.totalElements
+            };
+
+        case DELETE_MEAL:
+            return {
+                ...state.meals,
+                content: _.omit(state.meals.content, action.payload)
             };
 
         case FETCH_MY_MEALS:

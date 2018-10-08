@@ -1,4 +1,4 @@
-.meal-create__contentWrap {
+.content__mealCreate {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -9,7 +9,7 @@
     background-position: center;
 }
 
-.meal-create__title {
+.mealCreate__title {
     font-size: 33px;
     background-color: rgba(255, 255, 255, 0.7);
     padding: 0 10px;
