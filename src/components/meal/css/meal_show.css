@@ -41,11 +41,12 @@
 }
 
 .leftPanel__imageContainer {
-    width: 612px;
-    height: 366px;
+    width: 100%;
+    height: 100%;
     margin-bottom: 12px;
     border-radius: 5px;
     border: 1px solid cornflowerblue;
+    position: relative;
 }
 
 .leftPanel__imageContainer--image {
