@@ -1,115 +1,119 @@
-.content__wrap--mealShow {
-    width: 80%;
-}
 
-.head {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    position: relative;
-}
 
-.head__title {
-    margin-left: 10px;
-}
+@media (min-width: 600px) {
+    .content__wrap--mealShow {
+        width: 80%;
+    }
 
-.head__menu {
-    font-size: 10px;
-    display: flex;
-}
+    .head {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        position: relative;
+    }
 
-.head__span {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    cursor: pointer;
-    margin-right: 30px;
-}
+    .head__title {
+        margin-left: 10px;
+    }
 
-.body {
-    display: flex;
-    width: 100%;
-    position: relative;
-}
+    .head__menu {
+        font-size: 10px;
+        display: flex;
+    }
 
-.leftPanel {
-    display: flex;
-    flex-direction: column;
-    width: 41%;
-    padding: 10px;
-    position: relative;
-}
+    .head__span {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        cursor: pointer;
+        margin-right: 30px;
+    }
 
-.leftPanel__imageContainer {
-    width: 100%;
-    height: 100%;
-    margin-bottom: 12px;
-    border-radius: 5px;
-    border: 1px solid cornflowerblue;
-    position: relative;
-}
+    .body {
+        display: flex;
+        width: 100%;
+        position: relative;
+    }
 
-.leftPanel__imageContainer--image {
-    width: 100%;
-    height: 100%;
-    border-radius: 5px;
-}
+    .leftPanel {
+        display: flex;
+        flex-direction: column;
+        width: 41%;
+        padding: 10px;
+        position: relative;
+    }
 
-.show__mealProducts {
-    border: 1px solid rgba(87, 87, 87, 0.2);
-    border-radius: 5px;
-    padding: 10px;
-}
+    .leftPanel__imageContainer {
+        width: 100%;
+        height: 100%;
+        margin-bottom: 12px;
+        border-radius: 5px;
+        border: 1px solid cornflowerblue;
+        position: relative;
+    }
 
-.rightPanel {
-    min-height: 100%;
-    width: 59%;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    padding: 10px;
-}
+    .leftPanel__imageContainer--image {
+        width: 100%;
+        height: 100%;
+        border-radius: 5px;
+    }
 
-.show__mealDescription {
-    border: 1px solid rgba(87, 87, 87, 0.2);
-    border-radius: 5px;
-    padding: 10px;
-    margin-bottom: 10px;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-}
+    .show__mealProducts {
+        border: 1px solid rgba(87, 87, 87, 0.2);
+        border-radius: 5px;
+        padding: 10px;
+    }
 
-.rightPanel__bottom {
-    display: flex;
-    position: relative;
-    height: 100%;
-}
+    .rightPanel {
+        min-height: 100%;
+        width: 59%;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        padding: 10px;
+    }
 
-.show__mealRecipe {
-    width: 50%;
-    border: 1px solid rgba(87, 87, 87, 0.2);
-    border-radius: 5px;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    padding: 10px;
-    margin-right: 10px;
-}
+    .show__mealDescription {
+        border: 1px solid rgba(87, 87, 87, 0.2);
+        border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 10px;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+    }
 
-.show__mealInfo {
-    border: 1px solid rgba(87, 87, 87, 0.2);
-    border-radius: 5px;
-    padding: 10px;
-    width: 50%;
-}
+    .rightPanel__bottom {
+        display: flex;
+        position: relative;
+        height: 100%;
+    }
 
-.description {
-    display: flex;
-    white-space: pre-wrap;
-    position: relative;
-}
+    .show__mealRecipe {
+        width: 50%;
+        border: 1px solid rgba(87, 87, 87, 0.2);
+        border-radius: 5px;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        padding: 10px;
+        margin-right: 10px;
+    }
 
-.recipe {
-    white-space: pre-wrap;
+    .show__mealInfo {
+        border: 1px solid rgba(87, 87, 87, 0.2);
+        border-radius: 5px;
+        padding: 10px;
+        width: 50%;
+    }
+
+    .description {
+        display: flex;
+        white-space: pre-wrap;
+        position: relative;
+    }
+
+    .recipe {
+        white-space: pre-wrap;
+    }
 }

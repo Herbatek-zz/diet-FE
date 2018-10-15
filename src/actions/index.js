@@ -21,6 +21,7 @@ export const IS_FAVOURITE_MEAL = 'is_favourite_meal';
 export const ADD_MEAL_TO_FAVOURITES = 'add_meal_to_favourites';
 export const REMOVE_MEAL_FROM_FAVOURITES = 'remove_meal_from_favourites';
 export const SEARCH_MEALS = 'search_meals';
+export const EDIT_MEAL = 'edit_meal';
 
 export const FETCH_CART = 'fetch_cart';
 export const ADD_MEAL_TO_CART = 'add_meal_to_cart';
@@ -184,7 +185,7 @@ export function isFavouriteMeal(mealId) {
 
 export function addMealToFavourites(mealId) {
     const userId = AuthService.getDecodedToken().sub;
-    const request = SecuredRequest.post(`/users/${userId}/meals/${mealId}/favourites`)
+    const request = SecuredRequest.post(`/users/${userId}/meals/${mealId}/favourites`);
 
     return {
         type: ADD_MEAL_TO_FAVOURITES,
@@ -219,6 +220,16 @@ export function addMealToCart(mealId) {
 
     return {
         type: ADD_MEAL_TO_CART,
+        payload: request
+    }
+}
+
+export function editMeal(update, callback) {
+    const request = SecuredRequest.put(`/meals/${update.id}`, update)
+        .then(() => callback());
+
+    return {
+        type: EDIT_MEAL,
         payload: request
     }
 }

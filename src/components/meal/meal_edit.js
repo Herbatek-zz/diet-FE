@@ -1,42 +1,53 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {List, Avatar, Input, Spin, Tooltip} from 'antd';
+import {List, Avatar, Input, Spin, Tooltip, Button, message, Tag, Modal, InputNumber} from 'antd';
 import InfiniteScroll from 'react-infinite-scroller';
 import {Link} from "react-router-dom";
-
 import {
     fetchMeal,
     fetchProducts,
     fetchProductsInfinity,
     searchProducts,
     searchProductsInfinity,
+    editMeal,
     setMenuItem
 } from "../../actions";
-import MealDescription from './common/meal_description';
-import MealRecipe from './common/meal_recipe';
 import MealInfo from './common/meal_info';
-import EditMealProducts from "./common/edit_meal_products";
 import './css/meal_edit.css';
 import AuthService from "../../helpers/auth_service";
 import {LOADING_SPIN} from "../../helpers/messages";
+import _ from "lodash";
 
+const {TextArea} = Input;
 
 class MealEdit extends Component {
     state = {
+        modalVisible: false,
         searched: false,
         searchValue: '',
         loading: false,
         isLoggedIn: AuthService.isLogged(),
-        pageSize: 12
+        pageSize: 12,
+        name: '',
+        description: '',
+        recipe: '',
+        products: [],
+        productToAdd: {},
+        amount: 0
     };
 
     componentDidMount() {
         this.props.setMenuItem('');
 
         const {id} = this.props.match.params;
-        this.props.fetchMeal(id);
+        this.props.fetchMeal(id)
+            .then(() => this.setState({
+                name: this.props.meal.name,
+                description: this.props.meal.description,
+                recipe: this.props.meal.recipe,
+                products: this.props.meal.products
+            }));
         this.props.fetchProducts(0, this.state.pageSize);
-        console.log(this.props)
     }
 
     handleInfiniteOnLoad = () => {
@@ -52,6 +63,34 @@ class MealEdit extends Component {
         }
         searched ? searchProductsInfinity(searchValue, currentPage + 1, pageSize) : fetchProductsInfinity(currentPage + 1, pageSize);
         this.setState({loading: false});
+    };
+
+    clickOnProduct = (product) => {
+        if (!_.some(this.state.products, product))
+            this.setState({modalVisible: true, productToAdd: product});
+        else
+            message.warning("Posiłek nie może zawierać drugiego identycznego produktu")
+    };
+
+    clickOnSaveButton = () => {
+        const {meal} = this.props;
+        if (this.state.name)
+            meal.name = this.state.name;
+        if (this.state.description)
+            meal.description = this.state.description;
+        if (this.state.recipe)
+            meal.recipe = this.state.recipe;
+        if (this.state.products)
+            meal.products = this.state.products;
+        this.props.editMeal(meal, () => {
+            this.props.history.push(`/meals/${meal.id}`);
+            message.success("Poprawnie zapisano")
+        });
+    };
+
+    onCloseTag = (product) => {
+        this.setState({products: _.filter(this.state.products, (p) => p.id !== product.id)});
+        message.success("Usunięto " + product.name);
     };
 
     renderCollapse = () => {
@@ -71,13 +110,13 @@ class MealEdit extends Component {
                     <List
                         dataSource={Object.values(content)}
                         renderItem={item => (
-                            <Tooltip placement="bottom" title='Click to add' arrowPointAtCenter='true' mouseEnterDelay={0.6}>
-                                <Item key={item.id} onClick={() => console.log("działam")} className='edit__search--item'>
+                            <Tooltip placement="bottom" title='Kliknij aby dodać' arrowPointAtCenter='true' mouseEnterDelay={0.6}>
+                                <Item key={item.id} onClick={() => this.clickOnProduct(item)} className='edit__search--item'>
                                     <Item.Meta
                                         avatar={<Avatar src={item.imageUrl}/>}
                                         title={item.name}
                                     />
-                                    <Link to={`/products/${item.id}`}>See more</Link>
+                                    <Link to={`/products/${item.id}`}>Zobacz</Link>
                                 </Item>
                             </Tooltip>
                         )}
@@ -106,12 +145,19 @@ class MealEdit extends Component {
             <div className='content'>
                 <div className='content__mealEdit'>
                     <div className='head'>
-                        <h1 className='head__title'>Edit {meal.name}</h1>
+                        <Input value={this.state.name ? this.state.name : meal.name}
+                               onChange={(e) => this.setState({name: e.target.value})}/>
                     </div>
                     <div className='body'>
                         <div className='edit__leftPanel'>
                             <div className='edit__mealProducts'>
-                                <EditMealProducts products={meal.products}/>
+                                <h2>Produkty</h2>
+                                {_.map(this.state.products, product =>
+                                    <Tag key={product.id} style={{marginBottom: '5px'}} closable
+                                         onClose={() => this.onCloseTag(product)}>
+                                        <Link to={`/products/${product.id}`}>{product.name}</Link>
+                                    </Tag>
+                                )}
                             </div>
                             <div className='leftPanel__bottom'>
                                 <div className='leftPanel__bottom--left'>
@@ -124,17 +170,43 @@ class MealEdit extends Component {
                                 </div>
                                 <div className='leftPanel__bottom--right'>
                                     <div className='edit__mealDescription'>
-                                        <MealDescription description={meal.description}/>
+                                        <h2>Opis</h2>
+                                        <TextArea
+                                            value={this.state.description ? this.state.description : meal.description}
+                                            onChange={(e) => this.setState({description: e.target.value})}
+                                            rows={6}/>
                                     </div>
                                     <div className='edit__mealRecipe'>
-                                        <MealRecipe recipe={meal.recipe}/>
+                                        <h2>Przepis</h2>
+                                        <TextArea value={this.state.recipe ? this.state.recipe : meal.recipe}
+                                                  onChange={(e) => this.setState({recipe: e.target.value})}
+                                                  rows={6}/>
                                     </div>
                                 </div>
                             </div>
+                            <Button onClick={this.clickOnSaveButton}>Zapisz zmiany</Button>
                         </div>
+                        <Modal
+                            title="Basic Modal"
+                            visible={this.state.modalVisible}
+                            onOk={() => {
+                                const {productToAdd} = this.state;
+                                productToAdd.amount = this.state.amount;
+                                this.setState({products: [...this.state.products, productToAdd]});
+                                this.setState({productToAdd: {}, modalVisible: false, amount: 0});
+                                message.success("Dodano produkt");
+
+                            }}
+                            onCancel={() => this.setState({modalVisible: false})}
+                        >
+                            <InputNumber min={0} max={900} value={this.state.amount} onChange={(value) => {
+                                this.setState({amount: value});
+                            }}/>
+
+                        </Modal>
                         <div className='edit__rightPanel'>
                             <Search
-                                placeholder="Search products"
+                                placeholder="Szukaj produktów"
                                 onSearch={searchValue => {
                                     this.props.searchProducts(searchValue, 0, pageSize);
                                     this.setState({
@@ -169,5 +241,6 @@ export default connect(mapStateToProps, {
     fetchProductsInfinity,
     searchProducts,
     searchProductsInfinity,
-    setMenuItem
+    setMenuItem,
+    editMeal
 })(MealEdit);

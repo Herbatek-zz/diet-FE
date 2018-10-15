@@ -10,7 +10,7 @@ class ShowMealProducts extends Component {
 
         return (
             <div>
-                <h2>Products</h2>
+                <h2>Produkty</h2>
                 {_.map(products, product =>
                     <Tag key={product.id} style={{marginBottom: '5px'}} >
                         <Link to={`/products/${product.id}`}>{product.name}</Link>

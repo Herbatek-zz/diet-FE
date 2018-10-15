@@ -9,7 +9,7 @@ import {
     FETCH_FAVOURITE_MEALS,
     IS_FAVOURITE_MEAL,
     ADD_MEAL_TO_FAVOURITES,
-    REMOVE_MEAL_FROM_FAVOURITES,
+    REMOVE_MEAL_FROM_FAVOURITES, EDIT_MEAL,
 } from "../actions";
 
 
@@ -82,6 +82,16 @@ export default (state = {content: {}}, action) => {
             return {
                 ...state,
                 isFavourite: false
+            }
+        }
+
+        case EDIT_MEAL: {
+            return {
+                ...state.meals,
+                content: {
+                    ...state.content,
+                    [action.payload.data.id]: action.payload.data
+                }
             }
         }
 

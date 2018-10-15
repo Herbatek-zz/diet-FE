@@ -1,12 +1,18 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Icon, Tooltip} from 'antd';
+import {Icon, Tooltip, Popconfirm} from 'antd';
 import {Link} from "react-router-dom";
 
-import {fetchMeal, setMenuItem, isFavouriteMeal, addMealToFavourites, removeMealFromFavourites, deleteMeal, addMealToCart} from "../../actions";
+import {
+    fetchMeal,
+    setMenuItem,
+    isFavouriteMeal,
+    addMealToFavourites,
+    removeMealFromFavourites,
+    deleteMeal,
+    addMealToCart
+} from "../../actions";
 import AuthService from "../../helpers/auth_service";
-import MealDescription from './common/meal_description';
-import MealRecipe from './common/meal_recipe';
 import MealInfo from './common/meal_info';
 import ShowMealProducts from "./common/show_meal_products";
 import './css/meal_show.css';
@@ -82,11 +88,15 @@ class MealShow extends Component {
             deleteIcon = (() => {
                 if (sub === meal.userId)
                     return (
-                        <span className='head__span'
-                              onClick={() => deleteMeal(this.state.mealId, () => this.props.history.push('/meals/my'))}>
+                        <Popconfirm title="Czy na pewno chcesz usunąć ten posiłek ?"
+                                    onConfirm={() => deleteMeal(this.state.mealId, () => this.props.history.push('/meals/my'))}
+                                    okText="Tak"
+                                    cancelText="Nie">
+                        <span className='head__span'>
                                 <Icon type="delete" theme="outlined" style={{fontSize: '30px'}}/>
                                 Usuń
                         </span>
+                        </Popconfirm>
                     );
             })();
         }
@@ -118,11 +128,13 @@ class MealShow extends Component {
                         </div>
                         <div className='rightPanel'>
                             <div className='show__mealDescription'>
-                                <MealDescription description={meal.description}/>
+                                <h2>Opis</h2>
+                                <h4 className='description'>{meal.description}</h4>
                             </div>
                             <div className='rightPanel__bottom'>
                                 <div className='show__mealRecipe'>
-                                    <MealRecipe recipe={meal.recipe}/>
+                                    <h2>Przepis</h2>
+                                    <h4 className='recipe'>{meal.recipe}</h4>
                                 </div>
                                 <div className='show__mealInfo'>
                                     <MealInfo meal={meal}/>
