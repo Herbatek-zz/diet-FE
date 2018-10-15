@@ -26,9 +26,9 @@ class ProductMyList extends Component {
         return (
             <div className='content'>
                 <div className='content__wrap--productList'>
-                    <h1>My products</h1>
+                    <h1>Moje produkty</h1>
                     <div className='products__list'>
-                        {Object.keys(this.props.products.content).length === 0 ? "No data to display" :
+                        {Object.keys(this.props.products.content).length === 0 ? "Nie stworzyłeś jeszcze żadnych produktów" :
                             <ShowProductList products={this.props.products} onChange={this.onChange}/>}
                     </div>
                 </div>

@@ -35,7 +35,7 @@ class MealMyList extends Component {
             <div className='content'>
                 <div className='content__wrap--mealList'>
                     <div className='header'>
-                        <h1>My meals</h1>
+                        <h1>Moje posiłki</h1>
                     </div>
                     <div className='collapse-list'>
                         <Collapse className='collapse'>

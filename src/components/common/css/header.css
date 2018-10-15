@@ -1,5 +1,6 @@
 .ant-menu-horizontal {
     display: flex;
+    justify-content: space-between;
     margin-bottom: 25px !important;
 }
 
@@ -7,35 +8,22 @@
     padding: 0 !important;
 }
 
-.menu__home {
-    padding: 0 11px !important;
-}
-
-.menu__login {
-    position: absolute !important;
-    right: 20px;
-}
-
-.menu__cart {
-    position: absolute !important;
-    right: 94px;
-}
-
-.menu__avatar {
-    margin-left: auto;
-    padding-top: 3px;
-}
-
 .menu__avatar--span {
-    display: flex;
-    align-items: center;
+    justify-content: center;
     flex-direction: column;
-    line-height: 10px;
+    line-height: 15px;
     font-size: 10px;
 }
 
 .ant-menu-submenu-title {
-    padding: 0 11px !important;
+    padding: 0 18px !important;
+    height: 100%;
+}
+
+.ant-menu-submenu-title > span{
+    display: flex;
+    height: 100%;
+    align-items: center;
 }
 
 .no-margin {
@@ -45,12 +33,22 @@
 @media (min-width: 600px) {
 
     .ant-menu-horizontal {
+        justify-content: flex-start;
         margin-bottom: 50px !important;
     }
 
     .menu__logo {
         line-height: 0;
         padding: 0 20px !important;
+    }
+
+    .menu__cart {
+        margin-left: auto !important;
+    }
+
+    .menu__login {
+        margin-left: auto !important;
+        margin-right: 40px !important;
     }
 
     .menu__logo:before {
@@ -60,12 +58,22 @@
         line-height: 46px;
     }
 
-    .menu__login {
-        right: 40px;
+    .menu__login--icon:after {
+        content: "Zaloguj się";
+        margin-left: 8px;
+        position: relative;
+        bottom: 2px;
     }
 
-    .menu__login--icon:after {
-        content: "Login";
+    .menu__products--icon:after {
+        content: "Produkty";
+        margin-left: 8px;
+        position: relative;
+        bottom: 2px;
+    }
+
+    .menu__meals--icon:after {
+        content: "Posiłki";
         margin-left: 8px;
         position: relative;
         bottom: 2px;

@@ -27,7 +27,7 @@ class ProductList extends Component {
             <div className='content'>
                 <div className='content__wrap--productList'>
                     <div className='productsList__menu'>
-                        <h1>Products</h1>
+                        <h1>Lista wszystkich produktów</h1>
                         <Search
                             placeholder="Search products"
                             onSearch={value => {

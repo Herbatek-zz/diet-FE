@@ -33,7 +33,7 @@ class MealList extends Component {
             <div className='content'>
                 <div className='content__wrap--mealList'>
                     <div className='header'>
-                        <h1>Meal list</h1>
+                        <h1>Lista wszystkich posiłków</h1>
                         <Search
                             placeholder="Search meals"
                             onSearch={value => {

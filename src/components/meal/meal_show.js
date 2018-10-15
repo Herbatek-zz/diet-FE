@@ -44,7 +44,7 @@ class MealShow extends Component {
                 <span className='head__span'
                       onClick={() => this.props.removeMealFromFavourites(this.state.mealId)}>
                         <Icon type="heart" theme="filled" twoToneColor="#eb2f96" style={{fontSize: '30px', color: '#eb2f96'}}/>
-                        Favourites
+                        Ulubione
                 </span>
                     </Tooltip>;
                 } else {
@@ -52,7 +52,7 @@ class MealShow extends Component {
                 <span className='head__span'
                       onClick={() => this.props.addMealToFavourites(this.state.mealId)}>
                         <Icon type="heart" theme="outlined" twoToneColor="#eb2f96" style={{fontSize: '30px', color: '#eb2f96'}}/>
-                        Favourites
+                        Ulubione
                 </span>
                     </Tooltip>
                 }
@@ -62,7 +62,7 @@ class MealShow extends Component {
                 return (
                     <span className='head__span' onClick={() => this.props.addMealToCart(this.state.mealId)}>
                         <Icon type="shopping-cart" theme="outlined" style={{fontSize: '30px'}}/>
-                        Add to cart
+                        Do koszyka
                     </span>
                 );
             })();
@@ -73,7 +73,7 @@ class MealShow extends Component {
                         <Link to={`/meals/${meal.id}/edit`}>
                             <span className='head__span'>
                                 <Icon type="setting" style={{fontSize: '30px'}}/>
-                                Edit
+                                Edytuj
                             </span>
                         </Link>
                     );
@@ -85,7 +85,7 @@ class MealShow extends Component {
                         <span className='head__span'
                               onClick={() => deleteMeal(this.state.mealId, () => this.props.history.push('/meals/my'))}>
                                 <Icon type="delete" theme="outlined" style={{fontSize: '30px'}}/>
-                                Delete
+                                Usuń
                         </span>
                     );
             })();

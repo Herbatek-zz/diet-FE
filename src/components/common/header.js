@@ -41,15 +41,15 @@ class MyHeader extends Component {
         return (
             <SubMenu
                 className='menu__avatar'
-                title={<span className='menu__avatar--span'><Avatar src={this.state.pictureUrl}/>{this.state.username}</span>}
+                title={<span className='menu__avatar--span'><Avatar src={this.state.pictureUrl} size='small'/>{this.state.username}</span>}
                 key='avatar'>
                 <Item key='logout'>
                     <Link to='/' onClick={() => {
                         AuthService.logout();
-                        message.success("Successfully logged out");
+                        message.success("Poprawnie wylogowano");
                         this.setState({logged: false})
                     }}>
-                        <Icon type='logout'/>Log out
+                        <Icon type='logout'/>Wyloguj
                     </Link>
                 </Item>
             </SubMenu>
@@ -63,7 +63,7 @@ class MyHeader extends Component {
                 <Item key='cart' className='menu__cart'>
                     <Link to={"/cart"}>
                         <Badge count={this.props.cart.meals.length}>
-                            <Icon type="shopping-cart" theme="outlined" style={{fontSize: '17px'}}/>
+                            <Icon type="shopping-cart" theme="outlined" style={{fontSize: '17px'}} className='no-margin'/>
                         </Badge>
                     </Link>
                 </Item>
@@ -82,43 +82,43 @@ class MyHeader extends Component {
                     <Link to='/'><Icon type='home' className='no-margin'/></Link>
                 </Item>
 
-                <SubMenu title={<span><Icon type="setting"/>Products</span>} key='products'>
+                <SubMenu title={<span><Icon type="setting" className='no-margin menu__products--icon' /></span>} key='products'>
                     <Item key='product-list'>
                         <Link to='/products'>
-                            <Icon type='bars'/>All Products
+                            <Icon type='bars'/>Wszystkie
                         </Link>
                     </Item>
                     <Item key='product-my-list'>
                         <Link to='/products/my'>
-                            <Icon type='bars'/>My products
+                            <Icon type='bars'/>Moje
                         </Link>
                     </Item>
                     <Item key='product-create'>
                         <Link to='/products/new'>
-                            <Icon type='plus-circle-o'/>Add product
+                            <Icon type='plus-circle-o'/>Dodaj nowy
                         </Link>
                     </Item>
                 </SubMenu>
 
-                <SubMenu title={<span><Icon type="setting"/>Meals</span>} key='meals'>
+                <SubMenu title={<span><Icon type="setting" className='no-margin menu__meals--icon' /></span>} key='meals'>
                     <Item key='meal-list'>
                         <Link to='/meals'>
-                            <Icon type='bars'/>All Meals
+                            <Icon type='bars'/>Wszystkie
                         </Link>
                     </Item>
                     <Item key='meal-my-list'>
                         <Link to='/meals/my'>
-                            <Icon type='bars'/>My meals
+                            <Icon type='bars'/>Moje
                         </Link>
                     </Item>
                     <Item key='meal-favourite'>
                         <Link to='/meals/favourite'>
-                            <Icon type='bars'/>Favourite meals
+                            <Icon type='bars'/>Ulubione
                         </Link>
                     </Item>
                     <Item key='meal-create'>
                         <Link to='/meals/new'>
-                            <Icon type='plus-circle-o'/>Add meal
+                            <Icon type='plus-circle-o'/>Dodaj nowy
                         </Link>
                     </Item>
                 </SubMenu>

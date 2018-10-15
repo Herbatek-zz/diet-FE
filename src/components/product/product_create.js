@@ -33,23 +33,23 @@ class ProductCreate extends Component {
 
         return (
             <div className='content'>
-                <h1>Create a new product</h1>
+                <h1>Tworzenie nowego produktu</h1>
                 <form onSubmit={this.props.handleSubmit(this.onSubmit)} className='form' autoComplete='off'>
                     <Field
                         name='name'
                         component={TextField}
-                        placeholder='Name'/>
+                        placeholder='Nazwa'/>
                     <Field
                         name='imageUrl'
                         component={TextField}
-                        placeholder='Image'/>
+                        placeholder='Link do zdjęcia'/>
                     <Field
                         name='description'
                         rows={4}
                         component={TextAreaField}
-                        placeholder='Description'/>
+                        placeholder='Opis'/>
                     <div className='form__numberItem'>
-                        <label className='form__numberItem--label'>Protein:</label>
+                        <label className='form__numberItem--label'>Białko:</label>
                         <Field
                             name='protein'
                             component={NumberField}
@@ -58,7 +58,7 @@ class ProductCreate extends Component {
                             step={0.1}/>
                     </div>
                     <div className='form__numberItem'>
-                        <label className='form__numberItem--label'>Carbohydrate:</label>
+                        <label className='form__numberItem--label'>Węglowodany:</label>
                         <Field
                             name='carbohydrate'
                             component={NumberField}
@@ -67,7 +67,7 @@ class ProductCreate extends Component {
                             step={0.1}/>
                     </div>
                     <div className='form__numberItem'>
-                        <label className='form__numberItem--label'>Fat:</label>
+                        <label className='form__numberItem--label'>Tłuszcz:</label>
                         <Field
                             name='fat'
                             component={NumberField}
@@ -76,7 +76,7 @@ class ProductCreate extends Component {
                             step={0.1}/>
                     </div>
                     <div className='form__numberItem'>
-                        <label className='form__numberItem--label'>Fibre:</label>
+                        <label className='form__numberItem--label'>Błonnik:</label>
                         <Field
                             name='fibre'
                             component={NumberField}
@@ -102,7 +102,7 @@ class ProductCreate extends Component {
     onSubmit = (values) => {
         this.props.createProduct(values, () => {
             this.props.reset();
-            message.success('Product has been created');
+            message.success('Poprawnie stworzono produkt');
         });
     };
 

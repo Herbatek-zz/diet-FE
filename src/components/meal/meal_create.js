@@ -21,7 +21,7 @@ class MealCreate extends Component {
     onSubmit = (values) => {
         this.props.createMeal(values, () => {
             this.props.reset();
-            message.success('Meal has been created');
+            message.success('Poprawnie stworzono posiłek');
         });
     };
 
@@ -32,26 +32,26 @@ class MealCreate extends Component {
         return (
             <div className='content'>
                 <div className='content__mealCreate'>
-                    <h1 className='mealCreate__title'>Create a new meal</h1>
+                    <h1 className='mealCreate__title'>Tworzenie nowego posiłku</h1>
                     <form onSubmit={this.props.handleSubmit(this.onSubmit)} className='form' autoComplete='off'>
                         <Field
                             name='name'
                             component={TextField}
-                            placeholder='Name'/>
+                            placeholder='Nazwa'/>
                         <Field
                             name='imageUrl'
                             component={TextField}
-                            placeholder='Image'/>
+                            placeholder='Link do zdjęcia'/>
                         <Field
                             name='description'
                             rows={4}
                             component={TextAreaField}
-                            placeholder='Description'/>
+                            placeholder='Opis'/>
                         <Field
                             name='recipe'
                             rows={6}
                             component={TextAreaField}
-                            placeholder='Recipe'/>
+                            placeholder='Przepis'/>
                         <Button className='form__button' type="primary" ghost htmlType='submit'>Submit</Button>
                     </form>
                 </div>

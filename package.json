@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "antd": "^3.10.1",
-    "autoprefixer": "^9.1.5",
+    "autoprefixer": "^9.2.0",
     "axios": "^0.18.0",
     "babel-plugin-import": "^1.9.1",
     "hoist-non-react-statics": "^3.0.1",

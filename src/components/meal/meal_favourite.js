@@ -27,7 +27,7 @@ class MealFavourite extends Component {
         return (
             <div className='content'>
                 <div className='content__wrap--productList'>
-                    <h1>Favourite meals</h1>
+                    <h1>Ulubione posiłki</h1>
                     <div className='products__list'>
                         {Object.keys(this.props.meals.content).length === 0 ? "No data to display" :
                             <ShowMealList meals={this.props.meals} onChange={this.onChange}/>}
