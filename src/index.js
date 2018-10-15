@@ -19,6 +19,7 @@ import MealMyList from './components/meal/meal_my_list';
 import MealCreate from './components/meal/meal_create';
 import MealEdit from './components/meal/meal_edit';
 import MealFavourite from './components/meal/meal_favourite';
+import ShowCart from './components/cart/showCart';
 import reducers from './reducers';
 import './index.css';
 
@@ -31,6 +32,7 @@ ReactDOM.render(
             <Layout>
                 <Header/>
                 <Switch>
+                    <Route path='/cart' component={ShowCart}/>
                     <Route path='/meals/favourite' component={MealFavourite} />
                     <Route path='/meals/:id/edit' component={MealEdit}/>
                     <Route path='/meals/my' component={MealMyList}/>

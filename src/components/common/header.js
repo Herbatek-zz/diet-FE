@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
-import {Menu, Icon, Avatar, message} from 'antd';
+import {Menu, Icon, Avatar, message, Badge} from 'antd';
 
 import AuthService from '../../helpers/auth_service';
 import './css/header.css';
@@ -56,6 +56,20 @@ class MyHeader extends Component {
         );
     };
 
+    cart = () => {
+        console.log(this.props);
+        if (this.state.logged)
+            return (
+                <Item key='cart' className='menu__cart'>
+                    <Link to={"/cart"}>
+                        <Badge count={this.props.cart.meals.length}>
+                            <Icon type="shopping-cart" theme="outlined" style={{fontSize: '17px'}}/>
+                        </Badge>
+                    </Link>
+                </Item>
+            )
+    };
+
     render() {
         return (
             <Menu defaultSelectedKeys={[this.props.selectedMenuItem]} mode="horizontal">
@@ -108,7 +122,7 @@ class MyHeader extends Component {
                         </Link>
                     </Item>
                 </SubMenu>
-
+                {this.cart()}
                 {this.state.logged ? this.avatar() : this.loginButton()}
 
             </Menu>
@@ -116,8 +130,11 @@ class MyHeader extends Component {
     }
 }
 
-const mapStateToProps = ({selectedMenuItem}) => {
-    return {selectedMenuItem}
+const mapStateToProps = ({selectedMenuItem, cart}) => {
+    return {
+        selectedMenuItem,
+        cart
+    }
 };
 
 export default connect(mapStateToProps, null)(MyHeader);

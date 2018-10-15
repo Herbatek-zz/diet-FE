@@ -22,6 +22,9 @@ export const ADD_MEAL_TO_FAVOURITES = 'add_meal_to_favourites';
 export const REMOVE_MEAL_FROM_FAVOURITES = 'remove_meal_from_favourites';
 export const SEARCH_MEALS = 'search_meals';
 
+export const FETCH_CART = 'fetch_cart';
+export const ADD_MEAL_TO_CART = 'add_meal_to_cart';
+
 export const SELECT_MENU_ITEM = 'select_menu_item';
 
 export function createProduct(values, callback) {
@@ -161,7 +164,7 @@ export function searchMeals(query, page, pageSize) {
 
 export function fetchFavouriteMeals(page, pageSize) {
     const userId = AuthService.getDecodedToken().sub;
-    const request = Request.get(`/users/${userId}/favourite/meals?page=${page}&size=${pageSize}`);
+    const request = Request.get(`/users/${userId}/meals/favourites?page=${page}&size=${pageSize}`);
 
     return {
         type: FETCH_FAVOURITE_MEALS,
@@ -171,7 +174,7 @@ export function fetchFavouriteMeals(page, pageSize) {
 
 export function isFavouriteMeal(mealId) {
     const userId = AuthService.getDecodedToken().sub;
-    const request = SecuredRequest.get(`/users/${userId}/meals/${mealId}`);
+    const request = SecuredRequest.get(`/users/${userId}/meals/${mealId}/favourites`);
 
     return {
         type: IS_FAVOURITE_MEAL,
@@ -181,7 +184,7 @@ export function isFavouriteMeal(mealId) {
 
 export function addMealToFavourites(mealId) {
     const userId = AuthService.getDecodedToken().sub;
-    const request = SecuredRequest.post(`/users/${userId}/favourite/meals/${mealId}`)
+    const request = SecuredRequest.post(`/users/${userId}/meals/${mealId}/favourites`)
 
     return {
         type: ADD_MEAL_TO_FAVOURITES,
@@ -191,10 +194,31 @@ export function addMealToFavourites(mealId) {
 
 export function removeMealFromFavourites(mealId) {
     const userId = AuthService.getDecodedToken().sub;
-    const request = SecuredRequest.delete(`/users/${userId}/favourite/meals/${mealId}`);
+    const request = SecuredRequest.delete(`/users/${userId}/meals/${mealId}/favourites`);
 
     return {
         type: REMOVE_MEAL_FROM_FAVOURITES,
+        payload: request
+    }
+}
+
+export function fetchCart(date) {
+    const userId = AuthService.getDecodedToken().sub;
+    const dateRequest = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
+    const request = SecuredRequest.get(`/users/${userId}/carts?date=${dateRequest}`);
+
+    return {
+        type: FETCH_CART,
+        payload: request
+    }
+}
+
+export function addMealToCart(mealId) {
+    const userId = AuthService.getDecodedToken().sub;
+    const request = SecuredRequest.put(`/users/${userId}/carts?mealId=${mealId}`);
+
+    return {
+        type: ADD_MEAL_TO_CART,
         payload: request
     }
 }

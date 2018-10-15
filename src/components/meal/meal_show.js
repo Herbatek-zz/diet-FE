@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {Icon, Tooltip} from 'antd';
 import {Link} from "react-router-dom";
 
-import {fetchMeal, setMenuItem, isFavouriteMeal, addMealToFavourites, removeMealFromFavourites, deleteMeal} from "../../actions";
+import {fetchMeal, setMenuItem, isFavouriteMeal, addMealToFavourites, removeMealFromFavourites, deleteMeal, addMealToCart} from "../../actions";
 import AuthService from "../../helpers/auth_service";
 import MealDescription from './common/meal_description';
 import MealRecipe from './common/meal_recipe';
@@ -33,6 +33,7 @@ class MealShow extends Component {
         let editIcon;
         let hearthIcon;
         let deleteIcon;
+        let addToCartIcon;
 
         if (meal && this.state.isLoggedIn) {
             const {sub} = AuthService.getDecodedToken();
@@ -57,6 +58,15 @@ class MealShow extends Component {
                 }
             })();
 
+            addToCartIcon = (() => {
+                return (
+                    <span className='head__span' onClick={() => this.props.addMealToCart(this.state.mealId)}>
+                        <Icon type="shopping-cart" theme="outlined" style={{fontSize: '30px'}}/>
+                        Add to cart
+                    </span>
+                );
+            })();
+
             editIcon = (() => {
                 if (sub === meal.userId)
                     return (
@@ -72,7 +82,8 @@ class MealShow extends Component {
             deleteIcon = (() => {
                 if (sub === meal.userId)
                     return (
-                        <span className='head__span' onClick={() => deleteMeal(this.state.mealId, () => this.props.history.push('/meals/my'))}>
+                        <span className='head__span'
+                              onClick={() => deleteMeal(this.state.mealId, () => this.props.history.push('/meals/my'))}>
                                 <Icon type="delete" theme="outlined" style={{fontSize: '30px'}}/>
                                 Delete
                         </span>
@@ -91,6 +102,7 @@ class MealShow extends Component {
                         <h1 className='head__title'>{meal.name}</h1>
                         <div className='head__menu'>
                             {hearthIcon}
+                            {addToCartIcon}
                             {editIcon}
                             {deleteIcon}
                         </div>
@@ -137,5 +149,6 @@ export default connect(mapStateToProps, {
     isFavouriteMeal,
     addMealToFavourites,
     removeMealFromFavourites,
-    deleteMeal
+    deleteMeal,
+    addMealToCart
 })(MealShow);

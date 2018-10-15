@@ -16,6 +16,11 @@
     right: 20px;
 }
 
+.menu__cart {
+    position: absolute !important;
+    right: 94px;
+}
+
 .menu__avatar {
     margin-left: auto;
     padding-top: 3px;
