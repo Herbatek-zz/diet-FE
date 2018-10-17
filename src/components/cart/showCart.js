@@ -16,7 +16,6 @@ class ShowCart extends Component {
 
         if (this.state.isLoggedIn)
             this.props.fetchCart(new Date());
-        console.log(new Date());
     }
 
 

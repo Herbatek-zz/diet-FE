@@ -23,7 +23,6 @@ class MealFavourite extends Component {
         if (!this.state.isLoggedIn)
             return <div className='content'>{NO_LOGGED_MESSAGE}</div>;
 
-        console.log(this.props);
         return (
             <div className='content'>
                 <div className='content__wrap--productList'>

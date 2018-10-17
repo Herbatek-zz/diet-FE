@@ -1,7 +1,7 @@
 
 
 @media (min-width: 600px) {
-    .content__wrap--mealShow {
+    .content__mealShow {
         width: 80%;
     }
 
@@ -59,7 +59,7 @@
     }
 
     .show__mealProducts {
-        border: 1px solid rgba(87, 87, 87, 0.2);
+        border: 1px solid cornflowerblue;
         border-radius: 5px;
         padding: 10px;
     }
@@ -74,7 +74,7 @@
     }
 
     .show__mealDescription {
-        border: 1px solid rgba(87, 87, 87, 0.2);
+        border: 1px solid cornflowerblue;
         border-radius: 5px;
         padding: 10px;
         margin-bottom: 10px;
@@ -91,7 +91,7 @@
 
     .show__mealRecipe {
         width: 50%;
-        border: 1px solid rgba(87, 87, 87, 0.2);
+        border: 1px solid cornflowerblue;
         border-radius: 5px;
         display: flex;
         flex-direction: column;
@@ -101,7 +101,7 @@
     }
 
     .show__mealInfo {
-        border: 1px solid rgba(87, 87, 87, 0.2);
+        border: 1px solid cornflowerblue;
         border-radius: 5px;
         padding: 10px;
         width: 50%;
