@@ -6,7 +6,7 @@ export default ({mealId}) => {
     return (
         <Link to={`/meals/${mealId}/edit`}>
             <span className='head__span'>
-                <Icon type="setting" style={{fontSize: '30px'}}/>
+                <Icon type="setting"/>
                 Edytuj
             </span>
         </Link>

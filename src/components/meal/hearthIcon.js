@@ -18,7 +18,7 @@ class HearthIcon extends Component {
             return (
                 <Tooltip placement="top" title='Remove from favourites' arrowPointAtCenter='true'>
                     <span className='head__span' onClick={() => this.props.removeMealFromFavourites(this.props.mealId)}>
-                        <Icon type="heart" theme="filled" twoToneColor="#eb2f96" style={{fontSize: '30px', color: '#eb2f96'}}/>
+                        <Icon type="heart" theme="filled" twoToneColor="#eb2f96" style={{color: '#eb2f96'}}/>
                         Ulubione
                     </span>
                 </Tooltip>);
@@ -26,7 +26,7 @@ class HearthIcon extends Component {
             return (
                 <Tooltip placement="top" title='Add to favourites' arrowPointAtCenter='true'>
                     <span className='head__span' onClick={() => this.props.addMealToFavourites(this.props.mealId)}>
-                        <Icon type="heart" theme="outlined" twoToneColor="#eb2f96" style={{fontSize: '30px', color: '#eb2f96'}}/>
+                        <Icon type="heart" theme="outlined" twoToneColor="#eb2f96" style={{color: '#eb2f96'}}/>
                         Ulubione
                     </span>
                 </Tooltip>);

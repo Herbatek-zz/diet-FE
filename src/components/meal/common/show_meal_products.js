@@ -12,7 +12,7 @@ class ShowMealProducts extends Component {
             <div>
                 <h2>Produkty</h2>
                 {_.map(products, product =>
-                    <Tag key={product.id} style={{marginBottom: '5px'}} >
+                    <Tag key={product.id} className='mealShow__products--tag'>
                         <Link to={`/products/${product.id}`}>{product.name}</Link>
                     </Tag>
                 )}

@@ -7,7 +7,7 @@ class AddToCartIcon extends Component {
     render() {
         return (
             <span className='head__span' onClick={() => this.props.addMealToCart(this.props.mealId)}>
-                <Icon type="shopping-cart" theme="outlined" style={{fontSize: '30px'}}/>
+                <Icon type="shopping-cart" theme="outlined"/>
                 Do koszyka
             </span>
         )

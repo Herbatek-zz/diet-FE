@@ -1,80 +1,157 @@
+.content__mealShow {
+    width: 100%;
+    position: relative;
+}
 
+.head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 20px;
+}
+
+.head__title {
+    text-align: center;
+}
+
+.head__span > i {
+    font-size: 30px;
+}
+
+.head__span {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    margin-right: 30px;
+}
+
+.head__menu {
+    font-size: 10px;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+.body {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    position: relative;
+}
+
+.firstPanel {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    position: relative;
+}
+
+.firstPanel__imageContainer {
+    width: 100%;
+    height: 100%;
+    margin: 5px 0;
+    border: 1px solid cornflowerblue;
+    position: relative;
+}
+
+.firstPanel__imageContainer--image {
+    width: 100%;
+    height: 100%;
+}
+
+.show__mealProducts {
+    border: 1px solid cornflowerblue;
+    border-radius: 2px;
+    padding: 6px;
+    margin: 2px 0;
+}
+
+.mealShow__products--tag {
+    margin-bottom: 5px !important;
+}
+.secondPanel {
+    display: flex;
+    flex-direction: column;
+}
+
+.show__mealDescription {
+    border: 1px solid cornflowerblue;
+    border-radius: 2px;
+    padding: 6px;
+    margin: 2px 0;
+}
+
+.show__mealRecipe {
+    border: 1px solid cornflowerblue;
+    padding: 6px;
+    border-radius: 2px;
+    margin: 2px 0;
+}
+
+.show__mealInfo {
+    border: 1px solid cornflowerblue;
+    padding: 6px;
+    border-radius: 2px;
+    margin: 2px 0;
+}
+
+.description {
+    white-space: pre-wrap;
+}
+
+.recipe {
+    white-space: pre-wrap;
+}
 
 @media (min-width: 600px) {
     .content__mealShow {
-        width: 80%;
+        width: 90%;
     }
 
     .head {
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-        position: relative;
+        flex-direction: row;
+    }
+
+    .head__menu {
+        justify-content: flex-end;
     }
 
     .head__title {
         margin-left: 10px;
     }
 
-    .head__menu {
-        font-size: 10px;
-        display: flex;
-    }
-
-    .head__span {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        cursor: pointer;
-        margin-right: 30px;
-    }
-
     .body {
-        display: flex;
-        width: 100%;
-        position: relative;
+        flex-direction: row;
     }
 
-    .leftPanel {
-        display: flex;
-        flex-direction: column;
-        width: 41%;
+    .firstPanel {
+        width: 42%;
         padding: 10px;
-        position: relative;
     }
 
-    .leftPanel__imageContainer {
-        width: 100%;
-        height: 100%;
-        margin-bottom: 12px;
+    .firstPanel__imageContainer {
         border-radius: 5px;
-        border: 1px solid cornflowerblue;
-        position: relative;
+        height: auto;
     }
 
-    .leftPanel__imageContainer--image {
-        width: 100%;
-        height: 100%;
+    .firstPanel__imageContainer--image {
         border-radius: 5px;
     }
 
     .show__mealProducts {
-        border: 1px solid cornflowerblue;
         border-radius: 5px;
-        padding: 10px;
+        padding: 8px;
+        height: auto;
     }
 
-    .rightPanel {
-        min-height: 100%;
-        width: 59%;
-        display: flex;
-        flex-direction: column;
-        position: relative;
-        padding: 10px;
+    .secondPanel {
+        width: 58%;
+        padding: 8px;
     }
 
     .show__mealDescription {
-        border: 1px solid cornflowerblue;
         border-radius: 5px;
         padding: 10px;
         margin-bottom: 10px;
@@ -83,37 +160,35 @@
         position: relative;
     }
 
-    .rightPanel__bottom {
+    .show__mealDescription:hover {
+        background-color: #fafbfc;
+    }
+
+    .secondPanel__bottom {
         display: flex;
-        position: relative;
-        height: 100%;
     }
 
     .show__mealRecipe {
-        width: 50%;
-        border: 1px solid cornflowerblue;
+        width: 100%;
         border-radius: 5px;
-        display: flex;
-        flex-direction: column;
-        position: relative;
-        padding: 10px;
+        padding: 8px;
         margin-right: 10px;
+    }
+
+    .show__mealRecipe:hover {
+        background-color: #fafbfc;
     }
 
     .show__mealInfo {
         border: 1px solid cornflowerblue;
         border-radius: 5px;
-        padding: 10px;
-        width: 50%;
+        padding: 8px;
+        width: 30%;
+        min-width: 130px;
+        margin: 0;
     }
 
-    .description {
-        display: flex;
-        white-space: pre-wrap;
-        position: relative;
-    }
-
-    .recipe {
-        white-space: pre-wrap;
+    .show__mealInfo:hover {
+        background-color: #fafbfc;
     }
 }

@@ -45,20 +45,20 @@ class MealShow extends Component {
                         </div>
                     </div>
                     <div className='body'>
-                        <div className='leftPanel'>
-                            <div className='leftPanel__imageContainer'>
-                                <img src={meal.imageUrl} alt={meal.name} className='leftPanel__imageContainer--image'/>
+                        <div className='firstPanel'>
+                            <div className='firstPanel__imageContainer'>
+                                <img src={meal.imageUrl} alt={meal.name} className='firstPanel__imageContainer--image'/>
                             </div>
                             <div className='show__mealProducts'>
                                 <ShowMealProducts products={meal.products}/>
                             </div>
                         </div>
-                        <div className='rightPanel'>
+                        <div className='secondPanel'>
                             <div className='show__mealDescription'>
                                 <h2>Opis</h2>
                                 <h4 className='description'>{meal.description}</h4>
                             </div>
-                            <div className='rightPanel__bottom'>
+                            <div className='secondPanel__bottom'>
                                 <div className='show__mealRecipe'>
                                     <h2>Przepis</h2>
                                     <h4 className='recipe'>{meal.recipe}</h4>

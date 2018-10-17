@@ -7,7 +7,7 @@ class MealInfo extends Component {
 
         return (
             <div>
-                <h2>Informacje o produkcie</h2>
+                <h2>Informacje o posiłku</h2>
                 <h4>Białko: {meal.protein}</h4>
                 <h4>Węglowodany: {meal.carbohydrate}</h4>
                 <h4>Tłuszcz: {meal.fat}</h4>
