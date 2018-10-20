@@ -33,68 +33,70 @@ class ProductCreate extends Component {
 
         return (
             <div className='content'>
-                <h1>Tworzenie nowego produktu</h1>
-                <form onSubmit={this.props.handleSubmit(this.onSubmit)} className='form' autoComplete='off'>
-                    <Field
-                        name='name'
-                        component={TextField}
-                        placeholder='Nazwa'/>
-                    <Field
-                        name='imageUrl'
-                        component={TextField}
-                        placeholder='Link do zdjęcia'/>
-                    <Field
-                        name='description'
-                        rows={4}
-                        component={TextAreaField}
-                        placeholder='Opis'/>
-                    <div className='form__numberItem'>
-                        <label className='form__numberItem--label'>Białko:</label>
+                <div className='content__productCreate'>
+                    <h1 className='form__title'>Tworzenie nowego produktu</h1>
+                    <form onSubmit={this.props.handleSubmit(this.onSubmit)} className='form' autoComplete='off'>
                         <Field
-                            name='protein'
-                            component={NumberField}
-                            min={0}
-                            max={100}
-                            step={0.1}/>
-                    </div>
-                    <div className='form__numberItem'>
-                        <label className='form__numberItem--label'>Węglowodany:</label>
+                            name='name'
+                            component={TextField}
+                            placeholder='Nazwa'/>
                         <Field
-                            name='carbohydrate'
-                            component={NumberField}
-                            min={0}
-                            max={100}
-                            step={0.1}/>
-                    </div>
-                    <div className='form__numberItem'>
-                        <label className='form__numberItem--label'>Tłuszcz:</label>
+                            name='imageUrl'
+                            component={TextField}
+                            placeholder='Link do zdjęcia'/>
                         <Field
-                            name='fat'
-                            component={NumberField}
-                            min={0}
-                            max={100}
-                            step={0.1}/>
-                    </div>
-                    <div className='form__numberItem'>
-                        <label className='form__numberItem--label'>Błonnik:</label>
-                        <Field
-                            name='fibre'
-                            component={NumberField}
-                            min={0}
-                            max={100}
-                            step={0.1}/>
-                    </div>
-                    <div className='form__numberItem'>
-                        <label className='form__numberItem--label'>Kcal:</label>
-                        <Field
-                            name='kcal'
-                            component={NumberField}
-                            min={0}
-                            max={900}
-                            step={1}/>
-                    </div>
-                    <Button className='form__button' type="primary" ghost htmlType='submit'>Submit</Button>
-                </form>
+                            name='description'
+                            rows={4}
+                            component={TextAreaField}
+                            placeholder='Opis'/>
+                        <div className='form__numberItem'>
+                            <label className='form__numberItem--label'>Białko:</label>
+                            <Field
+                                name='protein'
+                                component={NumberField}
+                                min={0}
+                                max={100}
+                                step={0.1}/>
+                        </div>
+                        <div className='form__numberItem'>
+                            <label className='form__numberItem--label'>Węglowodany:</label>
+                            <Field
+                                name='carbohydrate'
+                                component={NumberField}
+                                min={0}
+                                max={100}
+                                step={0.1}/>
+                        </div>
+                        <div className='form__numberItem'>
+                            <label className='form__numberItem--label'>Tłuszcz:</label>
+                            <Field
+                                name='fat'
+                                component={NumberField}
+                                min={0}
+                                max={100}
+                                step={0.1}/>
+                        </div>
+                        <div className='form__numberItem'>
+                            <label className='form__numberItem--label'>Błonnik:</label>
+                            <Field
+                                name='fibre'
+                                component={NumberField}
+                                min={0}
+                                max={100}
+                                step={0.1}/>
+                        </div>
+                        <div className='form__numberItem'>
+                            <label className='form__numberItem--label'>Kcal:</label>
+                            <Field
+                                name='kcal'
+                                component={NumberField}
+                                min={0}
+                                max={900}
+                                step={1}/>
+                        </div>
+                        <Button className='form__button' type="primary" ghost htmlType='submit'>Submit</Button>
+                    </form>
+                </div>
             </div>
         );
     }

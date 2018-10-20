@@ -24,12 +24,14 @@ class ShowProductList extends Component {
                         key={item.id}
                         extra={
                             <div className='list__image--container'>
-                                <img width={272} alt="logo" src={item.imageUrl} className='list__image'/>
+                                <Link to={`/products/${item.id}`}>
+                                    <img width={272} alt="logo" src={item.imageUrl} className='list__image'/>
+                                </Link>
                             </div>}
                     >
                         <List.Item.Meta
                             title={<Link to={`/products/${item.id}`}>{item.name}</Link>}
-                            description={item.description}
+                            description={item.description.substring(0, 256) + (item.description.length > 256 ? '...' : '')}
                         />
                         {item.content}
                     </List.Item>

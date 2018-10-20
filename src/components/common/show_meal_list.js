@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from "react-router-dom";
 import {List, Icon} from 'antd';
+import './show_meal_list.css';
 
 
 const IconText = ({type, text}) => (
@@ -33,12 +34,14 @@ class ShowMealList extends Component {
                             <IconText type="message" text="2"/>]}
                         extra={
                             <div className='list__image--container'>
-                                <img width={272} alt="logo" src={item.imageUrl} className='list__image'/>
+                                <Link to={`/meals/${item.id}`}>
+                                    <img width={272} alt="logo" src={item.imageUrl} className='list__image'/>
+                                </Link>
                             </div>}
                     >
                         <List.Item.Meta
                             title={<Link to={`/meals/${item.id}`}>{item.name}</Link>}
-                            description={item.description}
+                            description={item.description.substring(0, 256) + (item.description.length > 256 ? '...' : '')}
                         />
                         {item.content}
                     </List.Item>

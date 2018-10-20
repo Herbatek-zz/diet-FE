@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {Icon} from 'antd';
 
 import {fetchProduct, setMenuItem} from "../../actions";
 import {LOADING_SPIN} from "../../helpers/messages";
+import './css/product_show.css';
 
 
 class ProductShow extends Component {
@@ -20,16 +22,40 @@ class ProductShow extends Component {
 
         return (
             <div className='content'>
-                <h4>Name: {product.name}</h4>
-                <h5>Description: {product.description}</h5>
-                <img src={product.imageUrl} alt='product' className='image-border-shadow'/>
-                <h5>Protein: {product.protein}</h5>
-                <h5>Carbohydrate: {product.carbohydrate}</h5>
-                <h5>Fat: {product.fat}</h5>
-                <h5>Fibre: {product.fibre}</h5>
-                <h5>Kcal: {product.kcal}</h5>
-                <h5>CE: {product.carbohydrateExchange}</h5>
-                <h5>PAFE: {product.proteinAndFatEquivalent}</h5>
+                <div className='productShow__content'>
+                    <div className='head'>
+                        <h2>{product.name}</h2>
+                        <div className='head__iconsMenu'>
+                            <span className='icon__span'>
+                                <Icon type="setting" theme="outlined"/>
+                                Edytuj
+                            </span>
+                            <span className='icon__span'>
+                                <Icon type="delete" theme="outlined"/>
+                                Usuń
+                            </span>
+                        </div>
+                    </div>
+                    <div className='body'>
+                            <div className='productShow__imageContainer'>
+                                <img src={product.imageUrl} alt='product' className='productShow__imageContainer--image'/>
+                            </div>
+                        <div className='productShow__description'>
+                            <h2>Opis:</h2>
+                            <h4>{product.description}</h4>
+                        </div>
+                        <div className='productShow__productInfo'>
+                            <h2>Informacje</h2>
+                            <h4>Białko: {Math.floor(product.protein)}</h4>
+                            <h4>Węglowodany: {Math.floor(product.carbohydrate)}</h4>
+                            <h4>Tłuszcz: {Math.floor(product.fat)}</h4>
+                            <h4>Błonnik: {Math.floor(product.fibre)}</h4>
+                            <h4>Kcal: {Math.floor(product.kcal)}</h4>
+                            <h4>WW: {product.carbohydrateExchange.toFixed(2)}</h4>
+                            <h4>WBT: {product.proteinAndFatEquivalent.toFixed(2)}</h4>
+                        </div>
+                    </div>
+                </div>
             </div>
         );
     }

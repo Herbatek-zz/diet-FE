@@ -32,7 +32,7 @@ class MealCreate extends Component {
         return (
             <div className='content'>
                 <div className='content__mealCreate'>
-                    <h1 className='mealCreate__title'>Tworzenie nowego posiłku</h1>
+                    <h1 className='form__title'>Tworzenie nowego posiłku</h1>
                     <form onSubmit={this.props.handleSubmit(this.onSubmit)} className='form' autoComplete='off'>
                         <Field
                             name='name'

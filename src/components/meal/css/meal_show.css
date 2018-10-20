@@ -116,6 +116,7 @@
 
     .head__menu {
         justify-content: flex-end;
+        width: 20%;
     }
 
     .head__title {
