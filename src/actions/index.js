@@ -214,9 +214,10 @@ export function fetchCart(date) {
     }
 }
 
-export function addMealToCart(mealId) {
+export function addMealToCart(mealId, date) {
     const userId = AuthService.getDecodedToken().sub;
-    const request = SecuredRequest.put(`/users/${userId}/carts?mealId=${mealId}`);
+    const dateRequest = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
+    const request = SecuredRequest.put(`/users/${userId}/carts/meals/${mealId}?date=${dateRequest}`);
 
     return {
         type: ADD_MEAL_TO_CART,
