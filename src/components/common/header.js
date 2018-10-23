@@ -64,7 +64,7 @@ class MyHeader extends Component {
             return (
                 <Item key='cart' className='menu__cart'>
                     <Link to={"/cart"}>
-                        <Badge count={this.props.cart.meals.length} style={{backgroundColor: '#1890ff'}}>
+                        <Badge count={this.props.cart.itemCounter} style={{backgroundColor: '#1890ff'}}>
                             <Icon type="shopping-cart" theme="outlined" style={{fontSize: '20px'}} className='no-margin'/>
                         </Badge>
                     </Link>

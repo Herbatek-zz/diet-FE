@@ -25,6 +25,9 @@ export const EDIT_MEAL = 'edit_meal';
 
 export const FETCH_CART = 'fetch_cart';
 export const ADD_MEAL_TO_CART = 'add_meal_to_cart';
+export const REMOVE_MEAL_FROM_CART = 'remove_meal_from_cart';
+export const ADD_PRODUCT_TO_CART = 'add_product_to_cart';
+export const REMOVE_PRODUCT_FROM_CART = 'remove_product_from_cart';
 
 export const SELECT_MENU_ITEM = 'select_menu_item';
 
@@ -214,13 +217,24 @@ export function fetchCart(date) {
     }
 }
 
-export function addMealToCart(mealId, date) {
+export function addMealToCart(mealId, date, amount) {
     const userId = AuthService.getDecodedToken().sub;
     const dateRequest = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
-    const request = SecuredRequest.put(`/users/${userId}/carts/meals/${mealId}?date=${dateRequest}`);
+    const request = SecuredRequest.put(`/users/${userId}/carts/meals/${mealId}?date=${dateRequest}&amount=${amount}`);
 
     return {
         type: ADD_MEAL_TO_CART,
+        payload: request
+    }
+}
+
+export function addProductToCart(productId, date, amount) {
+    const userId = AuthService.getDecodedToken().sub;
+    const dateRequest = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
+    const request = SecuredRequest.put(`/users/${userId}/carts/products/${productId}?date=${dateRequest}&amount=${amount}`);
+
+    return {
+        type: ADD_PRODUCT_TO_CART,
         payload: request
     }
 }

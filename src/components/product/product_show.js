@@ -1,13 +1,22 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Icon} from 'antd';
+import {Icon, InputNumber, Modal} from 'antd';
 
-import {fetchProduct, setMenuItem} from "../../actions";
+import {fetchProduct, setMenuItem, addProductToCart} from "../../actions";
 import {LOADING_SPIN} from "../../helpers/messages";
 import './css/product_show.css';
+import AddToCartIcon from "../meal/addToCartIcon";
+import AuthService from "../../helpers/auth_service";
 
 
 class ProductShow extends Component {
+    state = {
+        isLoggedIn: AuthService.isLogged(),
+        mealId: this.props.match.params.id,
+        modalVisible: false,
+        amount: 0
+    };
+
     componentDidMount() {
         this.props.setMenuItem('');
         this.props.fetchProduct(this.props.match.params.id);
@@ -26,6 +35,7 @@ class ProductShow extends Component {
                     <div className='head'>
                         <h2>{product.name}</h2>
                         <div className='head__iconsMenu'>
+                            {this.state.isLoggedIn ? <AddToCartIcon onClick={() => this.setState({modalVisible: true})}/> : ''}
                             <span className='icon__span'>
                                 <Icon type="setting" theme="outlined"/>
                                 Edytuj
@@ -36,6 +46,20 @@ class ProductShow extends Component {
                             </span>
                         </div>
                     </div>
+                    <Modal
+                        title="Wpisz ilość produktu [g]"
+                        visible={this.state.modalVisible}
+                        onOk={() => {
+                            this.props.addProductToCart(product.id, new Date(), this.state.amount);
+                            this.setState({modalVisible: false})
+                        }}
+                        onCancel={() => this.setState({modalVisible: false})}
+                    >
+                        <InputNumber min={0} value={this.state.amount} onChange={(value) => {
+                            this.setState({amount: value})
+                        }}/>
+
+                    </Modal>
                     <div className='body'>
                             <div className='productShow__imageContainer'>
                                 <img src={product.imageUrl} alt='product' className='productShow__imageContainer--image'/>
@@ -67,4 +91,4 @@ const mapStateToProps = ({products}, ownProps) => {
     }
 };
 
-export default connect(mapStateToProps, {fetchProduct, setMenuItem})(ProductShow);
+export default connect(mapStateToProps, {fetchProduct, setMenuItem, addProductToCart})(ProductShow);
