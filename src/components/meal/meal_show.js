@@ -11,7 +11,7 @@ import HearthIcon from './hearthIcon';
 import AddToCartIcon from './addToCartIcon';
 import EditIcon from './editIcon';
 import DeleteIcon from './deleteIcon';
-import {InputNumber, message, Modal} from "antd";
+import {InputNumber, Modal} from "antd";
 
 
 class MealShow extends Component {

@@ -1,6 +1,28 @@
-import Request from '../helpers/request';
-import SecuredRequest from '../helpers/secured_request';
-import AuthService from "../helpers/auth_service";
+import {fetchCart, addMealToCart, addProductToCart, removeMealFromCart, removeProductFromCart} from "./cartAction";
+import {
+    fetchMeal,
+    createMeal,
+    deleteMeal,
+    fetchMeals,
+    fetchMyMeals,
+    searchMeals,
+    fetchFavouriteMeals,
+    isFavouriteMeal,
+    addMealToFavourites,
+    removeMealFromFavourites,
+    editMeal
+} from "./mealAction";
+
+import {
+    createProduct,
+    fetchProduct,
+    deleteProduct,
+    fetchProducts,
+    searchProducts,
+    searchProductsInfinity,
+    fetchProductsInfinity,
+    fetchMyProducts
+} from "./productAction";
 
 export const CREATE_PRODUCT = 'create_product';
 export const FETCH_PRODUCT = 'fetch_product';
@@ -31,229 +53,58 @@ export const REMOVE_PRODUCT_FROM_CART = 'remove_product_from_cart';
 
 export const SELECT_MENU_ITEM = 'select_menu_item';
 
-export function createProduct(values, callback) {
-    const userId = AuthService.getDecodedToken().sub;
-    const request = SecuredRequest.post(`/users/${userId}/products`, values)
-        .then(() => callback());
-
-    return {
-        type: CREATE_PRODUCT,
-        payload: request
-    }
-}
-
-export function fetchProduct(id) {
-    const request = Request.get(`/products/${id}`);
-
-    return {
-        type: FETCH_PRODUCT,
-        payload: request
-    }
-}
-
-export function deleteProduct(id, callback) {
-    SecuredRequest.delete(`/products/${id}`)
-        .then(() => callback());
-
-    return {
-        type: DELETE_PRODUCT,
-        payload: id
-    }
-}
-
-export function fetchProducts(page, pageSize) {
-    const request = Request.get(`/products?page=${page}&size=${pageSize}`);
-
-    return {
-        type: FETCH_PRODUCTS,
-        payload: request
-    }
-}
-
-export function fetchProductsInfinity(page, pageSize) {
-    const request = Request.get(`/products?page=${page}&size=${pageSize}`);
-
-    return {
-        type: FETCH_PRODUCTS_INFINITY,
-        payload: request
-    }
-}
-
-export function fetchMyProducts(page, pageSize) {
-    const userId = AuthService.getDecodedToken().sub;
-    const request = Request.get(`/users/${userId}/products?page=${page}&size=${pageSize}`);
-
-    return {
-        type: FETCH_MY_PRODUCTS,
-        payload: request
-    }
-}
-
-export function searchProducts(query, page, pageSize) {
-    const request = Request.get(`/products/search?query=${query}&page=${page}&size=${pageSize}`);
-
-    return {
-        type: SEARCH_PRODUCTS,
-        payload: request
-    }
-}
-
-export function searchProductsInfinity(query, page, pageSize) {
-    const request = Request.get(`/products/search?query=${query}&page=${page}&size=${pageSize}`);
-
-    return {
-        type: SEARCH_PRODUCTS_INFINITY,
-        payload: request
-    }
-}
-
-
-export function createMeal(values, callback) {
-    const userId = AuthService.getDecodedToken().sub;
-    const request = SecuredRequest.post(`/users/${userId}/meals`, values)
-        .then(() => callback());
-
-    return {
-        type: CREATE_MEAL,
-        payload: request
-    }
-}
-
-export function deleteMeal(id, callback) {
-    SecuredRequest.delete(`/meals/${id}`)
-        .then(() => callback());
-
-    return {
-        type: DELETE_MEAL,
-        payload: id
-    }
-}
-
-export function fetchMeal(id) {
-    const request = Request.get(`/meals/${id}`);
-
-    return {
-        type: FETCH_MEAL,
-        payload: request
-    }
-}
-
-export function fetchMeals(page, pageSize) {
-    const request = Request.get(`/meals?page=${page}&size=${pageSize}`);
-
-    return {
-        type: FETCH_MEALS,
-        payload: request
-    }
-}
-
-export function fetchMyMeals(page, pageSize) {
-    const userId = AuthService.getDecodedToken().sub;
-    const request = Request.get(`/users/${userId}/meals?page=${page}&size=${pageSize}`);
-
-    return {
-        type: FETCH_MY_MEALS,
-        payload: request
-    }
-}
-
-export function searchMeals(query, page, pageSize) {
-    const request = Request.get(`/meals/search?query=${query}&page=${page}&size=${pageSize}`);
-
-    return {
-        type: SEARCH_MEALS,
-        payload: request
-    }
-}
-
-export function fetchFavouriteMeals(page, pageSize) {
-    const userId = AuthService.getDecodedToken().sub;
-    const request = Request.get(`/users/${userId}/meals/favourites?page=${page}&size=${pageSize}`);
-
-    return {
-        type: FETCH_FAVOURITE_MEALS,
-        payload: request
-    }
-}
-
-export function isFavouriteMeal(mealId) {
-    const userId = AuthService.getDecodedToken().sub;
-    const request = SecuredRequest.get(`/users/${userId}/meals/${mealId}/favourites`);
-
-    return {
-        type: IS_FAVOURITE_MEAL,
-        payload: request
-    }
-}
-
-export function addMealToFavourites(mealId) {
-    const userId = AuthService.getDecodedToken().sub;
-    const request = SecuredRequest.post(`/users/${userId}/meals/${mealId}/favourites`);
-
-    return {
-        type: ADD_MEAL_TO_FAVOURITES,
-        payload: request
-    }
-}
-
-export function removeMealFromFavourites(mealId) {
-    const userId = AuthService.getDecodedToken().sub;
-    const request = SecuredRequest.delete(`/users/${userId}/meals/${mealId}/favourites`);
-
-    return {
-        type: REMOVE_MEAL_FROM_FAVOURITES,
-        payload: request
-    }
-}
-
-export function fetchCart(date) {
-    const userId = AuthService.getDecodedToken().sub;
-    const dateRequest = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
-    const request = SecuredRequest.get(`/users/${userId}/carts?date=${dateRequest}`);
-
-    return {
-        type: FETCH_CART,
-        payload: request
-    }
-}
-
-export function addMealToCart(mealId, date, amount) {
-    const userId = AuthService.getDecodedToken().sub;
-    const dateRequest = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
-    const request = SecuredRequest.put(`/users/${userId}/carts/meals/${mealId}?date=${dateRequest}&amount=${amount}`);
-
-    return {
-        type: ADD_MEAL_TO_CART,
-        payload: request
-    }
-}
-
-export function addProductToCart(productId, date, amount) {
-    const userId = AuthService.getDecodedToken().sub;
-    const dateRequest = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
-    const request = SecuredRequest.put(`/users/${userId}/carts/products/${productId}?date=${dateRequest}&amount=${amount}`);
-
-    return {
-        type: ADD_PRODUCT_TO_CART,
-        payload: request
-    }
-}
-
-export function editMeal(update, callback) {
-    const request = SecuredRequest.put(`/meals/${update.id}`, update)
-        .then(() => callback());
-
-    return {
-        type: EDIT_MEAL,
-        payload: request
-    }
-}
-
-
 export function setMenuItem(menuItem) {
     return {
         type: SELECT_MENU_ITEM,
         payload: menuItem
     }
 }
+
+export{createProduct}
+
+export {fetchProduct}
+
+export {deleteProduct}
+
+export {fetchProducts}
+
+export {fetchProductsInfinity}
+
+export {fetchMyProducts}
+
+export {searchProducts}
+
+export {searchProductsInfinity}
+
+export {createMeal}
+
+export {deleteMeal}
+
+export {fetchMeal}
+
+export {fetchMeals}
+
+export {fetchMyMeals}
+
+export {searchMeals}
+
+export {fetchFavouriteMeals}
+
+export {isFavouriteMeal}
+
+export {addMealToFavourites}
+
+export {removeMealFromFavourites}
+
+export {editMeal}
+
+export {fetchCart}
+
+export {addMealToCart}
+
+export {addProductToCart}
+
+export {removeMealFromCart}
+
+export {removeProductFromCart}
 
