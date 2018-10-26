@@ -7,8 +7,7 @@ import {
     FETCH_MY_PRODUCTS,
     SEARCH_PRODUCTS,
     FETCH_PRODUCTS_INFINITY,
-    SEARCH_PRODUCTS_INFINITY
-} from "../actions";
+    SEARCH_PRODUCTS_INFINITY} from "../actions";
 
 
 export default (state = {content: {}}, action) => {

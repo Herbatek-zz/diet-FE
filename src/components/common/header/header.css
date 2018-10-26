@@ -1,7 +1,6 @@
 .ant-menu-horizontal {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 25px !important;
 }
 
 .menu__logo {
@@ -34,7 +33,6 @@
 
     .ant-menu-horizontal {
         justify-content: flex-start;
-        margin-bottom: 25px !important;
     }
 
     .menu__logo {

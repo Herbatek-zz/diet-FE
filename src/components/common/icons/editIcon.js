@@ -2,10 +2,12 @@ import {Link} from "react-router-dom";
 import {Icon} from "antd";
 import React from "react";
 
-export default ({mealId}) => {
+import './icons.css'
+
+export default ({link}) => {
     return (
-        <Link to={`/meals/${mealId}/edit`}>
-            <span className='head__span'>
+        <Link to={link}>
+            <span className='header-icon'>
                 <Icon type="setting"/>
                 Edytuj
             </span>

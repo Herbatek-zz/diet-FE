@@ -7,7 +7,7 @@ import {TextField, TextAreaField} from 'redux-form-antd';
 import AuthService from '../../helpers/auth_service';
 import {createMeal, setMenuItem} from "../../actions";
 import {NO_LOGGED_MESSAGE} from '../../helpers/messages';
-import '../common/css/form.css';
+import '../common/form.css';
 
 class MealCreate extends Component {
     state = {
@@ -30,31 +30,29 @@ class MealCreate extends Component {
             return <div className='content'>{NO_LOGGED_MESSAGE}</div>;
 
         return (
-            <div className='content'>
-                <div className='content__mealCreate'>
-                    <h1 className='form__title'>Tworzenie nowego posiłku</h1>
-                    <form onSubmit={this.props.handleSubmit(this.onSubmit)} className='form' autoComplete='off'>
-                        <Field
-                            name='name'
-                            component={TextField}
-                            placeholder='Nazwa'/>
-                        <Field
-                            name='imageUrl'
-                            component={TextField}
-                            placeholder='Link do zdjęcia'/>
-                        <Field
-                            name='description'
-                            rows={4}
-                            component={TextAreaField}
-                            placeholder='Opis'/>
-                        <Field
-                            name='recipe'
-                            rows={6}
-                            component={TextAreaField}
-                            placeholder='Przepis'/>
-                        <Button className='form__button' type="primary" ghost htmlType='submit'>Submit</Button>
-                    </form>
-                </div>
+            <div className='content__mealCreate'>
+                <h1 className='form__title'>Tworzenie nowego posiłku</h1>
+                <form onSubmit={this.props.handleSubmit(this.onSubmit)} className='form' autoComplete='off'>
+                    <Field
+                        name='name'
+                        component={TextField}
+                        placeholder='Nazwa'/>
+                    <Field
+                        name='imageUrl'
+                        component={TextField}
+                        placeholder='Link do zdjęcia'/>
+                    <Field
+                        name='description'
+                        rows={4}
+                        component={TextAreaField}
+                        placeholder='Opis'/>
+                    <Field
+                        name='recipe'
+                        rows={6}
+                        component={TextAreaField}
+                        placeholder='Przepis'/>
+                    <Button className='form__button' type="primary" ghost htmlType='submit'>Submit</Button>
+                </form>
             </div>
         )
     }

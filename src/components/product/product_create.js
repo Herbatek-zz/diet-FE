@@ -7,7 +7,7 @@ import {Button, message} from 'antd';
 import AuthService from '../../helpers/auth_service';
 import {createProduct, setMenuItem} from "../../actions";
 import {NO_LOGGED_MESSAGE} from "../../helpers/messages";
-import '../common/css/form.css';
+import '../common/form.css';
 
 
 class ProductCreate extends Component {
@@ -32,71 +32,69 @@ class ProductCreate extends Component {
             return <div className='content'>{NO_LOGGED_MESSAGE}</div>;
 
         return (
-            <div className='content'>
-                <div className='content__productCreate'>
-                    <h1 className='form__title'>Tworzenie nowego produktu</h1>
-                    <form onSubmit={this.props.handleSubmit(this.onSubmit)} className='form' autoComplete='off'>
+            <div className='content__productCreate'>
+                <h1 className='form__title'>Tworzenie nowego produktu</h1>
+                <form onSubmit={this.props.handleSubmit(this.onSubmit)} className='form' autoComplete='off'>
+                    <Field
+                        name='name'
+                        component={TextField}
+                        placeholder='Nazwa'/>
+                    <Field
+                        name='imageUrl'
+                        component={TextField}
+                        placeholder='Link do zdjęcia'/>
+                    <Field
+                        name='description'
+                        rows={4}
+                        component={TextAreaField}
+                        placeholder='Opis'/>
+                    <div className='form__numberItem'>
+                        <label className='form__numberItem--label'>Białko:</label>
                         <Field
-                            name='name'
-                            component={TextField}
-                            placeholder='Nazwa'/>
+                            name='protein'
+                            component={NumberField}
+                            min={0}
+                            max={100}
+                            step={0.1}/>
+                    </div>
+                    <div className='form__numberItem'>
+                        <label className='form__numberItem--label'>Węglowodany:</label>
                         <Field
-                            name='imageUrl'
-                            component={TextField}
-                            placeholder='Link do zdjęcia'/>
+                            name='carbohydrate'
+                            component={NumberField}
+                            min={0}
+                            max={100}
+                            step={0.1}/>
+                    </div>
+                    <div className='form__numberItem'>
+                        <label className='form__numberItem--label'>Tłuszcz:</label>
                         <Field
-                            name='description'
-                            rows={4}
-                            component={TextAreaField}
-                            placeholder='Opis'/>
-                        <div className='form__numberItem'>
-                            <label className='form__numberItem--label'>Białko:</label>
-                            <Field
-                                name='protein'
-                                component={NumberField}
-                                min={0}
-                                max={100}
-                                step={0.1}/>
-                        </div>
-                        <div className='form__numberItem'>
-                            <label className='form__numberItem--label'>Węglowodany:</label>
-                            <Field
-                                name='carbohydrate'
-                                component={NumberField}
-                                min={0}
-                                max={100}
-                                step={0.1}/>
-                        </div>
-                        <div className='form__numberItem'>
-                            <label className='form__numberItem--label'>Tłuszcz:</label>
-                            <Field
-                                name='fat'
-                                component={NumberField}
-                                min={0}
-                                max={100}
-                                step={0.1}/>
-                        </div>
-                        <div className='form__numberItem'>
-                            <label className='form__numberItem--label'>Błonnik:</label>
-                            <Field
-                                name='fibre'
-                                component={NumberField}
-                                min={0}
-                                max={100}
-                                step={0.1}/>
-                        </div>
-                        <div className='form__numberItem'>
-                            <label className='form__numberItem--label'>Kcal:</label>
-                            <Field
-                                name='kcal'
-                                component={NumberField}
-                                min={0}
-                                max={900}
-                                step={1}/>
-                        </div>
-                        <Button className='form__button' type="primary" ghost htmlType='submit'>Submit</Button>
-                    </form>
-                </div>
+                            name='fat'
+                            component={NumberField}
+                            min={0}
+                            max={100}
+                            step={0.1}/>
+                    </div>
+                    <div className='form__numberItem'>
+                        <label className='form__numberItem--label'>Błonnik:</label>
+                        <Field
+                            name='fibre'
+                            component={NumberField}
+                            min={0}
+                            max={100}
+                            step={0.1}/>
+                    </div>
+                    <div className='form__numberItem'>
+                        <label className='form__numberItem--label'>Kcal:</label>
+                        <Field
+                            name='kcal'
+                            component={NumberField}
+                            min={0}
+                            max={900}
+                            step={1}/>
+                    </div>
+                    <Button className='form__button' type="primary" ghost htmlType='submit'>Submit</Button>
+                </form>
             </div>
         );
     }

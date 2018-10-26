@@ -29,7 +29,7 @@ class ShowMealList extends Component {
                 dataSource={Object.values(content)}
                 renderItem={item => (
                     <List.Item
-                        key={item.id}
+                        key={item.id} className='listItem'
                         actions={[<IconText type="star-o" text="156"/>, <IconText type="like-o" text="156"/>,
                             <IconText type="message" text="2"/>]}
                         extra={
@@ -40,7 +40,7 @@ class ShowMealList extends Component {
                             </div>}
                     >
                         <List.Item.Meta
-                            title={<Link to={`/meals/${item.id}`}>{item.name}</Link>}
+                            title={<Link to={`/meals/${item.id}`}><b>{item.name}</b></Link>}
                             description={item.description.substring(0, 256) + (item.description.length > 256 ? '...' : '')}
                         />
                         {item.content}

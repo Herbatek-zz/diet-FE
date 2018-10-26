@@ -163,105 +163,102 @@ class MealEdit extends Component {
         const {content} = this.props.products;
 
         return (
-            <div className='content'>
-                <div className='editMeal__content'>
-                    <div className='editMeal__head'>
-                        <Input value={name ? name : meal.name}
-                               onChange={(e) => this.setState({name: e.target.value})}
-                               className='editMeal__head--name'/>
-                    </div>
-                    <div className='editMeal__body'>
-                        <div className='editMeal__displayMeal'>
-                            <div className='editMeal__displayMeal--first'>
-                                <div className='editMeal__imageContainer'>
-                                    <img src={meal.imageUrl} alt={meal.name} className='editMeal__imageContainer--image'/>
-                                </div>
-                                <div className='editMeal__info--core'>
-                                    <h2>Informacje o posiłku</h2>
-                                    <h4>Białko: {Math.round(this.state.protein)}</h4>
-                                    <h4>Węglowodany: {Math.round(this.state.carbohydrate)}</h4>
-                                    <h4>Tłuszcz: {Math.round(this.state.fat)}</h4>
-                                    <h4>Błonnik: {Math.round(this.state.fibre)}</h4>
-                                    <h4>Kcal: {Math.round(this.state.kcal)}</h4>
-                                    <h4>WW: {this.state.carbohydrateExchange.toFixed(2)}</h4>
-                                    <h4>WBT: {this.state.proteinAndFatEquivalent.toFixed(2)}</h4>
-                                </div>
+            <div className='editMeal__content'>
+                <div className='editMeal__head'>
+                    <Input value={name ? name : meal.name}
+                           onChange={(e) => this.setState({name: e.target.value})}
+                           className='editMeal__head--name'/>
+                </div>
+                <div className='editMeal__body'>
+                    <div className='editMeal__displayMeal'>
+                        <div className='editMeal__displayMeal--first'>
+                            <div className='editMeal__imageContainer'>
+                                <img src={meal.imageUrl} alt={meal.name} className='editMeal__imageContainer--image'/>
                             </div>
-                            <div className='editMeal__displayMeal--second'>
-                                <div className='editMeal__description'>
-                                    <h2>Opis</h2>
-                                    <TextArea
-                                        value={this.state.description ? this.state.description : meal.description}
-                                        onChange={(e) => this.setState({description: e.target.value})}
-                                        rows={6}/>
-                                </div>
-                                <div className='editMeal__recipe'>
-                                    <h2>Przepis</h2>
-                                    <TextArea value={this.state.recipe ? this.state.recipe : meal.recipe}
-                                              onChange={(e) => this.setState({recipe: e.target.value})}
-                                              rows={6}/>
-                                </div>
+                            <div className='editMeal__info--core'>
+                                <h2>Informacje o posiłku</h2>
+                                <h4>Białko: {Math.round(this.state.protein)}</h4>
+                                <h4>Węglowodany: {Math.round(this.state.carbohydrate)}</h4>
+                                <h4>Tłuszcz: {Math.round(this.state.fat)}</h4>
+                                <h4>Błonnik: {Math.round(this.state.fibre)}</h4>
+                                <h4>Kcal: {Math.round(this.state.kcal)}</h4>
+                                <h4>WW: {this.state.carbohydrateExchange.toFixed(2)}</h4>
+                                <h4>WBT: {this.state.proteinAndFatEquivalent.toFixed(2)}</h4>
                             </div>
                         </div>
-                        <Modal
-                            title="Wpisz ilość produktu [g]"
-                            visible={this.state.modalVisible}
-                            onOk={() => {
-                                const {productToAdd} = this.state;
-                                this.setState({products: [...this.state.products, productToAdd]});
+                        <div className='editMeal__displayMeal--second'>
+                            <div className='editMeal__description'>
+                                <h2>Opis</h2>
+                                <TextArea
+                                    value={this.state.description ? this.state.description : meal.description}
+                                    onChange={(e) => this.setState({description: e.target.value})}
+                                    rows={6}/>
+                            </div>
+                            <div className='editMeal__recipe'>
+                                <h2>Przepis</h2>
+                                <TextArea value={this.state.recipe ? this.state.recipe : meal.recipe}
+                                          onChange={(e) => this.setState({recipe: e.target.value})}
+                                          rows={6}/>
+                            </div>
+                        </div>
+                    </div>
+                    <Modal
+                        title="Wpisz ilość produktu [g]"
+                        visible={this.state.modalVisible}
+                        onOk={() => {
+                            const {productToAdd} = this.state;
+                            this.setState({products: [...this.state.products, productToAdd]});
+                            this.setState({
+                                productToAdd: {},
+                                modalVisible: false,
+                                protein: this.state.protein + productToAdd.protein * productToAdd.amount / 100,
+                                carbohydrate: this.state.carbohydrate + productToAdd.carbohydrate * productToAdd.amount / 100,
+                                fat: this.state.fat + productToAdd.fat * productToAdd.amount / 100,
+                                fibre: this.state.fibre + productToAdd.fibre * productToAdd.amount / 100,
+                                kcal: this.state.kcal + productToAdd.kcal * productToAdd.amount / 100,
+                                carbohydrateExchange: this.state.carbohydrateExchange + productToAdd.carbohydrateExchange * productToAdd.amount / 100,
+                                proteinAndFatEquivalent: this.state.proteinAndFatEquivalent + productToAdd.proteinAndFatEquivalent * productToAdd.amount / 100,
+                            });
+                            message.success("Dodano produkt");
+
+                        }}
+                        onCancel={() => this.setState({modalVisible: false})}
+                    >
+                        <InputNumber min={0} max={900} value={this.state.productToAdd.amount} onChange={(value) => {
+                            this.setState({
+                                productToAdd: {...this.state.productToAdd, amount: value}
+                            })
+                            ;
+                        }}/>
+
+                    </Modal>
+                    <div className='editMeal_searchProducts'>
+                        <div className='editMeal__products'>
+                            <h2>Produkty</h2>
+                            {_.map(this.state.products, product =>
+                                <Tag key={product.id} style={{marginBottom: '5px'}} closable
+                                     onClose={() => this.onCloseTag(product)}>
+                                    <Link to={`/products/${product.id}`}>{product.name}</Link>
+                                </Tag>
+                            )}
+                        </div>
+                        <Search
+                            placeholder="Wyszukaj produkt"
+                            onSearch={searchValue => {
+                                this.props.searchProducts(searchValue, 0, pageSize);
                                 this.setState({
-                                    productToAdd: {},
-                                    modalVisible: false,
-                                    protein: this.state.protein + productToAdd.protein * productToAdd.amount / 100,
-                                    carbohydrate: this.state.carbohydrate + productToAdd.carbohydrate * productToAdd.amount / 100,
-                                    fat: this.state.fat + productToAdd.fat * productToAdd.amount / 100,
-                                    fibre: this.state.fibre + productToAdd.fibre * productToAdd.amount / 100,
-                                    kcal: this.state.kcal + productToAdd.kcal * productToAdd.amount / 100,
-                                    carbohydrateExchange: this.state.carbohydrateExchange + productToAdd.carbohydrateExchange * productToAdd.amount / 100,
-                                    proteinAndFatEquivalent: this.state.proteinAndFatEquivalent + productToAdd.proteinAndFatEquivalent * productToAdd.amount / 100,
+                                    searched: true
                                 });
-                                message.success("Dodano produkt");
-
                             }}
-                            onCancel={() => this.setState({modalVisible: false})}
-                        >
-                            <InputNumber min={0} max={900} value={this.state.productToAdd.amount} onChange={(value) => {
-                                this.setState({
-                                    productToAdd: {...this.state.productToAdd, amount: value}
-                                })
-                                ;
-                            }}/>
+                            onChange={(e) => this.setState({searchValue: e.target.value})}
+                            value={searchValue}
+                            enterButton
+                            size="large"
+                            className='search'
+                        />
+                        {!content ? <div className='content loading-spin'><Spin size='large'/></div> : this.renderCollapse()}
 
-                        </Modal>
-                        <div className='editMeal_searchProducts'>
-                            <div className='editMeal__products'>
-                                <h2>Produkty</h2>
-                                {_.map(this.state.products, product =>
-                                    <Tag key={product.id} style={{marginBottom: '5px'}} closable
-                                         onClose={() => this.onCloseTag(product)}>
-                                        <Link to={`/products/${product.id}`}>{product.name}</Link>
-                                    </Tag>
-                                )}
-                            </div>
-                            <Search
-                                placeholder="Szukaj produktów"
-                                onSearch={searchValue => {
-                                    this.props.searchProducts(searchValue, 0, pageSize);
-                                    this.setState({
-                                        searched: true
-                                    });
-                                }}
-                                onChange={(e) => this.setState({searchValue: e.target.value})}
-                                value={searchValue}
-                                enterButton
-                                size="large"
-                                className='search'
-                            />
-                            {!content ? <div className='content loading-spin'><Spin size='large'/></div> : this.renderCollapse()}
-
-                        </div>
                     </div>
-
                 </div>
                 <Button onClick={this.clickOnSaveButton} type='primary' size='large' className='saveButton'>Zapisz zmiany</Button>
             </div>

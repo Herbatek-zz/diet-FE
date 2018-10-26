@@ -24,28 +24,26 @@ class ProductList extends Component {
         const {searchValue, pageSize} = this.state;
 
         return (
-            <div className='content'>
-                <div className='content__wrap--productList'>
-                    <div className='productsList__menu'>
-                        <h1>Lista wszystkich produktów</h1>
-                        <Search
-                            placeholder="Search products"
-                            onSearch={value => {
-                                this.props.searchProducts(value, 0, pageSize);
-                                this.setState({
-                                    searched: true
-                                });
-                            }}
-                            onChange={(e) => this.setState({searchValue: e.target.value})}
-                            value={searchValue}
-                            enterButton
-                            size="large"
-                        />
-                    </div>
-                    <div className='products__list'>
-                        {Object.keys(this.props.products.content).length === 0 ? LOADING_SPIN :
-                            <ShowProductList products={this.props.products} onChange={this.onChange}/>}
-                    </div>
+            <div className='content__wrap--productList'>
+                <div className='productsList__menu'>
+                    <h1>Lista wszystkich produktów</h1>
+                    <Search
+                        placeholder="Wyszukaj produkt"
+                        onSearch={value => {
+                            this.props.searchProducts(value, 0, pageSize);
+                            this.setState({
+                                searched: true
+                            });
+                        }}
+                        onChange={(e) => this.setState({searchValue: e.target.value})}
+                        value={searchValue}
+                        enterButton
+                        size="large"
+                    />
+                </div>
+                <div className='products__list'>
+                    {Object.keys(this.props.products.content).length === 0 ? LOADING_SPIN :
+                        <ShowProductList products={this.props.products} onChange={this.onChange}/>}
                 </div>
             </div>
         );

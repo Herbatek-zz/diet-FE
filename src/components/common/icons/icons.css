@@ -1,0 +1,15 @@
+.header-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    margin-right: 30px;
+}
+
+.header-icon > i {
+    font-size: 30px;
+}
+
+.icon--red {
+    color: red;
+}

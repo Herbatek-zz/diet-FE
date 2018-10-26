@@ -6,6 +6,7 @@ import {fetchCart, setMenuItem} from "../../actions";
 import AuthService from "../../helpers/auth_service";
 import {LOADING_SPIN, NO_LOGGED_MESSAGE} from "../../helpers/messages";
 import './show_cart.css';
+import {Link} from "react-router-dom";
 
 
 class Show_cart extends Component {
@@ -35,42 +36,85 @@ class Show_cart extends Component {
                     <div className='showCart__mealsAndProducts'>
                         <div className='mealAndProducts__meals'>
                             <h2>Posiłki</h2>
-                            {<ul>
+                            {<table className='mealAndProducts__meals--table'>
+                                <thead>
+                                <tr>
+                                    <th/>
+                                    <th>Nazwa</th>
+                                    <th>Waga</th>
+                                    <th/>
+                                </tr>
+                                </thead>
+                                <tbody>
                                 {_.map(this.props.cart.meals, meal => {
                                     return (
-                                        <li key={meal.id}>
-                                            {meal.name + ": " + meal.amount + "g"}
-                                        </li>
+                                        <tr key={meal.id} className='mealAndProducts__meals--tableRow'>
+                                            <td className='cart__td--image'>
+                                                <Link to={`/meals/${meal.id}`}>
+                                                    <img src={meal.imageUrl} className='cart__image' alt={meal.name}/>
+                                                </Link>
+                                            </td>
+                                            <td><Link to={`/meals/${meal.id}`}>{meal.name}</Link></td>
+                                            <td>{meal.amount + "g"}</td>
+                                            <td>usuń</td>
+                                        </tr>
                                     )
                                 })}
-                            </ul>
+                                </tbody>
+                            </table>
                             }
                         </div>
                         < div className='mealAndProducts__products'>
                             <h2>Produkty</h2>
-                            {<ul>
+                            {<table className='mealAndProducts__products--table'>
+                                <thead>
+                                <tr>
+                                    <th/>
+                                    <th>Nazwa</th>
+                                    <th>Waga</th>
+                                    <th/>
+                                </tr>
+                                </thead>
+                                <tbody>
                                 {_.map(this.props.cart.products, product => {
                                     return (
-                                        <li key={product.id}>
-                                            {product.name + ": " + product.amount + "g" }
-                                        </li>
+                                        <tr key={product.id} className='mealAndProducts__products--tableRow'>
+                                            <td className='cart__td--image'>
+                                                <Link to={`/products/${product.id}`}>
+                                                    <img src={product.imageUrl} className='cart__image' alt={product.name}/>
+                                                </Link>
+                                            </td>
+                                            <td><Link to={`/products/${product.id}`}>{product.name}</Link></td>
+                                            <td>{product.amount + "g"}</td>
+                                            <td>Usuń</td>
+                                        </tr>
                                     )
                                 })}
-                            </ul>
+                                </tbody>
+                            </table>
                             }
                         </div>
                     </div>
                     <div className='showCart__allProducts'>
                         <h2>Wszystkie produkty</h2>
-                        {<ul>
+                        {<table className='showCart__allProducts--table'>
+                            <thead>
+                            <tr>
+                                <th>Nazwa</th>
+                                <th>Waga</th>
+                            </tr>
+                            </thead>
+                            <tbody>
                             {_.map(this.props.cart.allProducts, product => {
                                 return (
-                                    <li key={product.id}>
-                                        {product.name + ": " + product.amount + "g"}
-                                    </li>
+                                    <tr key={product.id} className='showCart__allProducts--tableRow'>
+                                        <td><Link to={`/products/${product.id}`}>{product.name}</Link></td>
+                                        <td>{product.amount + "g"}</td>
+                                    </tr>
                                 )
                             })}
-                        </ul>
+                            </tbody>
+                        </table>
                         }
                     </div>
                     <div className='showCart__info'>

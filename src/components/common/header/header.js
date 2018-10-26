@@ -2,10 +2,10 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import {Menu, Icon, message, Badge} from 'antd';
 
-import AuthService from '../../helpers/auth_service';
-import './css/header.css';
+import AuthService from '../../../helpers/auth_service';
+import './header.css';
 import connect from "react-redux/es/connect/connect";
-import {fetchCart} from "../../actions";
+import {fetchCart} from "../../../actions";
 import Avatar from './avatar';
 
 const {SubMenu, Item} = Menu;

@@ -6,8 +6,8 @@ import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import promise from 'redux-promise';
 import {Layout} from 'antd';
 
-import Footer from './components/common/footer';
-import Header from './components/common/header';
+import Footer from './components/common/footer/footer';
+import Header from './components/common/header/header';
 import Dashboard from './components/dashboard';
 import ProductShow from './components/product/product_show';
 import ProductCreate from './components/product/product_create';
@@ -31,20 +31,23 @@ ReactDOM.render(
         <BrowserRouter>
             <Layout>
                 <Header/>
-                <Switch>
-                    <Route path='/cart' component={ShowCart}/>
-                    <Route path='/meals/favourite' component={MealFavourite} />
-                    <Route path='/meals/:id/edit' component={MealEdit}/>
-                    <Route path='/meals/my' component={MealMyList}/>
-                    <Route path='/meals/new' component={MealCreate}/>
-                    <Route path='/meals/:id' component={MealShow}/>
-                    <Route path='/meals' component={MealList}/>
-                    <Route path='/products/my' component={ProductMyList}/>
-                    <Route path='/products/new' component={ProductCreate}/>
-                    <Route path='/products/:id' component={ProductShow}/>
-                    <Route path='/products' component={ProductList}/>
-                    <Route path='/' component={Dashboard}/>
-                </Switch>
+                <div className='content'>
+                    <Switch>
+                        <Route path='/cart' component={ShowCart}/>
+                        <Route path='/meals/favourite' component={MealFavourite}/>
+                        <Route path='/meals/:id/edit' component={MealEdit}/>
+                        <Route path='/meals/my' component={MealMyList}/>
+                        <Route path='/meals/new' component={MealCreate}/>
+                        <Route path='/meals/:id' component={MealShow}/>
+                        <Route path='/meals' component={MealList}/>
+                        <Route path='/products/my' component={ProductMyList}/>
+                        <Route path='/products/new' component={ProductCreate}/>
+                        <Route path='/products/:id' component={ProductShow}/>
+                        <Route path='/products' component={ProductList}/>
+                        <Route path='/' component={Dashboard}/>
+
+                    </Switch>
+                </div>
                 <Footer/>
             </Layout>
         </BrowserRouter>

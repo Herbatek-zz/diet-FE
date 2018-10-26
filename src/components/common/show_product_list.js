@@ -20,7 +20,7 @@ class ShowProductList extends Component {
                 }}
                 dataSource={Object.values(content)}
                 renderItem={item => (
-                    <List.Item
+                    <List.Item className='listItem'
                         key={item.id}
                         extra={
                             <div className='list__image--container'>
@@ -30,7 +30,7 @@ class ShowProductList extends Component {
                             </div>}
                     >
                         <List.Item.Meta
-                            title={<Link to={`/products/${item.id}`}>{item.name}</Link>}
+                            title={<Link to={`/products/${item.id}`}><b>{item.name}</b></Link>}
                             description={item.description.substring(0, 256) + (item.description.length > 256 ? '...' : '')}
                         />
                         {item.content}

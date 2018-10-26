@@ -15,18 +15,6 @@
     text-align: center;
 }
 
-.head__span > i {
-    font-size: 30px;
-}
-
-.head__span {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    cursor: pointer;
-    margin-right: 30px;
-}
-
 .head__menu {
     font-size: 10px;
     display: flex;

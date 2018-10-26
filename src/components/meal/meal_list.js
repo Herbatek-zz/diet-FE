@@ -30,28 +30,26 @@ class MealList extends Component {
         const {searchValue, pageSize} = this.state;
 
         return (
-            <div className='content'>
-                <div className='content__wrap--mealList'>
-                    <div className='header'>
-                        <h1>Lista wszystkich posiłków</h1>
-                        <Search
-                            placeholder="Search meals"
-                            onSearch={value => {
-                                this.props.searchMeals(value, 0, pageSize);
-                                this.setState({
-                                    searched: true
-                                });
-                            }}
-                            onChange={e => this.setState({searchValue: e.target.value})}
-                            value={searchValue}
-                            enterButton
-                            size="large"
-                        />
-                    </div>
-                    <div className='meal-list'>
-                        {Object.keys(this.props.meals.content).length === 0 ? LOADING_SPIN :
-                            <ShowMealList meals={this.props.meals} onChange={this.onChange}/>}
-                    </div>
+            <div className='content__mealList'>
+                <div className='header'>
+                    <h1>Lista posiłków</h1>
+                    <Search
+                        placeholder="Wyszukaj posiłek"
+                        onSearch={value => {
+                            this.props.searchMeals(value, 0, pageSize);
+                            this.setState({
+                                searched: true
+                            });
+                        }}
+                        onChange={e => this.setState({searchValue: e.target.value})}
+                        value={searchValue}
+                        enterButton
+                        size="large"
+                    />
+                </div>
+                <div className='meal-list'>
+                    {Object.keys(this.props.meals.content).length === 0 ? LOADING_SPIN :
+                        <ShowMealList meals={this.props.meals} onChange={this.onChange}/>}
                 </div>
             </div>
         );

@@ -20,6 +20,17 @@ html,body
     margin: auto;
     width: 100%;
     min-height: 84vh;
+    background-image: url("../img/background11.jpg");
+}
+
+.content__loadingSpin {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+    width: 100%;
+    min-height: 84vh;
 }
 
 .loading-spin {

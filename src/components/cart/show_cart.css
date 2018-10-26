@@ -1,8 +1,112 @@
+.content__showCart {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border: 1px green solid;
+}
 
+.showCart__mealsAndProducts {
+    border: 1px red solid;
+    display: flex;
+    flex-direction: column;
+}
+
+.mealAndProducts__meals {
+    border: 1px gray solid;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.mealAndProducts__meals--table {
+    border: 1px red solid;
+    width: 100%;
+}
+
+.mealAndProducts__meals--tableRow {
+    border: 1px red solid;
+}
+
+.mealAndProducts__products {
+    border: 1px blue solid;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.mealAndProducts__products--table {
+    border: 1px red solid;
+    width: 100%;
+}
+
+.mealAndProducts__products--tableRow {
+    border: 1px red solid;
+}
+
+.showCart__allProducts {
+    border: 1px red solid;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.showCart__allProducts--table {
+    border: 1px red solid;
+    width: 100%;
+}
+
+.showCart__allProducts--tableRow {
+    border: 1px red solid;
+}
+
+.showCart__info {
+    border: 1px red solid;
+}
+
+.cart__td--image {
+    height: 64px;
+    width: 100px;
+}
+
+.cart__image {
+    height: 100%;
+    width: 100%;
+}
 
 @media (min-width: 600px) {
     .content__showCart {
-        display: flex;
         flex-direction: row;
+    }
+
+    .showCart__mealsAndProducts {
+        width: 33%;
+    }
+
+    .mealAndProducts__meals {
+
+    }
+
+    .mealAndProducts__meals--tableRow {
+
+    }
+
+    .mealAndProducts__products {
+
+    }
+
+    .mealAndProducts__products--tableRow {
+
+    }
+
+    .showCart__allProducts {
+        width: 33%;
+    }
+
+    .showCart__allProducts--tableRow {
+
+    }
+
+    .showCart__info {
+        width: 33%;
     }
 }
