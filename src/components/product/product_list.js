@@ -5,7 +5,6 @@ import {Input} from 'antd';
 import {fetchProducts, searchProducts, setMenuItem} from "../../actions";
 import ShowProductList from '../common/show_product_list';
 import {LOADING_SPIN} from '../../helpers/messages';
-import './css/product_list.css';
 
 class ProductList extends Component {
     state = {
@@ -24,9 +23,9 @@ class ProductList extends Component {
         const {searchValue, pageSize} = this.state;
 
         return (
-            <div className='content__wrap--productList'>
-                <div className='productsList__menu'>
-                    <h1>Lista wszystkich produktów</h1>
+            <div className='content__list'>
+                <div className='header'>
+                    <h1 className='header__title'>Lista produktów</h1>
                     <Search
                         placeholder="Wyszukaj produkt"
                         onSearch={value => {
@@ -41,7 +40,7 @@ class ProductList extends Component {
                         size="large"
                     />
                 </div>
-                <div className='products__list'>
+                <div className='list'>
                     {Object.keys(this.props.products.content).length === 0 ? LOADING_SPIN :
                         <ShowProductList products={this.props.products} onChange={this.onChange}/>}
                 </div>

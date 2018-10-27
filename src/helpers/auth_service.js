@@ -13,9 +13,13 @@ export default class AuthService {
     static isTokenExpired(token) {
         try {
             const decoded = decode(token);
-            return decoded.exp < Date.now() / 1000;
+            if (decoded.exp < Date.now() / 1000) {
+                AuthService.logout();
+                return false;
+            }
         }
         catch (err) {
+            AuthService.logout();
             return false;
         }
     }

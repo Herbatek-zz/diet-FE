@@ -29,10 +29,10 @@ class MealMyList extends Component {
                 <div className='header'>
                     <h1>Moje posiłki</h1>
                 </div>
-                <div className='meal-list'>
-                    {Object.keys(this.props.meals.content).length === 0 ? LOADING_SPIN :
-                        <ShowMealList meals={this.props.meals}
-                                      onChange={page => this.props.fetchMyMeals(page - 1, this.state.pageSize)}/>}
+                <div className='list'>
+                    {Object.keys(this.props.meals.content).length === 0 ? "Nie stworzyłeś jeszcze żadnego posiłku" :
+                    <ShowMealList meals={this.props.meals}
+                                  onChange={page => this.props.fetchMyMeals(page - 1, this.state.pageSize)}/>}}
                 </div>
             </div>
         );

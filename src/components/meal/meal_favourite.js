@@ -26,15 +26,13 @@ class MealFavourite extends Component {
         return (
             <div className='content__wrap--productList'>
                 <h1>Ulubione posiłki</h1>
-                <div className='products__list'>
-                    {Object.keys(this.props.meals.content).length === 0 ? "No data to display" :
-                        <ShowMealList meals={this.props.meals} onChange={this.onChange}/>}
+                <div className='list'>
+                    {Object.keys(this.props.meals.content).length === 0 ? "Nie dodałeś jeszcze żadnego posiłku do ulubionych" :
+                        <ShowMealList meals={this.props.meals} onChange={page => this.props.fetchFavouriteMeals(page - 1, this.state.pageSize)}/>}
                 </div>
             </div>
         );
     }
-
-    onChange = page => this.props.fetchFavouriteMeals(page - 1, this.state.pageSize);
 }
 
 const mapStateToProps = ({meals}) => {

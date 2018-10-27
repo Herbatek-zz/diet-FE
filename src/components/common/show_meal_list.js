@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from "react-router-dom";
 import {List, Icon} from 'antd';
-import './show_meal_list.css';
+import './show_list.css';
 
 
 const IconText = ({type, text}) => (

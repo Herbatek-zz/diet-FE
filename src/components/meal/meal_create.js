@@ -31,28 +31,30 @@ class MealCreate extends Component {
 
         return (
             <div className='content__mealCreate'>
-                <h1 className='form__title'>Tworzenie nowego posiłku</h1>
-                <form onSubmit={this.props.handleSubmit(this.onSubmit)} className='form' autoComplete='off'>
-                    <Field
-                        name='name'
-                        component={TextField}
-                        placeholder='Nazwa'/>
-                    <Field
-                        name='imageUrl'
-                        component={TextField}
-                        placeholder='Link do zdjęcia'/>
-                    <Field
-                        name='description'
-                        rows={4}
-                        component={TextAreaField}
-                        placeholder='Opis'/>
-                    <Field
-                        name='recipe'
-                        rows={6}
-                        component={TextAreaField}
-                        placeholder='Przepis'/>
-                    <Button className='form__button' type="primary" ghost htmlType='submit'>Submit</Button>
-                </form>
+                <div className='form__container'>
+                    <h1 className='form__title'>Dodaj nowy posiłek</h1>
+                    <form onSubmit={this.props.handleSubmit(this.onSubmit)} className='form' autoComplete='off'>
+                        <Field
+                            name='name'
+                            component={TextField}
+                            placeholder='Nazwa'/>
+                        <Field
+                            name='imageUrl'
+                            component={TextField}
+                            placeholder='Link do zdjęcia'/>
+                        <Field
+                            name='description'
+                            rows={4}
+                            component={TextAreaField}
+                            placeholder='Opis'/>
+                        <Field
+                            name='recipe'
+                            rows={6}
+                            component={TextAreaField}
+                            placeholder='Przepis'/>
+                        <Button className='form__button' type="primary" ghost htmlType='submit'>Submit</Button>
+                    </form>
+                </div>
             </div>
         )
     }

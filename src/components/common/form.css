@@ -1,35 +1,33 @@
 .content__mealCreate {
     width: 100%;
-    background-repeat: no-repeat;
-    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.8) 100%), url('../../img/food.jpg');;
-    background-size: cover;
-    background-position: center;
+    min-height: 100vh;
 }
 
 .content__productCreate {
     width: 100%;
+    min-height: 100vh;
 }
 
 .form__title {
     font-size: 33px;
-    background-color: rgba(255, 255, 255, 0.7);
-    padding: 0 10px;
-    margin-top: 20px;
+    padding: 0 5px;
+    margin: 20px 0;
+    text-align: center;
+}
+
+.form__container {
+    background-color: rgba(255, 255, 255, 0.75);
+    padding: 2% 4%;
 }
 
 .form {
-    background-color: rgba(255, 255, 255, 0.75);
-    padding: 2% 4%;
-    position: relative;
-    overflow: hidden;
     display: flex;
-    margin-bottom: 10px;
     flex-direction: column;
 }
 
 .form__button {
     max-width: 25%;
-    margin: auto;
+    margin: 0 auto 10px auto;
 }
 
 @media (min-width: 600px) {
@@ -46,13 +44,14 @@
         align-items: center;
     }
 
-    .form {
+    .form__container {
         width: 70%;
         padding: 2% 3%;
         display: flex;
         border-radius: 5px;
         flex-direction: column;
-        margin: 0 0 100px 0;
+        margin: 70px 0 40px 0;
+        background-color: rgba(255, 255, 255, 0.75);
     }
 
     .form__numberItem {
@@ -75,7 +74,7 @@
 }
 
 @media (min-width: 1200px) {
-    .form {
-        width: 35%;
+    .form__container {
+        width: 47%;
     }
 }

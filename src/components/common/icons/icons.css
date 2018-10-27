@@ -3,7 +3,6 @@
     flex-direction: column;
     align-items: center;
     cursor: pointer;
-    margin-right: 30px;
 }
 
 .header-icon > i {

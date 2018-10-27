@@ -31,11 +31,11 @@ class ProductShow extends Component {
             return LOADING_SPIN;
 
         return (
-            <div className='productShow__content'>
-                <div className='head'>
+            <div className='container__product-show'>
+                <div className='head-product-show'>
                     <h2>{product.name}</h2>
                     {this.state.isLoggedIn ?
-                        <div className='head__iconsMenu'>
+                        <div className='head-product-show__icon-menu'>
                             <AddToCartIcon onClick={() => this.setState({modalVisible: true})}/>
                             {AuthService.getDecodedToken().sub === product.userId ?
                                 <EditIcon link={`/products/${product.id}/edit`}/> : ''}
@@ -43,6 +43,58 @@ class ProductShow extends Component {
                                 <DeleteIcon confirmText='Czy na pewno chcesz usunąć ten produkt ?'
                                             onDelete={() => deleteProduct(product.id, () => this.props.history.push('/products/my'))}/> : ''}
                         </div> : ''}
+                </div>
+                <div className='body-product-show'>
+                    <div className='body-product-show__main-informations'>
+                        <div className='main-informations__image-container'>
+                            <img src={product.imageUrl} alt='product' className='main-informations__image-container--image'/>
+                        </div>
+                        <div className='main-informations__product-info'>
+                            <h2>Informacje o produkcie</h2>
+                            <table className='main-informations__product-info--table'>
+                                <thead>
+                                <tr>
+                                    <th>Nazwa</th>
+                                    <th>Wartość/100g</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <tr className='product-info__table--row'>
+                                        <td>Białko</td>
+                                        <td>{Math.floor(product.protein)}g</td>
+                                    </tr>
+                                    <tr className='product-info__table--row'>
+                                        <td>Węglowodany</td>
+                                        <td>{Math.floor(product.carbohydrate)}g</td>
+                                    </tr>
+                                    <tr className='product-info__table--row'>
+                                        <td>Tłuszcz</td>
+                                        <td>{Math.floor(product.fat)}g</td>
+                                    </tr>
+                                    <tr className='product-info__table--row'>
+                                        <td>Błonnik</td>
+                                        <td>{Math.floor(product.fibre)}g</td>
+                                    </tr>
+                                    <tr className='product-info__table--row'>
+                                        <td>Kcal</td>
+                                        <td>{Math.floor(product.kcal)}</td>
+                                    </tr>
+                                    <tr className='product-info__table--row'>
+                                        <td>WW</td>
+                                        <td>{product.carbohydrateExchange.toFixed(2)}</td>
+                                    </tr>
+                                    <tr className='product-info__table--row'>
+                                        <td>WBT</td>
+                                        <td>{product.proteinAndFatEquivalent.toFixed(2)}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div className='body-product-show__description'>
+                        <h2>Opis:</h2>
+                        <h4>{product.description}</h4>
+                    </div>
                 </div>
                 <Modal
                     title="Ile gram produktu chcesz dodać do koszyka"
@@ -59,25 +111,6 @@ class ProductShow extends Component {
                     }}/> [g]
 
                 </Modal>
-                <div className='body'>
-                    <div className='productShow__imageContainer'>
-                        <img src={product.imageUrl} alt='product' className='productShow__imageContainer--image'/>
-                    </div>
-                    <div className='productShow__description'>
-                        <h2>Opis:</h2>
-                        <h4>{product.description}</h4>
-                    </div>
-                    <div className='productShow__productInfo'>
-                        <h2>Informacje</h2>
-                        <h4>Białko: {Math.floor(product.protein)}</h4>
-                        <h4>Węglowodany: {Math.floor(product.carbohydrate)}</h4>
-                        <h4>Tłuszcz: {Math.floor(product.fat)}</h4>
-                        <h4>Błonnik: {Math.floor(product.fibre)}</h4>
-                        <h4>Kcal: {Math.floor(product.kcal)}</h4>
-                        <h4>WW: {product.carbohydrateExchange.toFixed(2)}</h4>
-                        <h4>WBT: {product.proteinAndFatEquivalent.toFixed(2)}</h4>
-                    </div>
-                </div>
             </div>
         );
     }

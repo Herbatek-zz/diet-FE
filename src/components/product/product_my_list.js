@@ -26,15 +26,14 @@ class ProductMyList extends Component {
         return (
             <div className='content__wrap--productList'>
                 <h1>Moje produkty</h1>
-                <div className='products__list'>
+                <div className='list'>
                     {Object.keys(this.props.products.content).length === 0 ? "Nie stworzyłeś jeszcze żadnych produktów" :
-                        <ShowProductList products={this.props.products} onChange={this.onChange}/>}
+                        <ShowProductList products={this.props.products}
+                                         onChange={page => this.props.fetchMyProducts(page - 1, this.state.pageSize)}/>}
                 </div>
             </div>
         );
     }
-
-    onChange = page => this.props.fetchMyProducts(page - 1, this.state.pageSize);
 }
 
 const mapStateToProps = ({products}) => {
