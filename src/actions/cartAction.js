@@ -16,7 +16,7 @@ export function fetchCart(date) {
 export function addMealToCart(mealId, date, amount) {
     const userId = AuthService.getDecodedToken().sub;
     const dateRequest = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
-    const request = SecuredRequest.put(`/users/${userId}/carts/meals/${mealId}?date=${dateRequest}&amount=${amount}`);
+    const request = SecuredRequest.post(`/users/${userId}/carts/meals/${mealId}?date=${dateRequest}&amount=${amount}`);
 
     return {
         type: ADD_MEAL_TO_CART,
@@ -27,7 +27,7 @@ export function addMealToCart(mealId, date, amount) {
 export function addProductToCart(productId, date, amount) {
     const userId = AuthService.getDecodedToken().sub;
     const dateRequest = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
-    const request = SecuredRequest.put(`/users/${userId}/carts/products/${productId}?date=${dateRequest}&amount=${amount}`);
+    const request = SecuredRequest.post(`/users/${userId}/carts/products/${productId}?date=${dateRequest}&amount=${amount}`);
 
     return {
         type: ADD_PRODUCT_TO_CART,
@@ -49,7 +49,9 @@ export function removeMealFromCart(mealId, date) {
 export function removeProductFromCart(productId, date) {
     const userId = AuthService.getDecodedToken().sub;
     const dateRequest = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
+
     const request = SecuredRequest.delete(`/users/${userId}/carts/products/${productId}?date=${dateRequest}`);
+
 
     return {
         type: REMOVE_PRODUCT_FROM_CART,

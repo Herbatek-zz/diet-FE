@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import _ from 'lodash';
 import {Progress} from 'antd';
 
-import {fetchCart, setMenuItem} from "../../actions";
+import {fetchCart, setMenuItem, removeProductFromCart, removeMealFromCart} from "../../actions";
 import AuthService from "../../helpers/auth_service";
 import {NO_LOGGED_MESSAGE} from "../../helpers/messages";
 import './show_cart.css';
@@ -52,7 +52,9 @@ class Show_cart extends Component {
                                         </td>
                                         <td><Link to={`/meals/${meal.id}`}>{meal.name}</Link></td>
                                         <td>{meal.amount + "g"}</td>
-                                        <td>usuń</td>
+                                        <td><label className='pointer'
+                                                   onClick={() => this.props.removeMealFromCart(meal.id, new Date())}>Usuń</label>
+                                        </td>
                                     </tr>
                                 )
                             })}
@@ -82,7 +84,9 @@ class Show_cart extends Component {
                                         </td>
                                         <td><Link to={`/products/${product.id}`}>{product.name}</Link></td>
                                         <td>{product.amount + "g"}</td>
-                                        <td>Usuń</td>
+                                        <td><label className='pointer'
+                                                   onClick={() => this.props.removeProductFromCart(product.id, new Date())}>Usuń</label>
+                                        </td>
                                     </tr>
                                 )
                             })}
@@ -116,19 +120,19 @@ class Show_cart extends Component {
                 <div className='show-cart__info'>
                     <div>
                         <label>Kalorie</label>
-                        <Progress type="dashboard" percent={100} />
+                        <Progress type="dashboard" percent={100}/>
                     </div>
                     <div>
                         <label>Tłuszcze</label>
-                        <Progress type="dashboard" percent={5} />
+                        <Progress type="dashboard" percent={5}/>
                     </div>
                     <div>
                         <label>Białko</label>
-                        <Progress type="dashboard" percent={20} />
+                        <Progress type="dashboard" percent={20}/>
                     </div>
                     <div>
                         <label>Węglowodany</label>
-                        <Progress type="dashboard" percent={24} />
+                        <Progress type="dashboard" percent={24}/>
                     </div>
                 </div>
             </div>
@@ -142,4 +146,4 @@ const mapStateToProps = ({cart}) => {
     }
 };
 
-export default connect(mapStateToProps, {fetchCart, setMenuItem})(Show_cart);
+export default connect(mapStateToProps, {fetchCart, removeMealFromCart, removeProductFromCart, setMenuItem})(Show_cart);

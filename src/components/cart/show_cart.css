@@ -7,6 +7,10 @@
     border: 1px green solid;
 }
 
+.pointer {
+    cursor: pointer;
+}
+
 .show-cart__meals-and-products {
     border: 1px red solid;
     display: flex;
