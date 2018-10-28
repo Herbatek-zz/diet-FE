@@ -3,14 +3,14 @@ import {connect} from 'react-redux';
 
 import {fetchMeal, setMenuItem, addMealToCart, deleteMeal} from "../../actions";
 import AuthService from "../../helpers/auth_service";
-import MealInfo from './common/meal_info';
-import ShowMealProducts from "./common/show_meal_products";
-import './css/meal_show.css';
+import ShowMealProducts from "../common/show_meal_products";
+import './meal_show.css';
 import {LOADING_SPIN} from "../../helpers/messages";
 import HearthIcon from '../common/icons/hearthIcon';
 import AddToCartIcon from '../common/icons/addToCartIcon';
 import EditIcon from '../common/icons/editIcon';
 import DeleteIcon from '../common/icons/deleteIcon';
+import ItemInfoTable from '../common/item-info-table';
 import {InputNumber, Modal} from "antd";
 
 
@@ -35,7 +35,7 @@ class MealShow extends Component {
             return LOADING_SPIN;
 
         return (
-            <div className='content__mealShow'>
+            <div className='container__meal-show'>
                 <div className='head'>
                     <h1 className='head__title'>{meal.name}</h1>
                     {isLoggedIn ?
@@ -68,23 +68,22 @@ class MealShow extends Component {
                         <div className='firstPanel__imageContainer'>
                             <img src={meal.imageUrl} alt={meal.name} className='firstPanel__imageContainer--image'/>
                         </div>
+                        <div className='show__meal-info'>
+                            <h2>Informacje o produkcie</h2>
+                            <ItemInfoTable item={meal}/>
+                        </div>
+                    </div>
+                    <div className='second-panel'>
                         <div className='show__mealProducts'>
                             <ShowMealProducts products={meal.products}/>
                         </div>
-                    </div>
-                    <div className='secondPanel'>
                         <div className='show__mealDescription'>
                             <h2>Opis</h2>
                             <h4 className='description'>{meal.description}</h4>
                         </div>
-                        <div className='secondPanel__bottom'>
-                            <div className='show__mealRecipe'>
-                                <h2>Przepis</h2>
-                                <h4 className='recipe'>{meal.recipe}</h4>
-                            </div>
-                            <div className='show__mealInfo'>
-                                <MealInfo meal={meal}/>
-                            </div>
+                        <div className='show__mealRecipe'>
+                            <h2>Przepis</h2>
+                            <h4 className='recipe'>{meal.recipe}</h4>
                         </div>
                     </div>
                 </div>

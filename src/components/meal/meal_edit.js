@@ -12,7 +12,7 @@ import {
     editMeal,
     setMenuItem
 } from "../../actions";
-import './css/meal_edit.css';
+import './meal_edit.css';
 import AuthService from "../../helpers/auth_service";
 import {LOADING_SPIN} from "../../helpers/messages";
 import _ from "lodash";

@@ -123,38 +123,38 @@ function validate({name, imageUrl, description, protein, carbohydrate, fat, fibr
 
     if (!description || !description.trim())
         errors.description = "Opis nie może być pusty";
-    else if (description.length < 10 || description.length > 1000)
+    else if (description.length < 10 || description.length > 3000)
         errors.description = "Opis może zawierać od 10 do 1000 znaków";
 
-    if (!protein)
+    if (!protein && protein !== 0)
         errors.protein = 'Jeżeli Twój produkt nie ma białka wpisz 0';
     else if (protein < 0)
         errors.protein = 'Wartość białka nie może być ujemna';
     else if (isNaN(protein))
         errors.protein = "Wartość białka musi wyrażać się liczbą";
 
-    if (!carbohydrate)
+    if (!carbohydrate && carbohydrate !== 0)
         errors.carbohydrate = 'Jeżeli Twój produkt nie ma węglowodanów pisz 0';
     else if (carbohydrate < 0)
         errors.carbohydrate = 'Wartość Węglowodanów nie może być ujemna';
     else if (isNaN(carbohydrate))
         errors.carbohydrate = "Wartość węglowodanów musi wyrażać się liczbą";
 
-    if (!fat)
+    if (!fat && fat !== 0)
         errors.fat = 'Tłuszcz musi mieć wartosć - jeżeli Twój produkt nie ma tłuszczu wpisz 0';
     else if (fat < 0)
         errors.fat = 'Wartość tłuszczu nie może być ujemna';
     else if (isNaN(fat))
         errors.fat = "Wartość tłuszczu musi wyrażać się liczbą";
 
-    if (!fibre)
+    if (!fibre && fibre !== 0)
         errors.fibre = 'Błonnik musi mieć wartosć - jeżeli Twój produkt nie ma błonnika wpisz 0';
     else if (fibre < 0)
         errors.fibre = 'Wartość błonnika nie może być ujemna';
     else if (isNaN(fibre))
         errors.fibre = "Wartość błonnika musi wyrażać się liczbą";
 
-    if (!kcal)
+    if (!kcal && kcal !== 0)
         errors.kcal = 'Kalorie muszą mieć wartość - jeżeli Twój produkt nie ma kalorii, wpisz 0';
     else if (kcal < 0)
         errors.kcal = 'Produkt nie może mieć mniej niż 0 kalorii';

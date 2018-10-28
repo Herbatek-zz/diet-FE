@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 
 import {fetchMyMeals, setMenuItem} from "../../actions";
 import AuthService from "../../helpers/auth_service";
-import {LOADING_SPIN, NO_LOGGED_MESSAGE} from "../../helpers/messages";
+import {NO_LOGGED_MESSAGE} from "../../helpers/messages";
 import ShowMealList from "../common/show_meal_list";
 
 
@@ -21,18 +21,20 @@ class MealMyList extends Component {
     }
 
     render() {
+        const {meals} = this.props;
+
         if (!this.state.isLoggedIn)
             return <div className='content'>{NO_LOGGED_MESSAGE}</div>;
+        if (Object.keys(meals.content).length === 0)
+            return <div className='container__message'><p>Nie stworzyłeś jeszcze żadnego posiłku</p></div>;
 
         return (
-            <div className='content__wrap--mealList'>
+            <div className='content__list'>
                 <div className='header'>
-                    <h1>Moje posiłki</h1>
+                    <h1 className='header__title'>Moje posiłki</h1>
                 </div>
                 <div className='list'>
-                    {Object.keys(this.props.meals.content).length === 0 ? "Nie stworzyłeś jeszcze żadnego posiłku" :
-                    <ShowMealList meals={this.props.meals}
-                                  onChange={page => this.props.fetchMyMeals(page - 1, this.state.pageSize)}/>}}
+                    <ShowMealList meals={meals} onChange={page => this.props.fetchMyMeals(page - 1, this.state.pageSize)}/>
                 </div>
             </div>
         );

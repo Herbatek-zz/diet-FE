@@ -18,10 +18,6 @@
     width: 100%;
 }
 
-.body-product-show {
-
-}
-
 .main-informations__image-container {
     width: 100%;
     height: auto;
@@ -37,15 +33,6 @@
 .main-informations__product-info {
     margin: 1px;
     padding: 5px;
-}
-
-.main-informations__product-info--table {
-    width: 100%;
-    text-align: center;
-}
-
-.product-info__table--row {
-    border-bottom: 1px solid black;
 }
 
 .body-product-show__description {

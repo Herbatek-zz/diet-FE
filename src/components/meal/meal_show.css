@@ -1,6 +1,7 @@
-.content__mealShow {
+.container__meal-show {
     width: 100%;
-    position: relative;
+    height: 100%;
+    background: rgba(255,255,255,0.95);
 }
 
 .head {
@@ -59,29 +60,26 @@
 .mealShow__products--tag {
     margin-bottom: 5px !important;
 }
-.secondPanel {
+.second-panel {
     display: flex;
     flex-direction: column;
 }
 
 .show__mealDescription {
-    border: 1px solid cornflowerblue;
+    border-bottom: 1px solid cornflowerblue;
     border-radius: 2px;
     padding: 6px;
     margin: 2px 0;
 }
 
 .show__mealRecipe {
-    border: 1px solid cornflowerblue;
+    border-bottom: 1px solid cornflowerblue;
     padding: 6px;
-    border-radius: 2px;
     margin: 2px 0;
 }
 
-.show__mealInfo {
-    border: 1px solid cornflowerblue;
+.show__meal-info {
     padding: 6px;
-    border-radius: 2px;
     margin: 2px 0;
 }
 
@@ -94,9 +92,11 @@
 }
 
 @media (min-width: 600px) {
-    .content__mealShow {
-        width: 90%;
+    .container__meal-show {
+        width: 80%;
         margin: 5px 0;
+        padding: 12px;
+        border-radius: 5px;
     }
 
     .head {
@@ -104,7 +104,7 @@
     }
 
     .head__menu {
-        justify-content: space-around;
+        justify-content: space-evenly;
         width: 20%;
     }
 
@@ -136,48 +136,26 @@
         height: auto;
     }
 
-    .secondPanel {
+    .second-panel {
         width: 58%;
         padding: 8px;
     }
 
     .show__mealDescription {
-        border-radius: 5px;
         padding: 10px;
-        margin-bottom: 10px;
         display: flex;
         flex-direction: column;
-        position: relative;
-    }
-
-    .show__mealDescription:hover {
-        background-color: #fafbfc;
-    }
-
-    .secondPanel__bottom {
-        display: flex;
     }
 
     .show__mealRecipe {
         width: 100%;
-        border-radius: 5px;
         padding: 8px;
         margin-right: 10px;
     }
 
-    .show__mealRecipe:hover {
-        background-color: #fafbfc;
-    }
-
-    .show__mealInfo {
-        border-radius: 5px;
+    .show__meal-info {
         padding: 8px;
-        width: 30%;
+        width: 100%;
         min-width: 130px;
-        margin: 0;
-    }
-
-    .show__mealInfo:hover {
-        background-color: #fafbfc;
     }
 }

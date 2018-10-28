@@ -4,11 +4,12 @@ import {InputNumber, Modal} from 'antd';
 
 import {fetchProduct, setMenuItem, addProductToCart, deleteProduct} from "../../actions";
 import {LOADING_SPIN} from "../../helpers/messages";
-import './css/product_show.css';
+import './product_show.css';
 import AddToCartIcon from "../common/icons/addToCartIcon";
 import AuthService from "../../helpers/auth_service";
 import EditIcon from '../common/icons/editIcon';
 import DeleteIcon from "../common/icons/deleteIcon";
+import ItemInfoTable from '../common/item-info-table';
 
 
 class ProductShow extends Component {
@@ -51,44 +52,7 @@ class ProductShow extends Component {
                         </div>
                         <div className='main-informations__product-info'>
                             <h2>Informacje o produkcie</h2>
-                            <table className='main-informations__product-info--table'>
-                                <thead>
-                                <tr>
-                                    <th>Nazwa</th>
-                                    <th>Wartość/100g</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                    <tr className='product-info__table--row'>
-                                        <td>Białko</td>
-                                        <td>{Math.floor(product.protein)}g</td>
-                                    </tr>
-                                    <tr className='product-info__table--row'>
-                                        <td>Węglowodany</td>
-                                        <td>{Math.floor(product.carbohydrate)}g</td>
-                                    </tr>
-                                    <tr className='product-info__table--row'>
-                                        <td>Tłuszcz</td>
-                                        <td>{Math.floor(product.fat)}g</td>
-                                    </tr>
-                                    <tr className='product-info__table--row'>
-                                        <td>Błonnik</td>
-                                        <td>{Math.floor(product.fibre)}g</td>
-                                    </tr>
-                                    <tr className='product-info__table--row'>
-                                        <td>Kcal</td>
-                                        <td>{Math.floor(product.kcal)}</td>
-                                    </tr>
-                                    <tr className='product-info__table--row'>
-                                        <td>WW</td>
-                                        <td>{product.carbohydrateExchange.toFixed(2)}</td>
-                                    </tr>
-                                    <tr className='product-info__table--row'>
-                                        <td>WBT</td>
-                                        <td>{product.proteinAndFatEquivalent.toFixed(2)}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <ItemInfoTable item={product}/>
                         </div>
                     </div>
                     <div className='body-product-show__description'>

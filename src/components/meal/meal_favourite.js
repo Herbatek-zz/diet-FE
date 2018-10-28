@@ -20,15 +20,19 @@ class MealFavourite extends Component {
     }
 
     render() {
+        const {meals} = this.props;
         if (!this.state.isLoggedIn)
             return <div className='content'>{NO_LOGGED_MESSAGE}</div>;
+        if (Object.keys(this.props.meals.content).length === 0)
+            return <div className='container__message'><p>Twoja lista ulubionych posiłków jest pusta</p></div>;
 
         return (
-            <div className='content__wrap--productList'>
-                <h1>Ulubione posiłki</h1>
+            <div className='content__list'>
+                <div className='header'>
+                    <h1 className='header__title'>Ulubione posiłki</h1>
+                </div>
                 <div className='list'>
-                    {Object.keys(this.props.meals.content).length === 0 ? "Nie dodałeś jeszcze żadnego posiłku do ulubionych" :
-                        <ShowMealList meals={this.props.meals} onChange={page => this.props.fetchFavouriteMeals(page - 1, this.state.pageSize)}/>}
+                    <ShowMealList meals={meals} onChange={page => this.props.fetchFavouriteMeals(page - 1, this.state.pageSize)}/>
                 </div>
             </div>
         );

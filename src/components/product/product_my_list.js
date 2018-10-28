@@ -20,16 +20,20 @@ class ProductMyList extends Component {
     }
 
     render() {
+
         if (!this.state.isLoggedIn)
             return <div className='content'>{NO_LOGGED_MESSAGE}</div>;
+        if (Object.keys(this.props.products.content).length === 0)
+            return <div className='container__message'><p>Nie stworzyłeś jeszcze żadnych produktów</p></div>
 
         return (
-            <div className='content__wrap--productList'>
-                <h1>Moje produkty</h1>
+            <div className='content__list'>
+                <div className='header'>
+                    <h1 className='header__title'>Moje produkty</h1>
+                </div>
                 <div className='list'>
-                    {Object.keys(this.props.products.content).length === 0 ? "Nie stworzyłeś jeszcze żadnych produktów" :
-                        <ShowProductList products={this.props.products}
-                                         onChange={page => this.props.fetchMyProducts(page - 1, this.state.pageSize)}/>}
+                    <ShowProductList products={this.props.products}
+                                     onChange={page => this.props.fetchMyProducts(page - 1, this.state.pageSize)}/>
                 </div>
             </div>
         );

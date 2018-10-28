@@ -1,0 +1,12 @@
+.table-info {
+    width: 100%;
+    text-align: center;
+}
+
+.table-info__row {
+    border-bottom: 1px solid black;
+}
+
+.table-info__row:hover {
+    background: rgba(0,0,0,0.1);
+}
