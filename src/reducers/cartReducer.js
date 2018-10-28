@@ -1,6 +1,5 @@
 import {FETCH_CART, ADD_MEAL_TO_CART, ADD_PRODUCT_TO_CART, REMOVE_MEAL_FROM_CART, REMOVE_PRODUCT_FROM_CART} from "../actions";
 
-
 export default (state = {meals: {}, products: {}}, action) => {
     switch (action.type) {
         case FETCH_CART:
