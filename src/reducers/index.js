@@ -4,11 +4,13 @@ import ProductReducer from './productReducer';
 import MealReducer from './mealReducer';
 import CartReducer from './cartReducer';
 import MenuNavReducer from './menuNavReducer';
+import UserReducer from './userReducer';
 
 const rootReducer = combineReducers({
     products: ProductReducer,
     meals: MealReducer,
     cart: CartReducer,
+    user: UserReducer,
     form: formReducer,
     selectedMenuItem: MenuNavReducer
 });

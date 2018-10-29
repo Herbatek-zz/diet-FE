@@ -20,6 +20,8 @@ import MealCreate from './components/meal/meal_create';
 import MealEdit from './components/meal/meal_edit';
 import MealFavourite from './components/meal/meal_favourite';
 import ShowCart from './components/cart/show_cart';
+import UserEdit from './components/user/user_edit';
+import UserShow from './components/user/user_show';
 import reducers from './reducers';
 import './index.css';
 
@@ -33,6 +35,8 @@ ReactDOM.render(
                 <Header/>
                 <div className='content'>
                     <Switch>
+                        <Route path='/user/edit' component={UserEdit}/>
+                        <Route path='/user/:id' component={UserShow}/>
                         <Route path='/cart' component={ShowCart}/>
                         <Route path='/meals/favourite' component={MealFavourite}/>
                         <Route path='/meals/:id/edit' component={MealEdit}/>

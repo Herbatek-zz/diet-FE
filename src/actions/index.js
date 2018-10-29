@@ -24,6 +24,8 @@ import {
     fetchMyProducts
 } from "./productAction";
 
+import {fetchUser, editUser} from './userAction';
+
 export const CREATE_PRODUCT = 'create_product';
 export const FETCH_PRODUCT = 'fetch_product';
 export const DELETE_PRODUCT = 'delete_product';
@@ -50,6 +52,9 @@ export const ADD_MEAL_TO_CART = 'add_meal_to_cart';
 export const REMOVE_MEAL_FROM_CART = 'remove_meal_from_cart';
 export const ADD_PRODUCT_TO_CART = 'add_product_to_cart';
 export const REMOVE_PRODUCT_FROM_CART = 'remove_product_from_cart';
+
+export const FETCH_USER = 'fetch_user';
+export const EDIT_USER = 'edit_user';
 
 export const SELECT_MENU_ITEM = 'select_menu_item';
 
@@ -107,4 +112,8 @@ export {addProductToCart}
 export {removeMealFromCart}
 
 export {removeProductFromCart}
+
+export {fetchUser}
+
+export {editUser}
 
