@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {setMenuItem, fetchUser} from "../../actions";
 import {LOADING_SPIN} from "../../helpers/messages";
 import AuthService from "../../helpers/auth_service";
-
+import EditIcon from './../common/icons/editIcon';
 
 
 class UserShow extends Component {
@@ -52,6 +52,7 @@ class UserShow extends Component {
                 <div>
                     Waga: {this.props.user.weight}
                 </div>
+                <EditIcon link={'/user/edit'}/>
             </div>
         );
     }

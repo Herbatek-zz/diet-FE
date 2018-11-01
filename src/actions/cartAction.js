@@ -4,7 +4,9 @@ import {FETCH_CART, ADD_MEAL_TO_CART, ADD_PRODUCT_TO_CART, REMOVE_MEAL_FROM_CART
 
 export function fetchCart(date) {
     const userId = AuthService.getDecodedToken().sub;
-    const dateRequest = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
+    const day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+    const month = date.getMonth() < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
+    const dateRequest = `${day}-${month}-${date.getFullYear()}`;
     const request = SecuredRequest.get(`/users/${userId}/carts?date=${dateRequest}`);
 
     return {
@@ -15,7 +17,9 @@ export function fetchCart(date) {
 
 export function addMealToCart(mealId, date, amount) {
     const userId = AuthService.getDecodedToken().sub;
-    const dateRequest = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
+    const day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+    const month = date.getMonth() < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
+    const dateRequest = `${day}-${month}-${date.getFullYear()}`;
     const request = SecuredRequest.post(`/users/${userId}/carts/meals/${mealId}?date=${dateRequest}&amount=${amount}`);
 
     return {
@@ -26,7 +30,9 @@ export function addMealToCart(mealId, date, amount) {
 
 export function addProductToCart(productId, date, amount) {
     const userId = AuthService.getDecodedToken().sub;
-    const dateRequest = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
+    const day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+    const month = date.getMonth() < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
+    const dateRequest = `${day}-${month}-${date.getFullYear()}`;
     const request = SecuredRequest.post(`/users/${userId}/carts/products/${productId}?date=${dateRequest}&amount=${amount}`);
 
     return {
@@ -37,7 +43,9 @@ export function addProductToCart(productId, date, amount) {
 
 export function removeMealFromCart(mealId, date) {
     const userId = AuthService.getDecodedToken().sub;
-    const dateRequest = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
+    const day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+    const month = date.getMonth() < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
+    const dateRequest = `${day}-${month}-${date.getFullYear()}`;
     const request = SecuredRequest.delete(`/users/${userId}/carts/meals/${mealId}?date=${dateRequest}`);
 
     return {
@@ -48,7 +56,9 @@ export function removeMealFromCart(mealId, date) {
 
 export function removeProductFromCart(productId, date) {
     const userId = AuthService.getDecodedToken().sub;
-    const dateRequest = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
+    const day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+    const month = date.getMonth() < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
+    const dateRequest = `${day}-${month}-${date.getFullYear()}`;
 
     const request = SecuredRequest.delete(`/users/${userId}/carts/products/${productId}?date=${dateRequest}`);
 

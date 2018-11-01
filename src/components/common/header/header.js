@@ -46,6 +46,12 @@ class MyHeader extends Component {
                 title={<Avatar pictureUrl={this.state.pictureUrl} username={this.state.username}/>}
                 key='avatar'>
                 <Item key='logout'>
+                    <Link to={`/user/${AuthService.getDecodedToken().sub}`}>
+                        <Icon type="user" theme="outlined" />
+                        Profil
+                    </Link>
+                </Item>
+                <Item key='profile'>
                     <Link to='/' onClick={() => {
                         AuthService.logout();
                         message.success("Poprawnie wylogowano");
