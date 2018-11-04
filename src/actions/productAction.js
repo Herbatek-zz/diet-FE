@@ -12,9 +12,10 @@ import {
     SEARCH_PRODUCTS_INFINITY
 } from "./index";
 
-export function createProduct(values, callback) {
+export function createProduct(product, callback) {
     const userId = AuthService.getDecodedToken().sub;
-    const request = SecuredRequest.post(`/users/${userId}/products`, values)
+    const token = AuthService.getToken();
+    const request = SecuredRequest.post(`/users/${userId}/products`, product, {headers: {'Authorization': `Bearer ${token}`}})
         .then(() => callback());
 
     return {
@@ -33,7 +34,8 @@ export function fetchProduct(id) {
 }
 
 export function deleteProduct(id, callback) {
-    SecuredRequest.delete(`/products/${id}`)
+    const token = AuthService.getToken();
+    SecuredRequest.delete(`/products/${id}`, {headers: {'Authorization': `Bearer ${token}`}})
         .then(() => callback());
 
     return {

@@ -15,9 +15,10 @@ import {
     EDIT_MEAL
 } from "./index";
 
-export function createMeal(values, callback) {
+export function createMeal(meal, callback) {
     const userId = AuthService.getDecodedToken().sub;
-    const request = SecuredRequest.post(`/users/${userId}/meals`, values)
+    const token = AuthService.getToken();
+    const request = SecuredRequest.post(`/users/${userId}/meals`, meal, {headers: {'Authorization': `Bearer ${token}`}})
         .then(() => callback());
 
     return {
@@ -27,7 +28,8 @@ export function createMeal(values, callback) {
 }
 
 export function deleteMeal(id, callback) {
-    SecuredRequest.delete(`/meals/${id}`)
+    const token = AuthService.getToken();
+    SecuredRequest.delete(`/meals/${id}`, {headers: {'Authorization': `Bearer ${token}`}})
         .then(() => callback());
 
     return {
@@ -85,7 +87,8 @@ export function fetchFavouriteMeals(page, pageSize) {
 
 export function isFavouriteMeal(mealId) {
     const userId = AuthService.getDecodedToken().sub;
-    const request = SecuredRequest.get(`/users/${userId}/meals/${mealId}/favourites`);
+    const token = AuthService.getToken();
+    const request = SecuredRequest.get(`/users/${userId}/meals/${mealId}/favourites`, {headers: {'Authorization': `Bearer ${token}`}});
 
     return {
         type: IS_FAVOURITE_MEAL,
@@ -95,7 +98,8 @@ export function isFavouriteMeal(mealId) {
 
 export function addMealToFavourites(mealId) {
     const userId = AuthService.getDecodedToken().sub;
-    const request = SecuredRequest.post(`/users/${userId}/meals/${mealId}/favourites`);
+    const token = AuthService.getToken();
+    const request = SecuredRequest.post(`/users/${userId}/meals/${mealId}/favourites`, null, {headers: {'Authorization': `Bearer ${token}`}});
 
     return {
         type: ADD_MEAL_TO_FAVOURITES,
@@ -105,7 +109,8 @@ export function addMealToFavourites(mealId) {
 
 export function removeMealFromFavourites(mealId) {
     const userId = AuthService.getDecodedToken().sub;
-    const request = SecuredRequest.delete(`/users/${userId}/meals/${mealId}/favourites`);
+    const token = AuthService.getToken();
+    const request = SecuredRequest.delete(`/users/${userId}/meals/${mealId}/favourites`, {headers: {'Authorization': `Bearer ${token}`}});
 
     return {
         type: REMOVE_MEAL_FROM_FAVOURITES,
@@ -114,8 +119,12 @@ export function removeMealFromFavourites(mealId) {
 }
 
 export function editMeal(update, callback) {
-    const request = SecuredRequest.put(`/meals/${update.id}`, update)
-        .then(() => callback());
+    const token = AuthService.getToken();
+    const request = SecuredRequest.put(`/meals/${update.id}`, update, {headers: {'Authorization': `Bearer ${token}`}})
+        .then((response) => {
+            callback();
+            return response;
+        });
 
     return {
         type: EDIT_MEAL,

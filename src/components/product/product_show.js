@@ -34,7 +34,7 @@ class ProductShow extends Component {
         return (
             <div className='container__product-show'>
                 <div className='head-product-show'>
-                    <h2>{product.name}</h2>
+                    <h2><label>{product.name}</label></h2>
                     {this.state.isLoggedIn ?
                         <div className='head-product-show__icon-menu'>
                             <AddToCartIcon onClick={() => this.setState({modalVisible: true})}/>
@@ -51,12 +51,12 @@ class ProductShow extends Component {
                             <img src={product.imageUrl} alt='product' className='main-informations__image-container--image'/>
                         </div>
                         <div className='main-informations__product-info'>
-                            <h2>Informacje o produkcie</h2>
+                            <label><h2>Informacje o produkcie</h2></label>
                             <ItemInfoTable item={product}/>
                         </div>
                     </div>
                     <div className='body-product-show__description'>
-                        <h2>Opis:</h2>
+                        <h2><label>Opis:</label></h2>
                         <h4>{product.description}</h4>
                     </div>
                 </div>

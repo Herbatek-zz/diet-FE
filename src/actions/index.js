@@ -25,6 +25,7 @@ import {
 } from "./productAction";
 
 import {fetchUser, editUser} from './userAction';
+import AuthService from "../helpers/auth_service";
 
 export const CREATE_PRODUCT = 'create_product';
 export const FETCH_PRODUCT = 'fetch_product';
@@ -55,6 +56,7 @@ export const REMOVE_PRODUCT_FROM_CART = 'remove_product_from_cart';
 
 export const FETCH_USER = 'fetch_user';
 export const EDIT_USER = 'edit_user';
+export const FETCH_USER_FROM_COOKIE = 'fetch_user_from_cookie';
 
 export const SELECT_MENU_ITEM = 'select_menu_item';
 
@@ -62,6 +64,18 @@ export function setMenuItem(menuItem) {
     return {
         type: SELECT_MENU_ITEM,
         payload: menuItem
+    }
+}
+
+export function fetchUserFromCookie() {
+    const decodedToken = AuthService.getDecodedToken();
+
+    return {
+        type: FETCH_USER_FROM_COOKIE,
+        payload: {
+            username: decodedToken.username,
+            imageUrl: decodedToken.pictureUrl
+        }
     }
 }
 

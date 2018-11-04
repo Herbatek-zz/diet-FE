@@ -7,19 +7,23 @@ import {
     FETCH_MY_PRODUCTS,
     SEARCH_PRODUCTS,
     FETCH_PRODUCTS_INFINITY,
-    SEARCH_PRODUCTS_INFINITY} from "../actions";
+    SEARCH_PRODUCTS_INFINITY
+} from "../actions";
 
 
 export default (state = {content: {}}, action) => {
     switch (action.type) {
-        case FETCH_PRODUCTS:
-            return {
-                content: _.mapKeys(action.payload.data.content, 'id'),
-                currentPage: action.payload.data.pageNumber,
-                pageSize: action.payload.data.pageSize,
-                totalElements: action.payload.data.totalElements,
-                last: action.payload.data.last
-            };
+        case FETCH_PRODUCTS: {
+            if (action.payload.data)
+                return {
+                    content: _.mapKeys(action.payload.data.content, 'id'),
+                    currentPage: action.payload.data.pageNumber,
+                    pageSize: action.payload.data.pageSize,
+                    totalElements: action.payload.data.totalElements,
+                    last: action.payload.data.last
+                };
+            return state;
+        }
 
         case DELETE_PRODUCT:
             return {

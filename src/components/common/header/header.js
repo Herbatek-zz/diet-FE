@@ -5,23 +5,19 @@ import {Menu, Icon, message, Badge} from 'antd';
 import AuthService from '../../../helpers/auth_service';
 import './header.css';
 import connect from "react-redux/es/connect/connect";
-import {fetchCart} from "../../../actions";
+import {fetchCart, fetchUserFromCookie} from "../../../actions";
 import Avatar from './avatar';
 
 const {SubMenu, Item} = Menu;
 
 class MyHeader extends Component {
-    state = {
-        pictureUrl: '',
-        username: '',
-        logged: false
-    };
+    state = {logged: false};
 
     componentDidMount() {
         if (AuthService.isLogged()) {
-            const {pictureUrl, username} = AuthService.getDecodedToken();
-            this.setState({pictureUrl, username, logged: true});
+            this.props.fetchUserFromCookie();
             this.props.fetchCart(new Date());
+            this.setState({logged: true});
         }
         else
             this.setState({logged: false})
@@ -43,11 +39,11 @@ class MyHeader extends Component {
         return (
             <SubMenu
                 className='menu__avatar'
-                title={<Avatar pictureUrl={this.state.pictureUrl} username={this.state.username}/>}
+                title={<Avatar pictureUrl={this.props.loggedUser.imageUrl} username={this.props.loggedUser.username}/>}
                 key='avatar'>
                 <Item key='logout'>
                     <Link to={`/user/${AuthService.getDecodedToken().sub}`}>
-                        <Icon type="user" theme="outlined" />
+                        <Icon type="user" theme="outlined"/>
                         Profil
                     </Link>
                 </Item>
@@ -137,11 +133,12 @@ class MyHeader extends Component {
     }
 }
 
-const mapStateToProps = ({selectedMenuItem, cart}) => {
+const mapStateToProps = ({selectedMenuItem, cart, loggedUser}) => {
     return {
         selectedMenuItem,
-        cart
+        cart,
+        loggedUser
     }
 };
 
-export default connect(mapStateToProps, {fetchCart})(MyHeader);
+export default connect(mapStateToProps, {fetchCart, fetchUserFromCookie})(MyHeader);

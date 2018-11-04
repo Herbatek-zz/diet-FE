@@ -25,7 +25,7 @@ class ProductList extends Component {
         return (
             <div className='content__list'>
                 <div className='header'>
-                    <h1 className='header__title'>Lista produktów</h1>
+                    <h1 className='header__title'><label>Lista produktów</label></h1>
                     <Search
                         placeholder="Wyszukaj produkt"
                         onSearch={value => {

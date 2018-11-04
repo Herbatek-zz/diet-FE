@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "antd": "^3.10.3",
+    "antd": "^3.10.4",
     "autoprefixer": "^9.3.1",
     "axios": "^0.18.0",
     "babel-plugin-import": "^1.11.0",
@@ -22,7 +22,7 @@
     "react-infinite-scroller": "^1.2.2",
     "react-redux": "^5.1.0",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "2.1.0",
+    "react-scripts": "2.1.1",
     "redux": "^4.0.1",
     "redux-form": "^7.4.2",
     "redux-form-antd": "^3.0.3",

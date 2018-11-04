@@ -14,8 +14,12 @@ export function fetchUser(userId) {
 
 export function editUser(updateUser, callback) {
     const userId = AuthService.getDecodedToken().sub;
-    const request = SecuredRequest.put(`/users/${userId}`, updateUser)
-        .then(() => callback());
+    const token = AuthService.getToken();
+    const request = SecuredRequest.put(`/users/${userId}`, updateUser, {headers: {'Authorization': `Bearer ${token}`}})
+        .then((response) => {
+            callback();
+            return response;
+        });
 
     return {
         type: EDIT_USER,

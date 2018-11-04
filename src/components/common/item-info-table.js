@@ -6,38 +6,38 @@ export default ({item}) => {
         <table className='table-info'>
             <thead>
             <tr>
-                <th>Nazwa</th>
-                <th>Wartość/100g</th>
+                <th><label>Nazwa</label></th>
+                <th><label>Wartość/100g</label></th>
             </tr>
             </thead>
             <tbody>
             <tr className='table-info__row'>
-                <td>Białko</td>
-                <td>{Math.floor(item.protein)}g</td>
+                <td><label>Białko</label></td>
+                <td><label>{Math.floor(item.protein)}g</label></td>
             </tr>
             <tr className='table-info__row'>
-                <td>Węglowodany</td>
-                <td>{Math.floor(item.carbohydrate)}g</td>
+                <td><label>Węglowodany</label></td>
+                <td><label>{Math.floor(item.carbohydrate)}g</label></td>
             </tr>
             <tr className='table-info__row'>
-                <td>Tłuszcz</td>
-                <td>{Math.floor(item.fat)}g</td>
+                <td><label>Tłuszcz</label></td>
+                <td><label>{Math.floor(item.fat)}g</label></td>
             </tr>
             <tr className='table-info__row'>
-                <td>Błonnik</td>
-                <td>{Math.floor(item.fibre)}g</td>
+                <td><label>Błonnik</label></td>
+                <td><label>{Math.floor(item.fibre)}g</label></td>
             </tr>
             <tr className='table-info__row'>
-                <td>Kcal</td>
-                <td>{Math.floor(item.kcal)}</td>
+                <td><label>Kcal</label></td>
+                <td><label>{Math.floor(item.kcal)}</label></td>
             </tr>
             <tr className='table-info__row'>
-                <td>WW</td>
-                <td>{item.carbohydrateExchange.toFixed(2)}</td>
+                <td><label>WW</label></td>
+                <td><label>{item.carbohydrateExchange.toFixed(2)}</label></td>
             </tr>
             <tr className='table-info__row'>
-                <td>WBT</td>
-                <td>{item.proteinAndFatEquivalent.toFixed(2)}</td>
+                <td><label>WBT</label></td>
+                <td><label>{item.proteinAndFatEquivalent.toFixed(2)}</label></td>
             </tr>
             </tbody>
         </table>

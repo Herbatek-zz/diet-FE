@@ -15,13 +15,16 @@ import {
 
 export default (state = {content: {}}, action) => {
     switch (action.type) {
-        case FETCH_MEALS:
-            return {
-                content: _.mapKeys(action.payload.data.content, 'id'),
-                currentPage: action.payload.data.pageNumber,
-                pageSize: action.payload.data.pageSize,
-                totalElements: action.payload.data.totalElements
-            };
+        case FETCH_MEALS: {
+            if (action.payload.data)
+                return {
+                    content: _.mapKeys(action.payload.data.content, 'id'),
+                    currentPage: action.payload.data.pageNumber,
+                    pageSize: action.payload.data.pageSize,
+                    totalElements: action.payload.data.totalElements
+                };
+            return state;
+        }
 
         case DELETE_MEAL:
             return {

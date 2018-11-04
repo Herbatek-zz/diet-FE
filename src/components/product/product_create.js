@@ -34,7 +34,7 @@ class ProductCreate extends Component {
         return (
             <div className='content__productCreate'>
                 <div className='form__container'>
-                    <h1 className='form__title'>Dodaj produkt</h1>
+                    <h1 className='form__title'><label>Dodaj produkt</label></h1>
                     <form onSubmit={this.props.handleSubmit(this.onSubmit)} className='form' autoComplete='off'>
                         <Field
                             name='name'

@@ -41,7 +41,7 @@ class UserShow extends Component {
                     Email: {this.props.user.email}
                 </div>
                 <div>
-                    Avatar: <img src={this.props.user.picture_url}/>
+                    Avatar: <img src={this.props.user.picture_url} alt='avatar'/>
                 </div>
                 <div>
                     Wiek: {this.props.user.age}
@@ -52,7 +52,7 @@ class UserShow extends Component {
                 <div>
                     Waga: {this.props.user.weight}
                 </div>
-                <EditIcon link={'/user/edit'}/>
+                {AuthService.isLogged() && AuthService.getDecodedToken().sub === this.props.user.id ? <EditIcon link={'/user/edit'}/> : ''}
             </div>
         );
     }

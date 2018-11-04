@@ -49,7 +49,6 @@ ReactDOM.render(
                         <Route path='/products/:id' component={ProductShow}/>
                         <Route path='/products' component={ProductList}/>
                         <Route path='/' component={Dashboard}/>
-
                     </Switch>
                 </div>
                 <Footer/>

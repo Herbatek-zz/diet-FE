@@ -5,7 +5,7 @@ import {Button, message} from 'antd';
 import {NumberField, TextField} from 'redux-form-antd';
 
 import AuthService from '../../helpers/auth_service';
-import {editUser, fetchUser, setMenuItem} from "../../actions";
+import {editUser, fetchUser, setMenuItem, fetchUserFromCookie} from "../../actions";
 import {NO_LOGGED_MESSAGE} from '../../helpers/messages';
 import '../common/form.css';
 
@@ -34,12 +34,12 @@ class UserEdit extends Component {
                 })
     }
 
-    onSubmit = (values) => {
+    onSubmit = (values) =>
         this.props.editUser(values, () => {
+            this.props.fetchUserFromCookie();
             this.props.history.push(`/user/${this.props.user.id}`);
             message.success('Poprawnie zaktualizowano profil');
         });
-    };
 
 
     render() {
@@ -144,5 +144,5 @@ export default reduxForm({
     validate,
     form: 'UserEditForm'
 })(
-    connect(mapStateToProps, {fetchUser, editUser, setMenuItem})(UserEdit)
+    connect(mapStateToProps, {fetchUser, editUser, setMenuItem, fetchUserFromCookie})(UserEdit)
 );
