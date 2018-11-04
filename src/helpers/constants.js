@@ -1,0 +1,1 @@
+export const NECESSARY_FIELD = "To pole jest wymagane";

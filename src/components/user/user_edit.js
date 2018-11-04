@@ -8,6 +8,7 @@ import AuthService from '../../helpers/auth_service';
 import {editUser, fetchUser, setMenuItem, fetchUserFromCookie} from "../../actions";
 import {NO_LOGGED_MESSAGE} from '../../helpers/messages';
 import '../common/form.css';
+import {NECESSARY_FIELD} from "../../helpers/constants";
 
 class UserEdit extends Component {
     state = {
@@ -49,7 +50,7 @@ class UserEdit extends Component {
         return (
             <div className='content__mealCreate'>
                 <div className='form__container'>
-                    <h1 className='form__title'>Edycja profilu</h1>
+                    <h1 className='form__title'><label>Edycja profilu</label></h1>
                     <form onSubmit={this.props.handleSubmit(this.onSubmit)} className='form' autoComplete='off'>
                         <Field
                             name='username'
@@ -78,30 +79,24 @@ class UserEdit extends Component {
                             addonBefore={<label>Link do avatara</label>}
                             placeholder='Link do zdjęcia'/>
                         <div className='form__numberItem'>
-                            <label className='form__numberItem--label'>Wiek:</label>
+                            <label className='form__numberItem--label'>Wiek</label>
                             <Field
                                 name='age'
                                 component={NumberField}
-                                min={0}
-                                max={140}
                                 step={1}/>
                         </div>
                         <div className='form__numberItem'>
-                            <label className='form__numberItem--label'>Wzrost:</label>
+                            <label className='form__numberItem--label'>Wzrost</label>
                             <Field
                                 name='height'
                                 component={NumberField}
-                                min={0}
-                                max={300}
                                 step={1}/>
                         </div>
                         <div className='form__numberItem'>
-                            <label className='form__numberItem--label'>Waga:</label>
+                            <label className='form__numberItem--label'>Waga</label>
                             <Field
                                 name='weight'
                                 component={NumberField}
-                                min={0}
-                                max={500}
                                 step={1}/>
                         </div>
                         <Button className='form__button' type="primary" ghost htmlType='submit'>Submit</Button>
@@ -113,23 +108,58 @@ class UserEdit extends Component {
 
 }
 
-function validate(values) {
+function validate({username, firstName, lastName, email, picture_url, age, height, weight}) {
     const errors = {};
 
-    if (!values.name)
-        errors.name = 'You have to enter a name of product';
-    if (!values.imageUrl)
-        errors.imageUrl = 'You have to add a link';
-    if (values.protein < 0)
-        errors.protein = 'Protein can not be lower than 0';
-    if (values.carbohydrate < 0)
-        errors.carbohydrate = 'Carbohydrate can not be lower than 0';
-    if (values.fat < 0)
-        errors.fat = 'Fat can not be lower than 0';
-    if (values.fibre < 0)
-        errors.fibre = 'Fibre can not be lower than 0';
-    if (values.kcal < 0)
-        errors.kcal = 'Kcal can not be lower than 0';
+    if (!username || !username.trim())
+        errors.username = NECESSARY_FIELD;
+    else if (username.length > 15)
+        errors.username = 'Nazwa użytkownika może mieć maksymalnie 15 znaków';
+
+    if (!firstName || !firstName.trim())
+        errors.firstName = NECESSARY_FIELD;
+    else if (firstName.length > 35)
+        errors.firstName = 'Imię może mieć maksymalnie 35 znaków';
+
+    if (!lastName || !lastName.trim())
+        errors.lastName = NECESSARY_FIELD;
+    else if (lastName.length > 35)
+        errors.lastName = 'Nazwisko może mieć maksymalnie 35 znaków';
+
+    if (!picture_url || !picture_url.trim())
+        errors.picture_url = 'Musisz podać link do avatara';
+
+    if (!email || !email.trim())
+        errors.email = NECESSARY_FIELD;
+    else if (email.length < 4 || email.length > 254)
+        errors.email = 'Email może mieć od 4 do 254 znaków';
+
+    if (!age && age !== 0)
+        errors.age = NECESSARY_FIELD;
+    else if (age < 0)
+        errors.age = 'Nie możesz ustawić ujemnego wieku';
+    else if (age > 140)
+        errors.age = 'Maksymalny wiek to 140 lat';
+    else if (isNaN(age))
+        errors.age = "Wiek musi być liczbą";
+
+    if (!height && height !== 0)
+        errors.height = NECESSARY_FIELD;
+    else if (height < 0)
+        errors.height = 'Nie możesz mieć ujemnego wzrostu';
+    else if (height > 250)
+        errors.height = 'Maksymalny wzrost to 250cm';
+    else if (isNaN(height))
+        errors.height = "Wzrost musi być liczbą";
+
+    if (!weight && weight !== 0)
+        errors.weight = NECESSARY_FIELD;
+    else if (weight < 0)
+        errors.weight = 'Waga nie może być ujemna';
+    else if (weight > 1000)
+        errors.weight = 'Maksymalna waga to 450kg';
+    else if (isNaN(weight))
+        errors.weight = "Waga musi być liczbą";
 
     return errors;
 }
