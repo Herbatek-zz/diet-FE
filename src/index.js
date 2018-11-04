@@ -17,6 +17,7 @@ import MealList from './components/meal/meal_list';
 import MealShow from './components/meal/meal_show';
 import MealMyList from './components/meal/meal_my_list';
 import MealCreate from './components/meal/meal_create';
+import MealAddProducts from './components/meal/meal_add_products';
 import MealEdit from './components/meal/meal_edit';
 import MealFavourite from './components/meal/meal_favourite';
 import ShowCart from './components/cart/show_cart';
@@ -40,6 +41,7 @@ ReactDOM.render(
                         <Route path='/cart' component={ShowCart}/>
                         <Route path='/meals/favourite' component={MealFavourite}/>
                         <Route path='/meals/:id/edit' component={MealEdit}/>
+                        <Route path='/meals/:id/add-products' component={MealAddProducts}/>
                         <Route path='/meals/my' component={MealMyList}/>
                         <Route path='/meals/new' component={MealCreate}/>
                         <Route path='/meals/:id' component={MealShow}/>

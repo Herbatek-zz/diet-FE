@@ -12,7 +12,7 @@ import {NECESSARY_FIELD} from "../../helpers/constants";
 
 class MealCreate extends Component {
     state = {
-        isLoggedIn: AuthService.isLogged()
+        isLoggedIn: AuthService.isLogged(),
     };
 
     componentDidMount() {
@@ -20,8 +20,8 @@ class MealCreate extends Component {
     }
 
     onSubmit = (values) => {
-        this.props.createMeal(values, () => {
-            this.props.reset();
+        this.props.createMeal(values, (mealId) => {
+            this.props.history.push(`/meals/${mealId}/add-products`);
             message.success('Poprawnie stworzono posiłek');
         });
     };
@@ -55,7 +55,7 @@ class MealCreate extends Component {
                             rows={6}
                             component={TextAreaField}
                             placeholder='Przepis'/>
-                        <Button className='form__button' type="primary" ghost htmlType='submit'>Submit</Button>
+                        <Button className='form__button' type="primary" ghost htmlType='submit'>Zatwierdź</Button>
                     </form>
                 </div>
             </div>

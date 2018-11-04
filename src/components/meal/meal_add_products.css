@@ -1,0 +1,84 @@
+.addProducts__content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.95);
+}
+
+.addProducts__body {
+    display: flex;
+    flex-direction: column;
+}
+
+.addProducts_secondPanel {
+    display: flex;
+    flex-direction: column;
+}
+
+.infinite-container {
+    border: 1px solid #e8e8e8;
+    border-radius: 4px;
+    overflow: auto;
+    padding: 8px 24px;
+    height: 300px;
+}
+.loading-container {
+    position: absolute;
+    bottom: 40px;
+    width: 100%;
+    text-align: center;
+}
+
+.edit__search--item {
+    cursor: pointer;
+}
+
+.meal-add-products__table {
+    width: 100%;
+    text-align: center;
+}
+
+.meal-add-products__table tr {
+    border-bottom: 1px solid black;
+}
+
+.meal-add-products__table tbody tr:hover {
+    background: rgba(0,0,0,0.1);
+}
+
+.table-add-products__td--pointer {
+    cursor: pointer;
+}
+
+.saveButton {
+    margin: 15px auto;
+    width: 90%;
+}
+
+@media (min-width: 600px) {
+    .addProducts__content {
+        width: 80%;
+        margin: 5px 0;
+        padding: 12px;
+        border-radius: 5px;
+    }
+
+    .addProducts__body {
+        flex-direction: row;
+        width: 100%;
+        padding: 0 20px 5px 0;
+    }
+
+    .addProducts__firstPanel {
+        width: 50%;
+    }
+
+    .addProducts_secondPanel {
+        width: 50%;
+    }
+
+    .infinite-container {
+        height: 600px;
+    }
+}

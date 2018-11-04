@@ -4,12 +4,12 @@ import React from "react";
 
 import './icons.css'
 
-export default ({link}) => {
+export default ({link, text = 'Edytuj'}) => {
     return (
         <Link to={link}>
             <span className='header-icon'>
                 <Icon type="setting"/>
-                Edytuj
+                {text}
             </span>
         </Link>
     )

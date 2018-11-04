@@ -31,13 +31,13 @@ class Show_cart extends Component {
             <div className='content__show-cart'>
                 <div className='show-cart__meals-and-products'>
                     <div className='meal-and-products__meals'>
-                        <h2>Posiłki</h2>
+                        <h2><label>Posiłki</label></h2>
                         {<table className='meal-and-products__meals--table'>
                             <thead>
                             <tr>
                                 <th/>
-                                <th>Nazwa</th>
-                                <th>Waga</th>
+                                <th><label>Nazwa</label></th>
+                                <th><label>Waga</label></th>
                                 <th/>
                             </tr>
                             </thead>
@@ -51,7 +51,7 @@ class Show_cart extends Component {
                                             </Link>
                                         </td>
                                         <td><Link to={`/meals/${meal.id}`}>{meal.name}</Link></td>
-                                        <td>{meal.amount + "g"}</td>
+                                        <td><label>{meal.amount + "g"}</label></td>
                                         <td><label className='pointer'
                                                    onClick={() => this.props.removeMealFromCart(meal.id, new Date())}>Usuń</label>
                                         </td>
@@ -63,13 +63,13 @@ class Show_cart extends Component {
                         }
                     </div>
                     < div className='mealAndProducts__products'>
-                        <h2>Produkty</h2>
+                        <h2><label>Produkty</label></h2>
                         {<table className='mealAndProducts__products--table'>
                             <thead>
                             <tr>
                                 <th/>
-                                <th>Nazwa</th>
-                                <th>Waga</th>
+                                <th><label>Nazwa</label></th>
+                                <th><label>Waga</label></th>
                                 <th/>
                             </tr>
                             </thead>
@@ -83,7 +83,7 @@ class Show_cart extends Component {
                                             </Link>
                                         </td>
                                         <td><Link to={`/products/${product.id}`}>{product.name}</Link></td>
-                                        <td>{product.amount + "g"}</td>
+                                        <td><label>{product.amount + "g"}</label></td>
                                         <td><label className='pointer'
                                                    onClick={() => this.props.removeProductFromCart(product.id, new Date())}>Usuń</label>
                                         </td>
@@ -96,12 +96,12 @@ class Show_cart extends Component {
                     </div>
                 </div>
                 <div className='showCart__allProducts'>
-                    <h2>Wszystkie produkty</h2>
+                    <h2><lable>Wszystkie produkty</lable></h2>
                     {<table className='showCart__allProducts--table'>
                         <thead>
                         <tr>
-                            <th>Nazwa</th>
-                            <th>Waga</th>
+                            <th><label>Nazwa</label></th>
+                            <th><label>Waga</label></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -109,7 +109,7 @@ class Show_cart extends Component {
                             return (
                                 <tr key={product.id} className='show-cart__all-products--table-row'>
                                     <td><Link to={`/products/${product.id}`}>{product.name}</Link></td>
-                                    <td>{product.amount + "g"}</td>
+                                    <td><label>{product.amount + "g"}</label></td>
                                 </tr>
                             )
                         })}

@@ -90,7 +90,7 @@ class ProductCreate extends Component {
                                     step={1}/>
                             </div>
                         </div>
-                        <Button className='form__button' type="primary" ghost htmlType='submit'>Submit</Button>
+                        <Button className='form__button' type="primary" ghost htmlType='submit'>Zatwierdź</Button>
                     </form>
                 </div>
             </div>

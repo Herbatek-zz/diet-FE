@@ -43,6 +43,7 @@ class MealShow extends Component {
                             <HearthIcon mealId={mealId}/>
                             <AddToCartIcon onClick={() => this.setState({modalVisible: true})}/>
                             {meal.userId === AuthService.getDecodedToken().sub ? <EditIcon link={`/meals/${mealId}/edit`}/> : ''}
+                            {meal.userId === AuthService.getDecodedToken().sub ? <EditIcon link={`/meals/${mealId}/add-products`} text='Edytuj produkty'/> : ''}
                             {meal.userId === AuthService.getDecodedToken().sub ?
                                 <DeleteIcon confirmText='Czy na pewno chcesz usunąć ten posiłek ?'
                                             onDelete={() => deleteMeal(this.state.mealId, () => this.props.history.push('/meals/my'))}/> : ''}
@@ -69,7 +70,7 @@ class MealShow extends Component {
                             <img src={meal.imageUrl} alt={meal.name} className='firstPanel__imageContainer--image'/>
                         </div>
                         <div className='show__meal-info'>
-                            <h2>Informacje o produkcie</h2>
+                            <h2>Informacje o posiłku</h2>
                             <ItemInfoTable item={meal}/>
                         </div>
                     </div>

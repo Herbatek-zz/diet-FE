@@ -19,7 +19,7 @@ export function createMeal(meal, callback) {
     const userId = AuthService.getDecodedToken().sub;
     const token = AuthService.getToken();
     const request = SecuredRequest.post(`/users/${userId}/meals`, meal, {headers: {'Authorization': `Bearer ${token}`}})
-        .then(() => callback());
+        .then((response) => callback(response.data.id));
 
     return {
         type: CREATE_MEAL,
@@ -118,9 +118,9 @@ export function removeMealFromFavourites(mealId) {
     }
 }
 
-export function editMeal(update, callback) {
+export function editMeal(mealId, update, callback) {
     const token = AuthService.getToken();
-    const request = SecuredRequest.put(`/meals/${update.id}`, update, {headers: {'Authorization': `Bearer ${token}`}})
+    const request = SecuredRequest.put(`/meals/${mealId}`, update, {headers: {'Authorization': `Bearer ${token}`}})
         .then((response) => {
             callback();
             return response;
