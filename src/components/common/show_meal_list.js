@@ -1,15 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from "react-router-dom";
-import {List, Icon} from 'antd';
+import {List} from 'antd';
 import './show_list.css';
-
-
-const IconText = ({type, text}) => (
-    <span>
-    <Icon type={type} style={{marginRight: 8}}/>
-        {text}
-  </span>
-);
 
 class ShowMealList extends Component {
 
@@ -30,8 +22,6 @@ class ShowMealList extends Component {
                 renderItem={item => (
                     <List.Item
                         key={item.id} className='listItem'
-                        actions={[<IconText type="star-o" text="156"/>, <IconText type="like-o" text="156"/>,
-                            <IconText type="message" text="2"/>]}
                         extra={
                             <div className='list__image--container'>
                                 <Link to={`/meals/${item.id}`}>
@@ -46,6 +36,7 @@ class ShowMealList extends Component {
                         {item.content}
                     </List.Item>
                 )}
+
             />
         )
     }

@@ -31,7 +31,7 @@ class MealMyList extends Component {
         return (
             <div className='content__list'>
                 <div className='header'>
-                    <h1 className='header__title'>Moje posiłki</h1>
+                    <h1 className='header__title'><label>Moje posiłki</label></h1>
                 </div>
                 <div className='list'>
                     <ShowMealList meals={meals} onChange={page => this.props.fetchMyMeals(page - 1, this.state.pageSize)}/>

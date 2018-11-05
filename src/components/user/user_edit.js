@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Field, reduxForm} from 'redux-form';
 import {connect} from 'react-redux';
 import {Button, message} from 'antd';
-import {NumberField, TextField} from 'redux-form-antd';
+import {NumberField, TextField, SliderField} from 'redux-form-antd';
 
 import AuthService from '../../helpers/auth_service';
 import {editUser, fetchUser, setMenuItem, fetchUserFromCookie} from "../../actions";
@@ -85,21 +85,40 @@ class UserEdit extends Component {
                                 component={NumberField}
                                 step={1}/>
                         </div>
-                        <div className='form__numberItem'>
-                            <label className='form__numberItem--label'>Wzrost</label>
-                            <Field
-                                name='height'
-                                component={NumberField}
-                                step={1}/>
-                        </div>
-                        <div className='form__numberItem'>
-                            <label className='form__numberItem--label'>Waga</label>
-                            <Field
-                                name='weight'
-                                component={NumberField}
-                                step={1}/>
-                        </div>
-                        <Button className='form__button' type="primary" ghost htmlType='submit'>Submit</Button>
+                        <Field
+                            name='height'
+                            component={SliderField}
+                            min={100}
+                            max={220}
+                            label='Wzrost'
+                            marks={{
+                                100: '100 cm',
+                                120: '120 cm',
+                                140: '140 cm',
+                                160: '160 cm',
+                                180: '180 cm',
+                                200: '200 cm',
+                                220: '220 cm'
+                            }}
+                            tipFormatter={(value) => value + ' cm'}/>
+
+                        <Field
+                            name='weight'
+                            component={SliderField}
+                            min={10}
+                            max={190}
+                            label='Waga'
+                            marks={{
+                                10: '10 kg',
+                                40: '40 kg',
+                                70: '70 kg',
+                                100: '100 kg',
+                                130: '130 kg',
+                                160: '160 kg',
+                                190: '190 kg'
+                            }}
+                            tipFormatter={(value) => value + ' kg'}/>
+                        <Button className='form__button' type="primary" ghost htmlType='submit'>Zatwierdź</Button>
                     </form>
                 </div>
             </div>
@@ -108,7 +127,7 @@ class UserEdit extends Component {
 
 }
 
-function validate({username, firstName, lastName, email, picture_url, age, height, weight}) {
+function validate({username, firstName, lastName, email, picture_url, age}) {
     const errors = {};
 
     if (!username || !username.trim())
@@ -142,24 +161,6 @@ function validate({username, firstName, lastName, email, picture_url, age, heigh
         errors.age = 'Maksymalny wiek to 140 lat';
     else if (isNaN(age))
         errors.age = "Wiek musi być liczbą";
-
-    if (!height && height !== 0)
-        errors.height = NECESSARY_FIELD;
-    else if (height < 0)
-        errors.height = 'Nie możesz mieć ujemnego wzrostu';
-    else if (height > 250)
-        errors.height = 'Maksymalny wzrost to 250cm';
-    else if (isNaN(height))
-        errors.height = "Wzrost musi być liczbą";
-
-    if (!weight && weight !== 0)
-        errors.weight = NECESSARY_FIELD;
-    else if (weight < 0)
-        errors.weight = 'Waga nie może być ujemna';
-    else if (weight > 1000)
-        errors.weight = 'Maksymalna waga to 450kg';
-    else if (isNaN(weight))
-        errors.weight = "Waga musi być liczbą";
 
     return errors;
 }

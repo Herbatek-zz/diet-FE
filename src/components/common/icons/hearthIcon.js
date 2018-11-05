@@ -5,6 +5,7 @@ import {addMealToFavourites, isFavouriteMeal, removeMealFromFavourites} from "..
 import './icons.css'
 
 class HearthIcon extends Component {
+
     componentDidMount() {
         this.props.isFavouriteMeal(this.props.mealId);
     }
