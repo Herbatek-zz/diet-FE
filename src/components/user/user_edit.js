@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Field, reduxForm} from 'redux-form';
 import {connect} from 'react-redux';
 import {Button, message} from 'antd';
-import {NumberField, TextField, SliderField} from 'redux-form-antd';
+import {NumberField, TextField, SliderField, SelectField} from 'redux-form-antd';
 
 import AuthService from '../../helpers/auth_service';
 import {editUser, fetchUser, setMenuItem, fetchUserFromCookie} from "../../actions";
@@ -28,6 +28,8 @@ class UserEdit extends Component {
                         lastName: user.lastName,
                         email: user.email,
                         picture_url: user.picture_url,
+                        sex: user.sex,
+                        activity: user.activity,
                         age: user.age,
                         height: user.height,
                         weight: user.weight
@@ -78,13 +80,51 @@ class UserEdit extends Component {
                             component={TextField}
                             addonBefore={<label>Link do avatara</label>}
                             placeholder='Link do zdjęcia'/>
-                        <div className='form__numberItem'>
-                            <label className='form__numberItem--label'>Wiek</label>
-                            <Field
-                                name='age'
-                                component={NumberField}
-                                step={1}/>
-                        </div>
+                        <Field
+                            name='sex'
+                            component={SelectField}
+                            label='Płeć'
+                            placeholder="Wybierz płeć"
+                            options={
+                                [
+                                    {label: 'Mężczyzna', value: 'MAN'},
+                                    {label: 'Kobieta', value: "WOMAN"}
+                                ]
+                            }
+                        />
+                        <Field
+                            name='activity'
+                            component={SelectField}
+                            placeholder='Wybierz aktywność fizyczną'
+                            label='Aktywność fizyczna'
+                            options={[
+                                {
+                                    label: 'Brak aktywności, praca siedząca',
+                                    value: 'VERY_LOW'
+                                },
+                                {
+                                    label: 'Niska aktywność (praca siedząca i 1-2 treningi w tygodniu)',
+                                    value: 'LOW'
+                                },
+                                {
+                                    label: 'Średnia aktywność (praca siedząca i treningi 3-4 razy w tygodniu)',
+                                    value: 'AVERAGE'
+                                },
+                                {
+                                    label: 'Wysoka aktywność (praca fizyczna i 3-4 treningi w tygodniu)',
+                                    value: 'HIGH'
+                                },
+                                {
+                                    label: 'Bardzo wysoka aktywność (zawodowi sportowcy, osoby codziennie trenujące)',
+                                    value: 'VERY_HIGH'
+                                }
+                            ]}
+                        />
+                        <Field
+                            label='Wiek'
+                            name='age'
+                            component={NumberField}
+                            step={1}/>
                         <Field
                             name='height'
                             component={SliderField}
@@ -127,7 +167,7 @@ class UserEdit extends Component {
 
 }
 
-function validate({username, firstName, lastName, email, picture_url, age}) {
+function validate({username, firstName, lastName, email, picture_url, sex, activity, age}) {
     const errors = {};
 
     if (!username || !username.trim())
@@ -147,6 +187,12 @@ function validate({username, firstName, lastName, email, picture_url, age}) {
 
     if (!picture_url || !picture_url.trim())
         errors.picture_url = 'Musisz podać link do avatara';
+
+    if(!sex)
+        errors.sex = NECESSARY_FIELD;
+
+    if(!activity)
+        errors.activity = NECESSARY_FIELD;
 
     if (!email || !email.trim())
         errors.email = NECESSARY_FIELD;

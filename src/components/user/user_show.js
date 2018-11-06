@@ -54,6 +54,9 @@ class UserShow extends Component {
                     <div>
                         Waga: <b>{user.weight === 0 ? 'Brak informacji' : user.weight + ' kg'}</b>
                     </div>
+                    <div>
+                        Dzienne zapotrzebowanie kaloryczne: <b>{user.caloriesPerDay === 0 ? 'Brak informacji' : user.caloriesPerDay + ' kcal'}</b>
+                    </div>
                 </div>
                 {AuthService.isLogged() && AuthService.getDecodedToken().sub === user.id ?
                     <div className='user-show__edit-icon'>
