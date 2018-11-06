@@ -26,7 +26,8 @@ class MealEdit extends Component {
                         name: meal.name,
                         imageUrl: meal.imageUrl,
                         description: meal.description,
-                        recipe: meal.recipe
+                        recipe: meal.recipe,
+                        products: meal.products
                     });
                 })
     }
