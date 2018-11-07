@@ -5,16 +5,13 @@ import './dashboard.css';
 import AuthService from "../helpers/auth_service";
 
 class Dashboard extends Component {
-    state = {
-        isLoggedIn: AuthService.isLogged()
-    };
 
     render() {
         return (
             <div className='dashboard__container'>
                 <Carousel autoplay>
                     <div>
-                        <h2>{this.state.isLoggedIn ? 'Witaj ' + AuthService.getDecodedToken().username + ' na stronie głównej naszej aplikacji'
+                        <h2>{AuthService.isLogged() ? 'Witaj ' + AuthService.getDecodedToken().username + ' na stronie głównej naszej aplikacji'
                             : 'Witaj, aby się zalogować, klikając przycisk po prawej stronie na pasku nawigacji - zostaniesz przekierowany na facebooka'}</h2>
                     </div>
                     <div><h2>Koszyk służy służy do zaplanowania posiłków - każdego dnia zostanie wygenerowany nowy koszyk, który
