@@ -68,7 +68,6 @@ export default (state = {content: {}}, action) => {
         }
 
         case IS_FAVOURITE_MEAL: {
-            console.log(action.payload);
             return {
                 ...state,
                 isFavourite: action.payload.data

@@ -163,7 +163,7 @@ class MealEdit extends Component {
                                 <thead>
                                 <tr>
                                     <th><label>Nazwa</label></th>
-                                    <th><label>Wartość/100g</label></th>
+                                    <th><label>Wartość</label></th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -205,7 +205,7 @@ class MealEdit extends Component {
                                 <tr>
                                     <th><label>Nazwa</label></th>
                                     <th><label>Waga</label></th>
-                                    <th></th>
+                                    <th/>
                                 </tr>
                                 </thead>
                                 <tbody>
