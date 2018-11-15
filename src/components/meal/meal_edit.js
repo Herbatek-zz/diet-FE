@@ -35,7 +35,7 @@ class MealEdit extends Component {
     onSubmit = (values) => {
         this.props.editMeal(this.state.mealId, values, () => {
             this.props.history.push(`/meals/${this.state.mealId}`);
-            message.success('Poprawnie edytowano produkt');
+            message.success('Poprawnie edytowano posiłek');
         });
     };
 

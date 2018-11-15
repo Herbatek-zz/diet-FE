@@ -13,6 +13,7 @@ import ProductShow from './components/product/product_show';
 import ProductCreate from './components/product/product_create';
 import ProductList from './components/product/product_list';
 import ProductMyList from './components/product/product_my_list';
+import ProductEdit from './components/product/product_edit';
 import MealList from './components/meal/meal_list';
 import MealShow from './components/meal/meal_show';
 import MealMyList from './components/meal/meal_my_list';
@@ -46,6 +47,7 @@ ReactDOM.render(
                         <Route path='/meals/new' component={MealCreate}/>
                         <Route path='/meals/:id' component={MealShow}/>
                         <Route path='/meals' component={MealList}/>
+                        <Route path='/products/:id/edit' component={ProductEdit}/>
                         <Route path='/products/my' component={ProductMyList}/>
                         <Route path='/products/new' component={ProductCreate}/>
                         <Route path='/products/:id' component={ProductShow}/>

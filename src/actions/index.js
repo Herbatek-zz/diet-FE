@@ -21,7 +21,8 @@ import {
     searchProducts,
     searchProductsInfinity,
     fetchProductsInfinity,
-    fetchMyProducts
+    fetchMyProducts,
+    editProduct
 } from "./productAction";
 
 import {fetchUser, editUser} from './userAction';
@@ -35,6 +36,7 @@ export const FETCH_PRODUCTS_INFINITY = 'fetch_products_infinty';
 export const FETCH_MY_PRODUCTS = 'fetch_my_products';
 export const SEARCH_PRODUCTS = 'search_products';
 export const SEARCH_PRODUCTS_INFINITY = 'search_products_infinity';
+export const EDIT_PRODUCT = 'edit_product';
 
 export const CREATE_MEAL = 'create_meal';
 export const FETCH_MEAL = 'fetch_meal';
@@ -126,6 +128,8 @@ export {addProductToCart}
 export {removeMealFromCart}
 
 export {removeProductFromCart}
+
+export {editProduct}
 
 export {fetchUser}
 

@@ -9,7 +9,8 @@ import {
     FETCH_MY_PRODUCTS,
     SEARCH_PRODUCTS,
     FETCH_PRODUCTS_INFINITY,
-    SEARCH_PRODUCTS_INFINITY
+    SEARCH_PRODUCTS_INFINITY,
+    EDIT_PRODUCT
 } from "./index";
 
 export function createProduct(product, callback) {
@@ -86,6 +87,20 @@ export function searchProductsInfinity(query, page, pageSize) {
 
     return {
         type: SEARCH_PRODUCTS_INFINITY,
+        payload: request
+    }
+}
+
+export function editProduct(productId, update, callback) {
+    const token = AuthService.getToken();
+    const request = SecuredRequest.put(`/products/${productId}`, update, {headers: {'Authorization': `Bearer ${token}`}})
+        .then((response) => {
+            callback();
+            return response;
+        });
+
+    return {
+        type: EDIT_PRODUCT,
         payload: request
     }
 }

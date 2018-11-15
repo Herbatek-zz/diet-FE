@@ -5,7 +5,7 @@
 }
 
 a:hover {
-    color: black !important;
+    color: white !important;
 }
 
 html,body
@@ -26,7 +26,8 @@ html,body
     margin: auto;
     width: 100%;
     min-height: 92vh;
-    background-image: url("./img/background-pattern.jpg");
+    background-image: url("./img/4.jpeg");
+    background-size: cover;
 }
 
 .container__loading-spin {

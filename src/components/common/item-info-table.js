@@ -13,31 +13,31 @@ export default ({item}) => {
             <tbody>
             <tr className='table-info__row'>
                 <td><label>Białko</label></td>
-                <td><label>{Math.floor(item.protein)}g</label></td>
+                <td><label>{item.protein}g</label></td>
             </tr>
             <tr className='table-info__row'>
                 <td><label>Węglowodany</label></td>
-                <td><label>{Math.floor(item.carbohydrate)}g</label></td>
+                <td><label>{item.carbohydrate}g</label></td>
             </tr>
             <tr className='table-info__row'>
                 <td><label>Tłuszcz</label></td>
-                <td><label>{Math.floor(item.fat)}g</label></td>
+                <td><label>{item.fat}g</label></td>
             </tr>
             <tr className='table-info__row'>
                 <td><label>Błonnik</label></td>
-                <td><label>{Math.floor(item.fibre)}g</label></td>
+                <td><label>{item.fibre}g</label></td>
             </tr>
             <tr className='table-info__row'>
                 <td><label>Kcal</label></td>
-                <td><label>{Math.floor(item.kcal)}</label></td>
+                <td><label>{item.kcal.toFixed(0)}</label></td>
             </tr>
             <tr className='table-info__row'>
                 <td><label>WW</label></td>
-                <td><label>{item.carbohydrateExchange.toFixed(2)}</label></td>
+                <td><label>{item.carbohydrateExchange}</label></td>
             </tr>
             <tr className='table-info__row'>
                 <td><label>WBT</label></td>
-                <td><label>{item.proteinAndFatEquivalent.toFixed(2)}</label></td>
+                <td><label>{item.proteinAndFatEquivalent}</label></td>
             </tr>
             </tbody>
         </table>
