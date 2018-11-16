@@ -244,7 +244,7 @@ class MealEdit extends Component {
                         }}
                         onCancel={() => this.setState({modalVisible: false})}
                     >
-                        <InputNumber min={0} max={900} value={this.state.productToAdd.amount} onChange={(value) => {
+                        <InputNumber min={0} value={this.state.productToAdd.amount} onChange={(value) => {
                             this.setState({
                                 productToAdd: {...this.state.productToAdd, amount: value}
                             })
