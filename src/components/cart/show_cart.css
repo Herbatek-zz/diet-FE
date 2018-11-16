@@ -125,4 +125,9 @@
     .show-cart__info {
         width: 33%;
     }
+
+    .cart__progress-items--macro {
+        display: flex;
+        justify-content: space-around;
+    }
 }

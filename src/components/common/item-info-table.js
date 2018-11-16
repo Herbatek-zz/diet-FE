@@ -33,7 +33,7 @@ export default ({item}) => {
             </tr>
             <tr className='table-info__row'>
                 <td><label>WW</label></td>
-                <td><label>{item.carbohydrateExchange}</label></td>
+                <td><label>{item.carbohydrateExchange.toFixed(2)}</label></td>
             </tr>
             <tr className='table-info__row'>
                 <td><label>WBT</label></td>
