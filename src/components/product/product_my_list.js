@@ -22,9 +22,11 @@ class ProductMyList extends Component {
     render() {
 
         if (!this.state.isLoggedIn)
-            return <div className='content'>{NO_LOGGED_MESSAGE}</div>;
+            return <div className='content__list'><label>{NO_LOGGED_MESSAGE}</label></div>;
         if (Object.keys(this.props.products.content).length === 0)
-            return <div className='container__message'><label>Nie stworzyłeś jeszcze żadnych produktów</label></div>
+            return <div className='content__list'>
+                <div className='container__message'><label>Nie stworzyłeś jeszcze żadnych produktów</label></div>
+            </div>;
 
         return (
             <div className='content__list'>

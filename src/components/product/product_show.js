@@ -51,8 +51,10 @@ class ProductShow extends Component {
                             <img src={product.imageUrl} alt='product' className='main-informations__image-container--image'/>
                         </div>
                         <div className='main-informations__product-info'>
-                            <label><h2>Informacje o produkcie</h2></label>
-                            <ItemInfoTable item={product}/>
+                            <div className='product-info__content'>
+                                <label><h2>Informacje o produkcie</h2></label>
+                                <ItemInfoTable item={product}/>
+                            </div>
                         </div>
                     </div>
                     <div className='body-product-show__description'>

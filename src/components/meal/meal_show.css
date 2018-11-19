@@ -38,16 +38,19 @@
 }
 
 .firstPanel__imageContainer {
+    display: flex;
+    justify-content: center;
     width: 100%;
-    height: 100%;
+    height: auto;
     margin: 5px 0;
     border: 1px solid cornflowerblue;
     position: relative;
 }
 
 .firstPanel__imageContainer--image {
-    width: 100%;
-    height: 100%;
+    width: auto;
+    height: auto;
+    max-width: 100%;
 }
 
 .show__mealProducts {

@@ -24,9 +24,11 @@ class MealMyList extends Component {
         const {meals} = this.props;
 
         if (!this.state.isLoggedIn)
-            return <div className='content'>{NO_LOGGED_MESSAGE}</div>;
+            return <div className='content__list'>{NO_LOGGED_MESSAGE}</div>;
         if (Object.keys(meals.content).length === 0)
-            return <div className='container__message'><p>Nie stworzyłeś jeszcze żadnego posiłku</p></div>;
+            return <div className='content__list'>
+                <div className='container__message'><p>Nie stworzyłeś jeszcze żadnego posiłku</p></div>
+            </div>;
 
         return (
             <div className='content__list'>

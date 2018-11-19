@@ -37,7 +37,7 @@ export default ({item}) => {
             </tr>
             <tr className='table-info__row'>
                 <td><label>WBT</label></td>
-                <td><label>{item.proteinAndFatEquivalent}</label></td>
+                <td><label>{item.proteinAndFatEquivalent.toFixed(2)}</label></td>
             </tr>
             </tbody>
         </table>

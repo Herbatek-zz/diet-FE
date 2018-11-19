@@ -30,7 +30,7 @@ class ProductCreate extends Component {
 
     render() {
         if (!this.state.isLoggedIn)
-            return <div className='content'>{NO_LOGGED_MESSAGE}</div>;
+            return <div className='content__list'>{NO_LOGGED_MESSAGE}</div>;
 
         return (
             <div className='content__productCreate'>

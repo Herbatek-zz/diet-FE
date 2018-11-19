@@ -22,9 +22,11 @@ class MealFavourite extends Component {
     render() {
         const {meals} = this.props;
         if (!this.state.isLoggedIn)
-            return <div className='content'>{NO_LOGGED_MESSAGE}</div>;
+            return <div className='content__list'>{NO_LOGGED_MESSAGE}</div>;
         if (Object.keys(this.props.meals.content).length === 0)
-            return <div className='container__message'><p>Twoja lista ulubionych posiłków jest pusta</p></div>;
+            return <div className='content__list'>
+                <div className='container__message'><p>Twoja lista ulubionych posiłków jest pusta</p></div>
+            </div>;
 
         return (
             <div className='content__list'>

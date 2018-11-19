@@ -80,7 +80,7 @@ class MyHeader extends Component {
 
     render() {
         return (
-            <Menu defaultSelectedKeys={[this.props.selectedMenuItem]} mode="horizontal" theme={"dark"}>
+            <Menu defaultSelectedKeys={[this.props.selectedMenuItem]} mode="horizontal">
                 <Item key='logo' className='menu__logo'>
                     <Link to='/'/>
                 </Item>
@@ -95,12 +95,12 @@ class MyHeader extends Component {
                             <Icon type='bars'/>Wszystkie
                         </Link>
                     </Item>
-                    <Item key='product-my-list'>
+                    <Item key='product-my-list' disabled={!this.state.logged}>
                         <Link to='/products/my'>
                             <Icon type='bars'/>Moje
                         </Link>
                     </Item>
-                    <Item key='product-create'>
+                    <Item key='product-create' disabled={!this.state.logged}>
                         <Link to='/products/new'>
                             <Icon type='plus-circle-o'/>Dodaj nowy
                         </Link>
@@ -113,17 +113,17 @@ class MyHeader extends Component {
                             <Icon type='bars'/>Wszystkie
                         </Link>
                     </Item>
-                    <Item key='meal-my-list'>
+                    <Item key='meal-my-list' disabled={!this.state.logged}>
                         <Link to='/meals/my'>
                             <Icon type='bars'/>Moje
                         </Link>
                     </Item>
-                    <Item key='meal-favourite'>
+                    <Item key='meal-favourite' disabled={!this.state.logged}>
                         <Link to='/meals/favourite'>
                             <Icon type='heart'/>Ulubione
                         </Link>
                     </Item>
-                    <Item key='meal-create'>
+                    <Item key='meal-create' disabled={!this.state.logged}>
                         <Link to='/meals/new'>
                             <Icon type='plus-circle-o'/>Dodaj nowy
                         </Link>

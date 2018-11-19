@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "antd": "^3.10.7",
+    "antd": "^3.10.8",
     "autoprefixer": "^9.3.1",
     "axios": "^0.18.0",
     "babel-plugin-import": "^1.11.0",

@@ -1,77 +1,105 @@
 .content__show-cart {
-    background: rgba(255,255,255,0.95);
+    background: rgba(255, 255, 255, 0.95);
     display: flex;
     flex-direction: column;
     width: 100%;
     height: 100%;
-    border: 1px green solid;
+}
+
+.content__show-cart a {
+    color: #2a2a2a;
+}
+
+.content__show-cart a:hover {
+    color: #000000;
 }
 
 .pointer {
     cursor: pointer;
 }
 
-.show-cart__meals-and-products {
-    border: 1px red solid;
+.label-delete:hover {
+    border-radius: 5px;
+    color: black;
+}
+
+.show-cart__first-section {
     display: flex;
     flex-direction: column;
 }
 
-.meal-and-products__meals {
-    border: 1px gray solid;
+.first-section__meals {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.1);
+    margin-bottom: 4px;
+    padding: 3px;
+}
+
+.first-section__meals--table {
+    width: 100%;
+}
+
+.first-section__meals--tableRow:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.first-section__products {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.1);
+    margin-bottom: 5px;
+    padding: 3px;
+}
+
+.first-section__products--table {
+    width: 100%;
+}
+
+.first-section__products--tableRow {
+}
+
+.first-section__products--tableRow:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.showCart__second-section {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.meal-and-products__meals--table {
-    border: 1px red solid;
-    width: 100%;
-}
-
-.mealAndProducts__meals--tableRow {
-    border: 1px red solid;
-}
-
-.mealAndProducts__products {
-    border: 1px blue solid;
+.second-section__content {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.1);
+    margin-bottom: 5px;
+    padding: 3px;
 }
 
-.mealAndProducts__products--table {
-    border: 1px red solid;
+.showCart__second-section--table {
+
+}
+
+.showCart__second-section--table {
     width: 100%;
 }
 
-.mealAndProducts__products--tableRow {
-    border: 1px red solid;
+.show-cart__second-section--table-row {
+    border-bottom: 1px solid black;
 }
 
-.showCart__allProducts {
-    border: 1px red solid;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.showCart__allProducts--table {
-    border: 1px red solid;
-    width: 100%;
-}
-
-.show-cart__all-products--table-row {
-    border: 1px red solid;
-}
-
-.show-cart__info {
-    border: 1px red solid;
+.show-cart__second-section--table-row:hover {
+    background: rgba(0, 0, 0, 0.1);
 }
 
 .cart__td--image {
     height: 64px;
-    width: 100px;
+    width: 64px;
 }
 
 .cart__image {
@@ -79,55 +107,68 @@
     width: 100%;
 }
 
-.cart__progress {
+.show-cart__progress-items {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.show-cart__progress-items--calories {
+    border-bottom: 1px solid black;
+    margin: 0 15px;
+    padding-top: 15px;
+}
+
+.show-cart__progress-items--macro {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 5px;
+}
+
+.show-cart__progress {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-@media (min-width: 600px) {
+.show-cart__progress--tittle {
+    margin-bottom: 4px;
+}
+
+@media (min-width: 1000px) {
     .content__show-cart {
         flex-direction: row;
         width: 80%;
         border-radius: 5px;
         margin: 5px 0;
-        padding: 12px;
+        padding: 9px;
     }
 
-    .show-cart__meals-and-products {
+    .show-cart__first-section {
         width: 33%;
     }
 
-    .meal-and-products__meals {
-
+    .first-section__meals {
+        border-radius: 5px;
     }
 
-    .mealAndProducts__meals--tableRow {
-
+    .first-section__products {
+        border-radius: 5px;
     }
 
-    .mealAndProducts__products {
-
+    .showCart__second-section {
+        width: 33%;
+        margin: 0 6px;
     }
 
-    .mealAndProducts__products--tableRow {
-
+    .second-section__content {
+        border-radius: 5px;
+        padding: 5px;
     }
 
-    .showCart__allProducts {
+    .show-cart__third-section {
         width: 33%;
     }
 
-    .show-cart__all-products--table-row {
-
-    }
-
-    .show-cart__info {
-        width: 33%;
-    }
-
-    .cart__progress-items--macro {
-        display: flex;
-        justify-content: space-around;
+    .show-cart__progress-items {
+        border-radius: 5px;
     }
 }
