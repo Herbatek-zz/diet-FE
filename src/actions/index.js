@@ -10,7 +10,9 @@ import {
     isFavouriteMeal,
     addMealToFavourites,
     removeMealFromFavourites,
-    editMeal
+    editMeal,
+    fetchTopMeals,
+    fetchLatestMeals
 } from "./mealAction";
 
 import {
@@ -49,6 +51,8 @@ export const ADD_MEAL_TO_FAVOURITES = 'add_meal_to_favourites';
 export const REMOVE_MEAL_FROM_FAVOURITES = 'remove_meal_from_favourites';
 export const SEARCH_MEALS = 'search_meals';
 export const EDIT_MEAL = 'edit_meal';
+export const FETCH_TOP_MEALS = 'fetch_top_meals';
+export const FETCH_LATEST_MEALS = 'fetch_latest_meals';
 
 export const FETCH_CART = 'fetch_cart';
 export const ADD_MEAL_TO_CART = 'add_meal_to_cart';
@@ -118,6 +122,10 @@ export {addMealToFavourites}
 export {removeMealFromFavourites}
 
 export {editMeal}
+
+export {fetchTopMeals}
+
+export {fetchLatestMeals}
 
 export {fetchCart}
 

@@ -10,6 +10,7 @@ import {
     IS_FAVOURITE_MEAL,
     ADD_MEAL_TO_FAVOURITES,
     REMOVE_MEAL_FROM_FAVOURITES, EDIT_MEAL,
+    FETCH_TOP_MEALS, FETCH_LATEST_MEALS
 } from "../actions";
 
 
@@ -64,6 +65,20 @@ export default (state = {content: {}}, action) => {
                 currentPage: action.payload.data.pageNumber,
                 pageSize: action.payload.data.pageSize,
                 totalElements: action.payload.data.totalElements
+            }
+        }
+
+        case FETCH_TOP_MEALS: {
+            return {
+                ...state,
+                top: _.mapKeys(action.payload.data, 'id')
+            }
+        }
+
+        case FETCH_LATEST_MEALS: {
+            return {
+                ...state,
+                latestMeals: _.mapKeys(action.payload.data, 'id')
             }
         }
 

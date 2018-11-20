@@ -12,7 +12,8 @@ import {
     ADD_MEAL_TO_FAVOURITES,
     REMOVE_MEAL_FROM_FAVOURITES,
     SEARCH_MEALS,
-    EDIT_MEAL
+    EDIT_MEAL,
+    FETCH_TOP_MEALS, FETCH_LATEST_MEALS
 } from "./index";
 
 export function createMeal(meal, callback) {
@@ -128,6 +129,24 @@ export function editMeal(mealId, update, callback) {
 
     return {
         type: EDIT_MEAL,
+        payload: request
+    }
+}
+
+export function fetchTopMeals() {
+    const request = Request.get('meals/top-favourites');
+
+    return {
+        type: FETCH_TOP_MEALS,
+        payload: request
+    }
+}
+
+export function fetchLatestMeals() {
+    const request = Request.get('meals/latest');
+
+    return {
+        type: FETCH_LATEST_MEALS,
         payload: request
     }
 }

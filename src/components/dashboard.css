@@ -20,6 +20,24 @@
     color: #fff;
 }
 
+.dashboard__lists-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.dashboard__lists-wrapper--list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.dashboard__lists-wrapper--title {
+    text-align: center;
+    width: 100%;
+}
+
 @media (min-width: 600px) {
 
     .dashboard__container {
@@ -36,6 +54,12 @@
 
     .article__content {
         text-align: justify;
+    }
+
+    .dashboard__lists-wrapper {
+        flex-direction: row;
+        justify-content: space-around;
+        margin-top: 30px;
     }
 
 }
