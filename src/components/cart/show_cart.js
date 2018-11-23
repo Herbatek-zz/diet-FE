@@ -25,16 +25,16 @@ class Show_cart extends Component {
 
     render() {
         if (!this.state.isLoggedIn)
-            return <div className='content__show-cart'>{NO_LOGGED_MESSAGE}</div>;
+            return <div className='show-cart'>{NO_LOGGED_MESSAGE}</div>;
 
         const {cart} = this.props;
 
         return (
-            <div className='content__show-cart'>
+            <div className='show-cart'>
                 <div className='show-cart__first-section'>
                     <div className='first-section__meals'>
                         <h2><label>Posiłki</label></h2>
-                        {<table className='first-section__meals--table'>
+                        {<table className='meals__table'>
                             <thead>
                             <tr>
                                 <th/>
@@ -46,7 +46,7 @@ class Show_cart extends Component {
                             <tbody>
                             {_.map(cart.meals, meal => {
                                 return (
-                                    <tr key={meal.id} className='first-section__meals--tableRow'>
+                                    <tr key={meal.id} className='meals__table-row'>
                                         <td className='cart__td--image'>
                                             <Link to={`/meals/${meal.id}`}>
                                                 <img src={meal.imageUrl} className='cart__image' alt={meal.name}/>
@@ -66,7 +66,7 @@ class Show_cart extends Component {
                     </div>
                     < div className='first-section__products'>
                         <h2><label>Produkty</label></h2>
-                        {<table className='first-section__products--table'>
+                        {<table className='products__table'>
                             <thead>
                             <tr>
                                 <th/>
@@ -78,7 +78,7 @@ class Show_cart extends Component {
                             <tbody>
                             {_.map(cart.products, product => {
                                 return (
-                                    <tr key={product.id} className='first-section__products--tableRow'>
+                                    <tr key={product.id} className='products__table-row'>
                                         <td className='cart__td--image'>
                                             <Link to={`/products/${product.id}`}>
                                                 <img src={product.imageUrl} className='cart__image' alt={product.name}/>
@@ -97,12 +97,12 @@ class Show_cart extends Component {
                         }
                     </div>
                 </div>
-                <div className='showCart__second-section'>
-                    <div className='second-section__content'>
+                <div className='show-cart__second-section'>
+                    <div className='second-section__wrapper'>
                         <h2>
                             <label>Potrzebne produkty</label>
                         </h2>
-                        {<table className='showCart__second-section--table'>
+                        {<table className='second-section__table'>
                             <thead>
                             <tr>
                                 <th><label>Nazwa</label></th>
@@ -112,7 +112,7 @@ class Show_cart extends Component {
                             <tbody>
                             {_.map(cart.allProducts, product => {
                                 return (
-                                    <tr key={product.id} className='show-cart__second-section--table-row'>
+                                    <tr key={product.id} className='second-section__table-row'>
                                         <td><Link to={`/products/${product.id}`}>{product.name}</Link></td>
                                         <td><label>{product.amount + "g"}</label></td>
                                     </tr>
@@ -125,10 +125,10 @@ class Show_cart extends Component {
                 </div>
                 <div className='show-cart__third-section'>
                     {cart.targetUserCalories ?
-                        <div className='show-cart__progress-items'>
-                            <div className='show-cart__progress-items--calories'>
-                                <div className='show-cart__progress'>
-                                    <label className='show-cart__progress--tittle'><b>Kalorie</b></label>
+                        <div className='third-section__wrapper'>
+                            <div className='third-section__calories'>
+                                <div className='progress__wrapper'>
+                                    <label className='third-section__calories-title'><b>Kalorie</b></label>
                                     <Progress type="dashboard"
                                               width={150}
                                               percent={cart.kcal === undefined || cart.kcal === 0 ? 0 : Number(((cart.kcal / cart.targetUserCalories) * 100).toFixed(1))}
@@ -136,25 +136,25 @@ class Show_cart extends Component {
                                     <label>{cart.kcal} kcal / {cart.targetUserCalories} kcal</label>
                                 </div>
                             </div>
-                            <div className='show-cart__progress-items--macro'>
-                                <div className='show-cart__progress'>
-                                    <label className='show-cart__progress--tittle'><b>Tłuszcze</b></label>
+                            <div className='third-section__macro'>
+                                <div className='progress__wrapper'>
+                                    <label className='third-section__macro-title'><b>Tłuszcze</b></label>
                                     <Progress type="circle"
                                               width={80}
                                               status={cart.fat > cart.targetUserFat ? "exception" : cart.fat === cart.targetUserFat ? "success" : "active"}
                                               percent={cart.fat === undefined || cart.fat === 0 ? 0 : Number(((cart.fat / cart.targetUserFat) * 100).toFixed(1))}/>
                                     <label> {cart.fat} g / {cart.targetUserFat} g</label>
                                 </div>
-                                <div className='show-cart__progress'>
-                                    <label className='show-cart__progress--tittle'><b>Białko</b></label>
+                                <div className='progress__wrapper'>
+                                    <label className='third-section__macro-title'><b>Białko</b></label>
                                     <Progress type="circle"
                                               width={80}
                                               status={cart.protein > cart.targetUserProtein ? "exception" : cart.protein === cart.targetUserProtein ? "success" : "active"}
                                               percent={cart.protein === undefined || cart.protein === 0 ? 0 : Number(((cart.protein / cart.targetUserProtein) * 100).toFixed(1))}/>
                                     <label> {cart.protein} g / {cart.targetUserProtein} g</label>
                                 </div>
-                                <div className='show-cart__progress'>
-                                    <label className='show-cart__progress--tittle'><b>Węglowodany</b></label>
+                                <div className='progress__wrapper'>
+                                    <label className='third-section__macro-title'><b>Węglowodany</b></label>
                                     <Progress type="circle"
                                               width={80}
                                               status={cart.carbohydrate > cart.targetUserCarbohydrate ? "exception" : cart.carbohydrate === cart.targetUserCarbohydrate ? "success" : "active"}

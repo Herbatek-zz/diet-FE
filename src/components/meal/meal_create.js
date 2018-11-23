@@ -31,9 +31,9 @@ class MealCreate extends Component {
             return <div className='content__list'>{NO_LOGGED_MESSAGE}</div>;
 
         return (
-            <div className='content__mealCreate'>
-                <div className='form__container'>
-                    <h1 className='form__title'><label>Dodaj nowy posiłek</label></h1>
+            <div className='form-container'>
+                <div className='form-container__wrapper'>
+                    <h1 className='form-container__title'><label>Dodaj nowy posiłek</label></h1>
                     <form onSubmit={this.props.handleSubmit(this.onSubmit)} className='form' autoComplete='off'>
                         <Field
                             name='name'

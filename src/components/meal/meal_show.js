@@ -35,11 +35,11 @@ class MealShow extends Component {
             return LOADING_SPIN;
 
         return (
-            <div className='container__meal-show'>
-                <div className='head'>
-                    <h1 className='head__title'>{meal.name}</h1>
+            <div className='meal-show'>
+                <div className='meal-show__head'>
+                    <h1 className='meal-show__title'>{meal.name}</h1>
                     {isLoggedIn ?
-                        <div className='head__menu'>
+                        <div className='meal-show__menu'>
                             <HearthIcon mealId={mealId}/>
                             <AddToCartIcon onClick={() => this.setState({modalVisible: true})}/>
                             {meal.userId === AuthService.getDecodedToken().sub ? <EditIcon link={`/meals/${mealId}/edit`}/> : ''}
@@ -64,27 +64,27 @@ class MealShow extends Component {
 
                     </Modal>
                 </div>
-                <div className='body'>
-                    <div className='firstPanel'>
-                        <div className='firstPanel__imageContainer'>
-                            <img src={meal.imageUrl} alt={meal.name} className='firstPanel__imageContainer--image'/>
+                <div className='meal-show__body'>
+                    <div className='meal-show__first-panel'>
+                        <div className='first-panel__image-container'>
+                            <img src={meal.imageUrl} alt={meal.name} className='first-panel__image'/>
                         </div>
-                        <div className='show__meal-info'>
+                        <div className='first-panel__info'>
                             <h2>Informacje o posiłku</h2>
                             <ItemInfoTable item={meal}/>
                         </div>
                     </div>
-                    <div className='second-panel'>
-                        <div className='show__mealProducts'>
+                    <div className='meal-show__second-panel'>
+                        <div className='second-panel__meal-products'>
                             <ShowMealProducts products={meal.products}/>
                         </div>
-                        <div className='show__mealDescription'>
+                        <div className='second-panel__description'>
                             <h2>Opis</h2>
-                            <h4 className='description'>{meal.description}</h4>
+                            <p className='second-panel__description-text'>{meal.description}</p>
                         </div>
-                        <div className='show__mealRecipe'>
+                        <div className='second-panel__recipe'>
                             <h2>Przepis</h2>
-                            <h4 className='recipe'>{meal.recipe}</h4>
+                            <p className='second-panel__recipe-text'>{meal.recipe}</p>
                         </div>
                     </div>
                 </div>

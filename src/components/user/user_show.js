@@ -28,39 +28,39 @@ class UserShow extends Component {
             return LOADING_SPIN;
 
         return (
-            <div className='user-show__container'>
+            <div className='user-show'>
                 <div className='user-show__body'>
-                    <div className='user-show__image-container'>
-                        <img src={user.picture_url} alt='avatar' className='user-show__image-container--image'/>
+                    <div className='body__image-container'>
+                        <img src={user.picture_url} alt='avatar' className='body__image'/>
                     </div>
-                    <div>
-                        <label>Nazwa użytkownika:</label><b>{user.username}</b>
+                    <div className='body__item'>
+                        <label>Nazwa użytkownika: </label><b>{user.username}</b>
                     </div>
-                    <div>
+                    <div className='body__item'>
                         <label>Imie:</label> <b>{user.firstName}</b>
                     </div>
-                    <div>
+                    <div className='body__item'>
                         <label>Nazwisko:</label> <b>{user.lastName}</b>
                     </div>
-                    <div>
+                    <div className='body__item'>
                         <label>Email:</label> <b>{user.email}</b>
                     </div>
-                    <div>
+                    <div className='body__item'>
                         <label>Wiek:</label> <b>{user.age === 0 ? 'Brak informacji' : user.age}</b>
                     </div>
-                    <div>
+                    <div className='body__item'>
                         <label>Wzrost:</label> <b>{user.height === 0 ? 'Brak informacji' : user.height + ' cm'} </b>
                     </div>
-                    <div>
+                    <div className='body__item'>
                         Waga: <b>{user.weight === 0 ? 'Brak informacji' : user.weight + ' kg'}</b>
                     </div>
-                    <div>
-                        Dzienne zapotrzebowanie kaloryczne: <b>{user.caloriesPerDay === 0 ? 'Brak informacji' : user.caloriesPerDay + ' kcal'}</b>
+                    <div className='body__item'>
+                        <label>Dzienne zapotrzebowanie kaloryczne:</label> <b>{user.caloriesPerDay === 0 ? 'Brak informacji' : user.caloriesPerDay + ' kcal'}</b>
                     </div>
                 </div>
                 {AuthService.isLogged() && AuthService.getDecodedToken().sub === user.id ?
-                    <div className='user-show__edit-icon'>
-                        <EditIcon link={'/user/edit'} text='Edytuj profil' className='user-show__edit-icon'/>
+                    <div className='user-show__icon-menu'>
+                        <EditIcon link={'/user/edit'} text='Edytuj profil'/>
                     </div> : ''}
             </div>
         );

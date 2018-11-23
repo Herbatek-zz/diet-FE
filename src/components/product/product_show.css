@@ -1,4 +1,4 @@
-.container__product-show {
+.product-show {
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -6,19 +6,19 @@
     background: rgba(255,255,255,0.95);
 }
 
-.head-product-show {
+.product-show__head {
     margin: 0 auto;
     font-size: 18px;
 }
 
-.head-product-show__icon-menu {
+.product-show__icon-menu {
     font-size: 10px;
     display: flex;
     justify-content: space-around;
     width: 100%;
 }
 
-.main-informations__image-container {
+.product-show__image-container {
     width: 100%;
     height: auto;
     display: flex;
@@ -27,53 +27,53 @@
     position: relative;
 }
 
-.main-informations__image-container--image {
+.product-show__image {
     width: auto;
     height: auto;
     max-width: 100%;
 }
 
-.main-informations__product-info {
+.product-show__first-panel {
     margin: 1px;
     padding: 5px;
 }
 
-.body-product-show__description {
+.product-show__description {
     margin: 1px;
     padding: 5px;
     white-space: pre-wrap;
 }
 
 @media (min-width: 600px) {
-    .container__product-show {
+    .product-show {
         width: 80%;
         margin: 5px 0;
         border-radius: 5px;
         padding: 12px;
     }
 
-    .head-product-show {
+    .product-show__head {
         display: flex;
         justify-content: space-between;
         width: 100%;
         padding-left: 10px;
     }
 
-    .head-product-show__icon-menu {
+    .product-show__icon-menu {
         width: 15%;
         border-bottom: black 1px solid;
     }
 
-    .body-product-show {
+    .product-show__body {
         display: flex;
         flex-direction: column;
     }
 
-    .body-product-show__main-informations {
+    .product-show__first-panel {
         display: flex;
     }
 
-    .main-informations__image-container {
+    .product-show__image-container {
         width: 50%;
         margin: 0 10px;
         border-radius: 5px;
@@ -81,7 +81,7 @@
         justify-content: center;
     }
 
-    .main-informations__image-container--image {
+    .product-show__image {
         border-radius: 5px;
         width: auto;
         height: auto;
@@ -89,26 +89,26 @@
         box-shadow: 3px 3px 10px #ccc;
     }
 
-    .main-informations__product-info {
+    .product-show__info {
         width: 50%;
     }
 
-    .product-info__content {
+    .product-show__info-wrapper {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         margin: 10px;
-        padding: 10px;
+        padding: 15px;
         border: 1px cornflowerblue solid;
 
     }
 
-    .main-informations__product-info > h2 {
+    .product-show__info-text {
         font-size: 26px;
     }
 
-    .body-product-show__description {
+    .product-show__description {
         margin: 10px 10px;
         padding: 10px;
         border-bottom: 1px cornflowerblue solid;

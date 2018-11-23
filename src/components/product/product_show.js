@@ -32,11 +32,11 @@ class ProductShow extends Component {
             return LOADING_SPIN;
 
         return (
-            <div className='container__product-show'>
-                <div className='head-product-show'>
+            <div className='product-show'>
+                <div className='product-show__head'>
                     <h2><label>{product.name}</label></h2>
                     {this.state.isLoggedIn ?
-                        <div className='head-product-show__icon-menu'>
+                        <div className='product-show__icon-menu'>
                             <AddToCartIcon onClick={() => this.setState({modalVisible: true})}/>
                             {AuthService.getDecodedToken().sub === product.userId ?
                                 <EditIcon link={`/products/${product.id}/edit`}/> : ''}
@@ -45,19 +45,19 @@ class ProductShow extends Component {
                                             onDelete={() => deleteProduct(product.id, () => this.props.history.push('/products/my'))}/> : ''}
                         </div> : ''}
                 </div>
-                <div className='body-product-show'>
-                    <div className='body-product-show__main-informations'>
-                        <div className='main-informations__image-container'>
-                            <img src={product.imageUrl} alt='product' className='main-informations__image-container--image'/>
+                <div className='product-show__body'>
+                    <div className='product-show__first-panel'>
+                        <div className='product-show__image-container'>
+                            <img src={product.imageUrl} alt='product' className='product-show__image'/>
                         </div>
-                        <div className='main-informations__product-info'>
-                            <div className='product-info__content'>
-                                <label><h2>Informacje o produkcie</h2></label>
+                        <div className='product-show__info'>
+                            <div className='product-show__info-wrapper'>
+                                <label><h2 className='product-show__info-text'>Informacje o produkcie</h2></label>
                                 <ItemInfoTable item={product}/>
                             </div>
                         </div>
                     </div>
-                    <div className='body-product-show__description'>
+                    <div className='product-show__description'>
                         <h2><label>Opis:</label></h2>
                         <h4>{product.description}</h4>
                     </div>

@@ -1,10 +1,10 @@
-.container__meal-show {
+.meal-show {
     width: 100%;
     height: 100%;
     background: rgba(255,255,255,0.95);
 }
 
-.head {
+.meal-show__head {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -12,32 +12,32 @@
     font-size: 20px;
 }
 
-.head__title {
+.meal-show__title {
     text-align: center;
 }
 
-.head__menu {
+.meal-show__menu {
     font-size: 10px;
     display: flex;
     width: 100%;
     justify-content: space-around;
 }
 
-.body {
+.meal-show__body {
     display: flex;
     flex-direction: column;
     width: 100%;
     position: relative;
 }
 
-.firstPanel {
+.meal-show__first-panel {
     display: flex;
     flex-direction: column;
     width: 100%;
     position: relative;
 }
 
-.firstPanel__imageContainer {
+.first-panel__image-container {
     display: flex;
     justify-content: center;
     width: 100%;
@@ -47,13 +47,23 @@
     position: relative;
 }
 
-.firstPanel__imageContainer--image {
+.first-panel__image {
     width: auto;
     height: auto;
     max-width: 100%;
 }
 
-.show__mealProducts {
+.first-panel__info {
+    padding: 6px;
+    margin: 2px 0;
+}
+
+.meal-show__second-panel {
+    display: flex;
+    flex-direction: column;
+}
+
+.second-panel__meal-products {
     border: 1px solid cornflowerblue;
     border-radius: 2px;
     padding: 6px;
@@ -63,102 +73,87 @@
 .mealShow__products--tag {
     margin-bottom: 5px !important;
 }
-.second-panel {
-    display: flex;
-    flex-direction: column;
-}
 
-.show__mealDescription {
+.second-panel__description {
     border-bottom: 1px solid cornflowerblue;
     border-radius: 2px;
     padding: 6px;
     margin: 2px 0;
-}
-
-.show__mealRecipe {
-    border-bottom: 1px solid cornflowerblue;
-    padding: 6px;
-    margin: 2px 0;
-}
-
-.show__meal-info {
-    padding: 6px;
-    margin: 2px 0;
-}
-
-.description {
     white-space: pre-wrap;
 }
 
-.recipe {
+.second-panel__recipe {
+    border-bottom: 1px solid cornflowerblue;
+    padding: 6px;
+    margin: 2px 0;
     white-space: pre-wrap;
 }
 
 @media (min-width: 600px) {
-    .container__meal-show {
+    .meal-show {
         width: 80%;
         margin: 5px 0;
         padding: 12px;
         border-radius: 5px;
     }
 
-    .head {
+    .meal-show__head {
         flex-direction: row;
     }
 
-    .head__menu {
+    .meal-show__menu {
         justify-content: space-evenly;
         width: 20%;
     }
 
-    .head__title {
+    .meal-show__title {
         margin-left: 10px;
     }
 
-    .body {
+    .meal-show__body {
         flex-direction: row;
     }
 
-    .firstPanel {
+    .meal-show__first-panel {
         width: 42%;
         padding: 10px;
     }
 
-    .firstPanel__imageContainer {
+    .first-panel__image-container {
         border-radius: 5px;
         height: auto;
     }
 
-    .firstPanel__imageContainer--image {
+    .first-panel__image {
         border-radius: 5px;
     }
 
-    .show__mealProducts {
-        border-radius: 5px;
+    .first-panel__info {
         padding: 8px;
-        height: auto;
+        width: 100%;
+        min-width: 130px;
     }
 
-    .second-panel {
+    .meal-show__second-panel {
         width: 58%;
         padding: 8px;
     }
 
-    .show__mealDescription {
+    .second-panel__meal-products {
+        border-radius: 5px;
+        padding: 8px;
+        height: auto;
+    }
+
+    .second-panel__description {
         padding: 10px;
         display: flex;
         flex-direction: column;
     }
 
-    .show__mealRecipe {
+    .second-panel__recipe {
         width: 100%;
         padding: 8px;
         margin-right: 10px;
-    }
-
-    .show__meal-info {
-        padding: 8px;
-        width: 100%;
-        min-width: 130px;
     }
 }

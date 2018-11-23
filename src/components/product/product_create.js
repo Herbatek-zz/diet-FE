@@ -33,10 +33,10 @@ class ProductCreate extends Component {
             return <div className='content__list'>{NO_LOGGED_MESSAGE}</div>;
 
         return (
-            <div className='content__productCreate'>
-                <div className='form__container'>
-                    <h1 className='form__title'><label>Dodaj produkt</label></h1>
-                    <form onSubmit={this.props.handleSubmit(this.onSubmit)} className='form' autoComplete='off'>
+            <div className='form-container'>
+                <div className='form-container__wrapper'>
+                    <h1 className='form-container__title'><label>Dodaj produkt</label></h1>
+                    <form onSubmit={this.props.handleSubmit(this.onSubmit)} autoComplete='off' className='form'>
                         <Field
                             name='name'
                             component={TextField}
@@ -54,41 +54,31 @@ class ProductCreate extends Component {
                             placeholder='Opis'/>
                         <div>
                             <label>Makroskładniki oraz pozostałe informacje w <b>100g</b> produktu</label>
-                            <div className='form__numberItem'>
-                                <label className='form__numberItem--label'>Białko:</label>
-                                <Field
-                                    name='protein'
-                                    component={NumberField}
-                                    step={0.1}/>
-                            </div>
-                            <div className='form__numberItem'>
-                                <label className='form__numberItem--label'>Węglowodany</label>
-                                <Field
-                                    name='carbohydrate'
-                                    component={NumberField}
-                                    step={0.1}/>
-                            </div>
-                            <div className='form__numberItem'>
-                                <label className='form__numberItem--label'>Tłuszcz</label>
-                                <Field
-                                    name='fat'
-                                    component={NumberField}
-                                    step={0.1}/>
-                            </div>
-                            <div className='form__numberItem'>
-                                <label className='form__numberItem--label'>Błonnik</label>
+                            <Field
+                                name='protein'
+                                component={NumberField}
+                                step={0.1}
+                                label='Białko'/>
+                            <Field
+                                name='carbohydrate'
+                                component={NumberField}
+                                step={0.1}
+                                label='Węglowodany'/>
+                            <Field
+                                name='fat'
+                                component={NumberField}
+                                step={0.1}
+                                label='Tłuszcz'/>
                                 <Field
                                     name='fibre'
                                     component={NumberField}
-                                    step={0.1}/>
-                            </div>
-                            <div className='form__numberItem'>
-                                <label className='form__numberItem--label'>Kcal</label>
+                                    step={0.1}
+                                    label='Błonnik'/>
                                 <Field
                                     name='kcal'
                                     component={NumberField}
-                                    step={1}/>
-                            </div>
+                                    step={1}
+                                    label='Kalorie'/>
                         </div>
                         <Button className='form__button' type="primary" ghost htmlType='submit'>Zatwierdź</Button>
                     </form>
