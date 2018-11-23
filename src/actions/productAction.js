@@ -25,8 +25,9 @@ export function createProduct(product, callback) {
     }
 }
 
-export function fetchProduct(id) {
-    const request = Request.get(`/products/${id}`);
+export function fetchProduct(id, onErrorDo) {
+    const request = Request.get(`/products/${id}`)
+        .catch(e => onErrorDo());
 
     return {
         type: FETCH_PRODUCT,

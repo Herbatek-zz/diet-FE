@@ -92,14 +92,14 @@ export default (state = {content: {}}, action) => {
         case ADD_MEAL_TO_FAVOURITES: {
             return {
                 ...state,
-                isFavourite: true
+                isFavourite: action.payload.status === 201
             }
         }
 
         case REMOVE_MEAL_FROM_FAVOURITES: {
             return {
                 ...state,
-                isFavourite: false
+                isFavourite: action.payload.status !== 204
             }
         }
 

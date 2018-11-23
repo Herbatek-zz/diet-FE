@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {InputNumber, Modal} from 'antd';
+import {InputNumber, Modal, message} from 'antd';
 
 import {fetchProduct, setMenuItem, addProductToCart, deleteProduct} from "../../actions";
 import {LOADING_SPIN} from "../../helpers/messages";
@@ -22,7 +22,7 @@ class ProductShow extends Component {
 
     componentDidMount() {
         this.props.setMenuItem('');
-        this.props.fetchProduct(this.state.productId);
+        this.props.fetchProduct(this.state.productId, () => message.error("Nie odnaleziono produktu"));
     }
 
     render() {

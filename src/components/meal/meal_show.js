@@ -11,7 +11,7 @@ import AddToCartIcon from '../common/icons/addToCartIcon';
 import EditIcon from '../common/icons/editIcon';
 import DeleteIcon from '../common/icons/deleteIcon';
 import ItemInfoTable from '../common/item-info-table';
-import {InputNumber, Modal} from "antd";
+import {InputNumber, Modal, message} from "antd";
 
 
 class MealShow extends Component {
@@ -24,7 +24,7 @@ class MealShow extends Component {
 
     componentDidMount() {
         this.props.setMenuItem('');
-        this.props.fetchMeal(this.state.mealId);
+        this.props.fetchMeal(this.state.mealId, () => message.error("Nie odnaleziono produktu"));
     }
 
     render() {
