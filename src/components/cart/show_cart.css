@@ -6,6 +6,27 @@
     height: 100%;
 }
 
+.show-cart__head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 12px;
+    width: 100%;
+    height: 8%;
+}
+
+.head__title {
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.show-cart__body {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 92%;
+}
+
 .show-cart a {
     color: #2a2a2a;
 }
@@ -14,13 +35,11 @@
     color: #000000;
 }
 
-.pointer {
-    cursor: pointer;
-}
-
-.label-delete:hover {
-    border-radius: 5px;
-    color: black;
+.button--delete {
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    align-items: center;
 }
 
 .show-cart__first-section {
@@ -37,14 +56,6 @@
     padding: 3px;
 }
 
-.meals__table {
-    width: 100%;
-}
-
-.meals__table-row:hover {
-    background-color: rgba(0, 0, 0, 0.1);
-}
-
 .first-section__products {
     display: flex;
     flex-direction: column;
@@ -52,17 +63,6 @@
     background-color: rgba(0, 0, 0, 0.1);
     margin-bottom: 5px;
     padding: 3px;
-}
-
-.products__table {
-    width: 100%;
-}
-
-.products__table-row {
-}
-
-.products__table-row:hover {
-    background-color: rgba(0, 0, 0, 0.1);
 }
 
 .showCart__second-section {
@@ -81,25 +81,7 @@
     padding: 3px;
 }
 
-.second-section__table {
-    width: 100%;
-}
-
-.second-section__table-row {
-    border-bottom: 1px solid black;
-}
-
-.second-section__table-row:hover {
-    background: rgba(0, 0, 0, 0.1);
-}
-
-.cart__td--image {
-    height: 64px;
-    width: 64px;
-}
-
-.cart__image {
-    height: 100%;
+.ant-table-wrapper {
     width: 100%;
 }
 
@@ -129,13 +111,34 @@
     margin-bottom: 4px;
 }
 
+.text-info {
+    text-align: center;
+}
+
 @media (min-width: 1000px) {
     .show-cart {
-        flex-direction: row;
         width: 80%;
         border-radius: 5px;
         margin: 5px 0;
         padding: 9px;
+    }
+
+    .show-cart__head {
+        flex-direction: row-reverse;
+        height: 8%;
+        justify-content: center;
+        border-bottom: #364d79 solid 1px;
+        margin-bottom: 5px;
+    }
+
+    .head__title {
+        margin: 0 46% 0 34%;
+    }
+
+    .show-cart__body {
+        display: flex;
+        flex-direction: row;
+        height: 77%;
     }
 
     .show-cart__first-section {

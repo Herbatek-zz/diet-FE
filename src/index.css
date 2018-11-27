@@ -20,14 +20,14 @@ html,body
 
 .content {
     display: flex;
-    position: relative;
     flex-direction: column;
     align-items: center;
     margin: auto;
     width: 100%;
     min-height: 92vh;
-    background-image: url("./img/4.jpeg");
+    background-image: url("img/background.jpeg");
     background-size: cover;
+    background-attachment: fixed;
 }
 
 .container__loading-spin {

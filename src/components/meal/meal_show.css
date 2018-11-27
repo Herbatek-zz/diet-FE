@@ -41,15 +41,14 @@
     display: flex;
     justify-content: center;
     width: 100%;
-    height: auto;
+    max-height: 400px;
     margin: 5px 0;
-    border: 1px solid cornflowerblue;
     position: relative;
 }
 
 .first-panel__image {
-    width: auto;
-    height: auto;
+    object-fit: cover;
+    position: relative;
     max-width: 100%;
 }
 
@@ -64,9 +63,6 @@
 }
 
 .second-panel__meal-products {
-    border: 1px solid cornflowerblue;
-    border-radius: 2px;
-    padding: 6px;
     margin: 2px 0;
 }
 
@@ -119,15 +115,6 @@
         padding: 10px;
     }
 
-    .first-panel__image-container {
-        border-radius: 5px;
-        height: auto;
-    }
-
-    .first-panel__image {
-        border-radius: 5px;
-    }
-
     .first-panel__info {
         padding: 8px;
         width: 100%;
@@ -137,12 +124,6 @@
     .meal-show__second-panel {
         width: 58%;
         padding: 8px;
-    }
-
-    .second-panel__meal-products {
-        border-radius: 5px;
-        padding: 8px;
-        height: auto;
     }
 
     .second-panel__description {

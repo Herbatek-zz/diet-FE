@@ -3,7 +3,6 @@ import {connect} from 'react-redux';
 
 import {fetchMeal, setMenuItem, addMealToCart, deleteMeal} from "../../actions";
 import AuthService from "../../helpers/auth_service";
-import ShowMealProducts from "../common/show_meal_products";
 import './meal_show.css';
 import {LOADING_SPIN} from "../../helpers/messages";
 import HearthIcon from '../common/icons/hearthIcon';
@@ -11,7 +10,8 @@ import AddToCartIcon from '../common/icons/addToCartIcon';
 import EditIcon from '../common/icons/editIcon';
 import DeleteIcon from '../common/icons/deleteIcon';
 import ItemInfoTable from '../common/item-info-table';
-import {InputNumber, Modal, message} from "antd";
+import {InputNumber, Modal, message, Table} from "antd";
+import {Link} from "react-router-dom";
 
 
 class MealShow extends Component {
@@ -37,7 +37,7 @@ class MealShow extends Component {
         return (
             <div className='meal-show'>
                 <div className='meal-show__head'>
-                    <h1 className='meal-show__title'>{meal.name}</h1>
+                    <h1 className='meal-show__title'><label>{meal.name}</label></h1>
                     {isLoggedIn ?
                         <div className='meal-show__menu'>
                             <HearthIcon mealId={mealId}/>
@@ -76,7 +76,21 @@ class MealShow extends Component {
                     </div>
                     <div className='meal-show__second-panel'>
                         <div className='second-panel__meal-products'>
-                            <ShowMealProducts products={meal.products}/>
+                            <Table
+                                locale={{emptyText: 'Brak produktów'}}
+                                title={() => <h3><label>Produkty na porcję</label></h3>}
+                                bordered={true}
+                                pagination={false}
+                                rowKey='id'
+                                columns={[{
+                                    title: 'Nazwa', dataIndex: 'name',
+                                    render: (text, record) => <Link to={`/products/${record.id}`}>{text}</Link>
+                                }, {
+                                    title: 'Waga',
+                                    dataIndex: 'amount',
+                                    render: (text) => `${text} g`
+                                }
+                                ]} dataSource={meal.products} size="default"/>
                         </div>
                         <div className='second-panel__description'>
                             <h2>Opis</h2>

@@ -40,6 +40,7 @@ class Dashboard extends Component {
                         <MealLatest/>
                     </div>
                 </div>
+
             </div>
         );
     }
