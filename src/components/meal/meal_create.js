@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Field, reduxForm} from 'redux-form';
 import {connect} from 'react-redux';
-import {Button, message} from 'antd';
+import {Button, message, Upload, Icon} from 'antd';
 import {TextField, TextAreaField} from 'redux-form-antd';
 
 import AuthService from '../../helpers/auth_service';
@@ -10,9 +10,11 @@ import {NO_LOGGED_MESSAGE} from '../../helpers/messages';
 import '../common/form.css';
 import {NECESSARY_FIELD} from "../../helpers/constants";
 
+
 class MealCreate extends Component {
     state = {
         isLoggedIn: AuthService.isLogged(),
+        imageFile: []
     };
 
     componentDidMount() {
@@ -20,10 +22,15 @@ class MealCreate extends Component {
     }
 
     onSubmit = (values) => {
-        this.props.createMeal(values, (mealId) => {
-            this.props.history.push(`/meals/${mealId}/add-products`);
-            message.success('Poprawnie stworzono posiłek');
-        });
+        if (!this.state.imageFile[0])
+            message.error("Musisz wybrać obrazek");
+        else {
+            values.image = this.state.imageFile[0];
+            this.props.createMeal(values, (mealId) => {
+                this.props.history.push(`/meals/${mealId}/add-products`);
+                message.success('Poprawnie stworzono posiłek');
+            });
+        }
     };
 
     render() {
@@ -41,11 +48,6 @@ class MealCreate extends Component {
                             addonBefore={<label>Nazwa</label>}
                             placeholder='Nazwa'/>
                         <Field
-                            name='imageUrl'
-                            component={TextField}
-                            addonBefore={<label>Zdjęcie posiłku</label>}
-                            placeholder='Link do zdjęcia'/>
-                        <Field
                             name='description'
                             rows={4}
                             component={TextAreaField}
@@ -55,6 +57,22 @@ class MealCreate extends Component {
                             rows={6}
                             component={TextAreaField}
                             placeholder='Przepis'/>
+
+                        <Upload name='image'
+                                className='form__upload-btn'
+                                action={(image) => {
+                                    this.setState({imageFile: [image]});
+                                    this.event.preventDefault();
+                                }}
+                                onRemove={() => this.setState({imageFile: []})}
+                                fileList={this.state.imageFile}
+                                showUploadList={true}
+                                accept='.jpg, .jpeg, .png' supportServerRender={true}>
+                            <Button>
+                                <Icon type="upload"/> Wczytaj obrazek
+                            </Button>
+                        </Upload>
+
                         <Button className='form__button' type="primary" ghost htmlType='submit'>Zatwierdź</Button>
                     </form>
                 </div>
@@ -64,7 +82,7 @@ class MealCreate extends Component {
 
 }
 
-function validate({name, imageUrl, description, recipe}) {
+function validate({name, image, description, recipe}) {
     const errors = {};
 
     if (!name || !name.trim())
@@ -72,7 +90,7 @@ function validate({name, imageUrl, description, recipe}) {
     else if (name.length < 2 || name.length > 60)
         errors.name = 'Nazwa musi mieć więcej niż 2 znaki, a mniej niż 60 znaków';
 
-    if (!imageUrl || !imageUrl.trim())
+    if (!image)
         errors.imageUrl = NECESSARY_FIELD;
 
     if (!description || !description.trim())

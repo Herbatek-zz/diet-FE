@@ -19,7 +19,14 @@ import {
 export function createMeal(meal, callback) {
     const userId = AuthService.getDecodedToken().sub;
     const token = AuthService.getToken();
-    const request = SecuredRequest.post(`/users/${userId}/meals`, meal, {headers: {'Authorization': `Bearer ${token}`}})
+
+    const formData = new FormData();
+    formData.append("imageUrl", meal.image);
+    formData.append("recipe", meal.recipe);
+    formData.append("description", meal.description);
+    formData.append("name", meal.name);
+
+    const request = SecuredRequest.post(`/users/${userId}/meals`, formData, {headers: {'Authorization': `Bearer ${token}`}})
         .then((response) => callback(response.data.id));
 
     return {
