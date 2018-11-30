@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Field, reduxForm} from 'redux-form';
 import {connect} from 'react-redux';
-import {Button, message} from 'antd';
+import {Button, Icon, message, Upload} from 'antd';
 import {TextField, TextAreaField} from 'redux-form-antd';
 
 import AuthService from '../../helpers/auth_service';
@@ -13,7 +13,8 @@ import {NECESSARY_FIELD} from "../../helpers/constants";
 class MealEdit extends Component {
     state = {
         isLoggedIn: AuthService.isLogged(),
-        mealId: this.props.match.params.id
+        mealId: this.props.match.params.id,
+        imageFile: []
     };
 
     componentDidMount() {
@@ -24,7 +25,6 @@ class MealEdit extends Component {
                     const {meal} = this.props;
                     this.props.initialize({
                         name: meal.name,
-                        imageUrl: meal.imageUrl,
                         description: meal.description,
                         recipe: meal.recipe,
                         products: meal.products
@@ -33,6 +33,7 @@ class MealEdit extends Component {
     }
 
     onSubmit = (values) => {
+        values.image = this.state.imageFile[0];
         this.props.editMeal(this.state.mealId, values, () => {
             this.props.history.push(`/meals/${this.state.mealId}`);
             message.success('Poprawnie edytowano posiłek');
@@ -44,20 +45,15 @@ class MealEdit extends Component {
             return <div className='content'>{NO_LOGGED_MESSAGE}</div>;
 
         return (
-            <div className='content__mealCreate'>
-                <div className='form__container'>
-                    <h1 className='form__title'><label>Edytuj posiłek</label></h1>
+            <div className='form-container'>
+                <div className='form-container__wrapper'>
+                    <h1 className='form-container__title'><label>Edytuj posiłek</label></h1>
                     <form onSubmit={this.props.handleSubmit(this.onSubmit)} className='form' autoComplete='off'>
                         <Field
                             name='name'
                             component={TextField}
                             addonBefore={<label>Nazwa</label>}
                             placeholder='Nazwa'/>
-                        <Field
-                            name='imageUrl'
-                            component={TextField}
-                            addonBefore={<label>Zdjęcie posiłku</label>}
-                            placeholder='Link do zdjęcia'/>
                         <Field
                             name='description'
                             rows={4}
@@ -68,6 +64,22 @@ class MealEdit extends Component {
                             rows={6}
                             component={TextAreaField}
                             placeholder='Przepis'/>
+                        <Upload
+                            name='image'
+                            className='form__upload-btn'
+                            action={(image) => {
+                                this.setState({imageFile: [image]});
+                                this.event.preventDefault();
+                            }}
+                            onRemove={() => this.setState({imageFile: []})}
+                            fileList={this.state.imageFile}
+                            showUploadList={true}
+                            accept='.jpg, .jpeg, .png' supportServerRender={true}>
+                            <Button htmlType='button'>
+                                <Icon type="upload"/> Wczytaj zdjęcie
+                            </Button>
+                        </Upload>
+
                         <Button className='form__button' type="primary" ghost htmlType='submit'>Zatwierdź</Button>
                     </form>
                 </div>
@@ -77,16 +89,13 @@ class MealEdit extends Component {
 
 }
 
-function validate({name, imageUrl, description, recipe}) {
+function validate({name, description, recipe}) {
     const errors = {};
 
     if (!name || !name.trim())
         errors.name = NECESSARY_FIELD;
     else if (name.length < 2 || name.length > 60)
         errors.name = 'Nazwa musi mieć więcej niż 2 znaki, a mniej niż 60 znaków';
-
-    if (!imageUrl || !imageUrl.trim())
-        errors.imageUrl = NECESSARY_FIELD;
 
     if (!description || !description.trim())
         errors.description = NECESSARY_FIELD;

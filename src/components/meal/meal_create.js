@@ -58,18 +58,19 @@ class MealCreate extends Component {
                             component={TextAreaField}
                             placeholder='Przepis'/>
 
-                        <Upload name='image'
-                                className='form__upload-btn'
-                                action={(image) => {
-                                    this.setState({imageFile: [image]});
-                                    this.event.preventDefault();
-                                }}
-                                onRemove={() => this.setState({imageFile: []})}
-                                fileList={this.state.imageFile}
-                                showUploadList={true}
-                                accept='.jpg, .jpeg, .png' supportServerRender={true}>
-                            <Button>
-                                <Icon type="upload"/> Wczytaj obrazek
+                        <Upload
+                            name='image'
+                            className='form__upload-btn'
+                            action={(image) => {
+                                this.setState({imageFile: [image]});
+                                this.event.preventDefault();
+                            }}
+                            onRemove={() => this.setState({imageFile: []})}
+                            fileList={this.state.imageFile}
+                            showUploadList={true}
+                            accept='.jpg, .jpeg, .png' supportServerRender={true}>
+                            <Button htmlType='button'>
+                                <Icon type="upload"/> Wczytaj zdjęcie
                             </Button>
                         </Upload>
 
@@ -82,16 +83,13 @@ class MealCreate extends Component {
 
 }
 
-function validate({name, image, description, recipe}) {
+function validate({name, description, recipe}) {
     const errors = {};
 
     if (!name || !name.trim())
         errors.name = NECESSARY_FIELD;
     else if (name.length < 2 || name.length > 60)
         errors.name = 'Nazwa musi mieć więcej niż 2 znaki, a mniej niż 60 znaków';
-
-    if (!image)
-        errors.imageUrl = NECESSARY_FIELD;
 
     if (!description || !description.trim())
         errors.description = NECESSARY_FIELD;

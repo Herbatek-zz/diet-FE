@@ -1,19 +1,20 @@
 import React, {Component} from 'react';
 import {Field, reduxForm} from 'redux-form';
 import {connect} from 'react-redux';
-import {Button, message} from 'antd';
+import {Button, Icon, message, Upload} from 'antd';
 import {TextField, TextAreaField, NumberField} from 'redux-form-antd';
 
 import AuthService from '../../helpers/auth_service';
 import {fetchProduct, editProduct, setMenuItem} from "../../actions";
 import {NO_LOGGED_MESSAGE} from '../../helpers/messages';
-import '../common/form.css';
 import {NECESSARY_FIELD} from "../../helpers/constants";
+import '../common/form.css';
 
 class ProductEdit extends Component {
     state = {
         isLoggedIn: AuthService.isLogged(),
-        productId: this.props.match.params.id
+        productId: this.props.match.params.id,
+        imageFile: []
     };
 
     componentDidMount() {
@@ -24,7 +25,6 @@ class ProductEdit extends Component {
                     const {product} = this.props;
                     this.props.initialize({
                         name: product.name,
-                        imageUrl: product.imageUrl,
                         description: product.description,
                         protein: product.protein,
                         carbohydrate: product.carbohydrate,
@@ -36,6 +36,7 @@ class ProductEdit extends Component {
     }
 
     onSubmit = (values) => {
+        values.image = this.state.imageFile[0];
         this.props.editProduct(this.state.productId, values, () => {
             this.props.history.push(`/products/${this.state.productId}`);
             message.success('Poprawnie edytowano produkt');
@@ -47,9 +48,9 @@ class ProductEdit extends Component {
             return <div className='content'>{NO_LOGGED_MESSAGE}</div>;
 
         return (
-            <div className='content__mealCreate'>
-                <div className='form__container'>
-                    <h1 className='form__title'><label>Edytuj produkt</label></h1>
+            <div className='form-container'>
+                <div className='form-container__wrapper'>
+                    <h1 className='form-container__title'><label>Edytuj produkt</label></h1>
                     <form onSubmit={this.props.handleSubmit(this.onSubmit)} className='form' autoComplete='off'>
                         <Field
                             name='name'
@@ -57,52 +58,53 @@ class ProductEdit extends Component {
                             addonBefore={<label>Nazwa</label>}
                             placeholder='Nazwa'/>
                         <Field
-                            name='imageUrl'
-                            component={TextField}
-                            addonBefore={<label>Zdjęcie posiłku</label>}
-                            placeholder='Link do zdjęcia'/>
-                        <Field
                             name='description'
                             rows={4}
                             component={TextAreaField}
                             placeholder='Opis'/>
+                        <Upload
+                            name='image'
+                            className='form__upload-btn'
+                            action={(image) => {
+                                this.setState({imageFile: [image]});
+                                this.event.preventDefault();
+                            }}
+                            onRemove={() => this.setState({imageFile: []})}
+                            fileList={this.state.imageFile}
+                            showUploadList={true}
+                            accept='.jpg, .jpeg, .png' supportServerRender={true}>
+                            <Button htmlType='button'>
+                                <Icon type="upload"/> Wczytaj zdjęcie
+                            </Button>
+                        </Upload>
+
                         <div>
                             <label>Makroskładniki oraz pozostałe informacje w <b>100g</b> produktu</label>
-                            <div className='form__numberItem'>
-                                <label className='form__numberItem--label'>Białko:</label>
-                                <Field
-                                    name='protein'
-                                    component={NumberField}
-                                    step={0.1}/>
-                            </div>
-                            <div className='form__numberItem'>
-                                <label className='form__numberItem--label'>Węglowodany</label>
-                                <Field
-                                    name='carbohydrate'
-                                    component={NumberField}
-                                    step={0.1}/>
-                            </div>
-                            <div className='form__numberItem'>
-                                <label className='form__numberItem--label'>Tłuszcz</label>
-                                <Field
-                                    name='fat'
-                                    component={NumberField}
-                                    step={0.1}/>
-                            </div>
-                            <div className='form__numberItem'>
-                                <label className='form__numberItem--label'>Błonnik</label>
-                                <Field
-                                    name='fibre'
-                                    component={NumberField}
-                                    step={0.1}/>
-                            </div>
-                            <div className='form__numberItem'>
-                                <label className='form__numberItem--label'>Kcal</label>
-                                <Field
-                                    name='kcal'
-                                    component={NumberField}
-                                    step={1}/>
-                            </div>
+                            <Field
+                                name='protein'
+                                component={NumberField}
+                                step={0.1}
+                                label='Białko'/>
+                            <Field
+                                name='carbohydrate'
+                                component={NumberField}
+                                step={0.1}
+                                label='Węglowodany'/>
+                            <Field
+                                name='fat'
+                                component={NumberField}
+                                step={0.1}
+                                label='Tłuszcz'/>
+                            <Field
+                                name='fibre'
+                                component={NumberField}
+                                step={0.1}
+                                label='Błonnik'/>
+                            <Field
+                                name='kcal'
+                                component={NumberField}
+                                step={1}
+                                label='Kalorie'/>
                         </div>
                         <Button className='form__button' type="primary" ghost htmlType='submit'>Zatwierdź</Button>
                     </form>
@@ -113,16 +115,13 @@ class ProductEdit extends Component {
 
 }
 
-function validate({name, imageUrl, description, protein, carbohydrate, fat, fibre, kcal}) {
+function validate({name, description, protein, carbohydrate, fat, fibre, kcal}) {
     const errors = {};
 
     if (!name || !name.trim())
         errors.name = NECESSARY_FIELD;
     else if (name.length < 2 || name.length > 60)
         errors.name = 'Nazwa musi mieć więcej niż 2 znaki, a mniej niż 60 znaków';
-
-    if (!imageUrl || !imageUrl.trim())
-        errors.imageUrl = NECESSARY_FIELD;
 
     if (!description || !description.trim())
         errors.description = NECESSARY_FIELD;

@@ -16,7 +16,18 @@ import {
 export function createProduct(product, callback) {
     const userId = AuthService.getDecodedToken().sub;
     const token = AuthService.getToken();
-    const request = SecuredRequest.post(`/users/${userId}/products`, product, {headers: {'Authorization': `Bearer ${token}`}})
+
+    const formData = new FormData();
+    formData.append("name", product.name);
+    formData.append("description", product.description);
+    formData.append("imageToSave", product.image);
+    formData.append("protein", product.protein);
+    formData.append("carbohydrate", product.carbohydrate);
+    formData.append("fat", product.fat);
+    formData.append("fibre", product.fibre);
+    formData.append("kcal", product.kcal);
+
+    const request = SecuredRequest.post(`/users/${userId}/products`, formData, {headers: {'Authorization': `Bearer ${token}`}})
         .then(() => callback());
 
     return {
@@ -94,7 +105,18 @@ export function searchProductsInfinity(query, page, pageSize) {
 
 export function editProduct(productId, update, callback) {
     const token = AuthService.getToken();
-    const request = SecuredRequest.put(`/products/${productId}`, update, {headers: {'Authorization': `Bearer ${token}`}})
+
+    const formData = new FormData();
+    formData.append("name", update.name);
+    formData.append("description", update.description);
+    formData.append("imageToSave", update.image);
+    formData.append("protein", update.protein);
+    formData.append("carbohydrate", update.carbohydrate);
+    formData.append("fat", update.fat);
+    formData.append("fibre", update.fibre);
+    formData.append("kcal", update.kcal);
+
+    const request = SecuredRequest.put(`/products/${productId}`, formData, {headers: {'Authorization': `Bearer ${token}`}})
         .then((response) => {
             callback();
             return response;

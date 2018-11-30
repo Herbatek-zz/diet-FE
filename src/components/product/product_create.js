@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Field, reduxForm} from 'redux-form';
 import {TextField, TextAreaField, NumberField} from 'redux-form-antd'
 import {connect} from 'react-redux';
-import {Button, message} from 'antd';
+import {Button, Icon, message, Upload} from 'antd';
 
 import AuthService from '../../helpers/auth_service';
 import {createProduct, setMenuItem} from "../../actions";
@@ -13,7 +13,8 @@ import {NECESSARY_FIELD} from "../../helpers/constants";
 
 class ProductCreate extends Component {
     state = {
-        isLoggedIn: AuthService.isLogged()
+        isLoggedIn: AuthService.isLogged(),
+        imageFile: []
     };
 
     componentWillMount() {
@@ -27,6 +28,18 @@ class ProductCreate extends Component {
             kcal: 0
         });
     }
+
+    onSubmit = (values) => {
+        if (!this.state.imageFile[0])
+            message.error("Musisz wybrać obrazek");
+        else {
+            values.image = this.state.imageFile[0];
+            this.props.createProduct(values, () => {
+                this.props.reset();
+                message.success('Poprawnie stworzono produkt');
+            });
+        }
+    };
 
     render() {
         if (!this.state.isLoggedIn)
@@ -43,15 +56,26 @@ class ProductCreate extends Component {
                             addonBefore={<label>Nazwa</label>}
                             placeholder='Nazwa'/>
                         <Field
-                            name='imageUrl'
-                            component={TextField}
-                            addonBefore={<label>Zdjęcie produktu</label>}
-                            placeholder='Link do zdjęcia'/>
-                        <Field
                             name='description'
                             rows={4}
                             component={TextAreaField}
                             placeholder='Opis'/>
+                        <Upload
+                            name='image'
+                            className='form__upload-btn'
+                            action={(image) => {
+                                this.setState({imageFile: [image]});
+                                this.event.preventDefault();
+                            }}
+                            onRemove={() => this.setState({imageFile: []})}
+                            fileList={this.state.imageFile}
+                            showUploadList={true}
+                            accept='.jpg, .jpeg, .png' supportServerRender={true}>
+                            <Button htmlType='button'>
+                                <Icon type="upload"/> Wczytaj zdjęcie
+                            </Button>
+                        </Upload>
+
                         <div>
                             <label>Makroskładniki oraz pozostałe informacje w <b>100g</b> produktu</label>
                             <Field
@@ -69,16 +93,16 @@ class ProductCreate extends Component {
                                 component={NumberField}
                                 step={0.1}
                                 label='Tłuszcz'/>
-                                <Field
-                                    name='fibre'
-                                    component={NumberField}
-                                    step={0.1}
-                                    label='Błonnik'/>
-                                <Field
-                                    name='kcal'
-                                    component={NumberField}
-                                    step={1}
-                                    label='Kalorie'/>
+                            <Field
+                                name='fibre'
+                                component={NumberField}
+                                step={0.1}
+                                label='Błonnik'/>
+                            <Field
+                                name='kcal'
+                                component={NumberField}
+                                step={1}
+                                label='Kalorie'/>
                         </div>
                         <Button className='form__button' type="primary" ghost htmlType='submit'>Zatwierdź</Button>
                     </form>
@@ -87,25 +111,15 @@ class ProductCreate extends Component {
         );
     }
 
-    onSubmit = (values) => {
-        this.props.createProduct(values, () => {
-            this.props.reset();
-            message.success('Poprawnie stworzono produkt');
-        });
-    };
-
 }
 
-function validate({name, imageUrl, description, protein, carbohydrate, fat, fibre, kcal}) {
+function validate({name, description, protein, carbohydrate, fat, fibre, kcal}) {
     const errors = {};
 
     if (!name || !name.trim())
         errors.name = NECESSARY_FIELD;
     else if (name.length < 2 || name.length > 60)
         errors.name = 'Nazwa musi mieć więcej niż 2 znaki, a mniej niż 60 znaków';
-
-    if (!imageUrl || !imageUrl.trim())
-        errors.imageUrl = NECESSARY_FIELD;
 
     if (!description || !description.trim())
         errors.description = NECESSARY_FIELD;

@@ -131,7 +131,14 @@ export function removeMealFromFavourites(mealId, onErrorDo) {
 
 export function editMeal(mealId, update, callback) {
     const token = AuthService.getToken();
-    const request = SecuredRequest.put(`/meals/${mealId}`, update, {headers: {'Authorization': `Bearer ${token}`}})
+
+    const formData = new FormData();
+    formData.append("imageToSave", update.image);
+    formData.append("recipe", update.recipe);
+    formData.append("description", update.description);
+    formData.append("name", update.name);
+
+    const request = SecuredRequest.put(`/meals/${mealId}`, formData, {headers: {'Authorization': `Bearer ${token}`}})
         .then((response) => {
             callback();
             return response;
