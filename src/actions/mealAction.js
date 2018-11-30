@@ -21,7 +21,7 @@ export function createMeal(meal, callback) {
     const token = AuthService.getToken();
 
     const formData = new FormData();
-    formData.append("imageUrl", meal.image);
+    formData.append("imageToSave", meal.image);
     formData.append("recipe", meal.recipe);
     formData.append("description", meal.description);
     formData.append("name", meal.name);

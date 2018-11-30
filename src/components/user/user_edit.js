@@ -41,7 +41,7 @@ class UserEdit extends Component {
         this.props.editUser(values, () => {
             this.props.fetchUserFromCookie();
             this.props.history.push(`/user/${this.props.user.id}`);
-            message.success('Poprawnie zaktualizowano profil');
+            message.success('Poprawnie zaktualizowano profil', 1);
         });
 
 

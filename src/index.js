@@ -8,7 +8,7 @@ import {Layout} from 'antd';
 
 import Footer from './components/common/footer/footer';
 import Header from './components/common/header/header';
-import Dashboard from './components/dashboard';
+import Dashboard from './components/dashboard/dashboard';
 import ProductShow from './components/product/product_show';
 import ProductCreate from './components/product/product_create';
 import ProductList from './components/product/product_list';

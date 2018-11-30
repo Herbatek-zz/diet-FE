@@ -71,14 +71,14 @@ export default (state = {content: {}}, action) => {
         case FETCH_TOP_MEALS: {
             return {
                 ...state,
-                top: _.mapKeys(action.payload.data, 'id')
+                top: action.payload.data
             }
         }
 
         case FETCH_LATEST_MEALS: {
             return {
                 ...state,
-                latestMeals: _.mapKeys(action.payload.data, 'id')
+                latestMeals: action.payload.data
             }
         }
 

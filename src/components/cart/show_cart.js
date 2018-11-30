@@ -51,6 +51,7 @@ class Show_cart extends Component {
                     <div className='show-cart__first-section'>
                         <div className='first-section__meals'>
                             <Table
+                                className='cart-table'
                                 locale={{emptyText: 'Brak posiłków'}}
                                 title={() => <h3><label>Posiłki</label></h3>}
                                 bordered={true}
@@ -79,6 +80,7 @@ class Show_cart extends Component {
                         </div>
                         < div className='first-section__products'>
                             <Table
+                                className='cart-table'
                                 locale={{emptyText: 'Brak produktów'}}
                                 title={() => <h3><label>Produkty</label></h3>}
                                 bordered={true}
@@ -110,6 +112,7 @@ class Show_cart extends Component {
                     <div className='show-cart__second-section'>
                         <div className='second-section__wrapper'>
                             <Table
+                                className='cart-table'
                                 locale={{emptyText: 'Brak produktów'}}
                                 title={() => <h3><label>Wymagane produkty</label></h3>}
                                 bordered={true}
@@ -166,7 +169,8 @@ class Show_cart extends Component {
                                     </div>
                                 </div>
                             </div> :
-                            <p className='text-info'>Aby zobaczyć informacje o spożytym jedzeniu musisz uzupełnić <b>profil</b>
+                            <p className='text-info'>Aby zobaczyć informacje o spożytym jedzeniu musisz
+                                uzupełnić <b>profil</b> i/lub dodać do koszyka <b>posiłek</b> lub <b>produkt</b>
                             </p>}
                     </div>
                 </div>

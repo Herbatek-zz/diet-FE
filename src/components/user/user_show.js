@@ -6,6 +6,7 @@ import {LOADING_SPIN} from "../../helpers/messages";
 import AuthService from "../../helpers/auth_service";
 import EditIcon from './../common/icons/editIcon';
 import './user_show.css';
+import {NO_INFO} from "../../helpers/constants";
 
 
 class UserShow extends Component {
@@ -46,16 +47,16 @@ class UserShow extends Component {
                         <label>Email:</label> <b>{user.email}</b>
                     </div>
                     <div className='body__item'>
-                        <label>Wiek:</label> <b>{user.age === 0 ? 'Brak informacji' : user.age}</b>
+                        <label>Wiek:</label> <b>{user.age === 0 ? NO_INFO : user.age}</b>
                     </div>
                     <div className='body__item'>
-                        <label>Wzrost:</label> <b>{user.height === 0 ? 'Brak informacji' : user.height + ' cm'} </b>
+                        <label>Wzrost:</label> <b>{user.height === 0 ? NO_INFO : user.height + ' cm'} </b>
                     </div>
                     <div className='body__item'>
-                        Waga: <b>{user.weight === 0 ? 'Brak informacji' : user.weight + ' kg'}</b>
+                        <label>Waga:</label> <b>{user.weight === 0 ? NO_INFO : user.weight + ' kg'}</b>
                     </div>
                     <div className='body__item'>
-                        <label>Dzienne zapotrzebowanie kaloryczne:</label> <b>{user.caloriesPerDay === 0 ? 'Brak informacji' : user.caloriesPerDay + ' kcal'}</b>
+                        <label>Dzienne zapotrzebowanie kaloryczne:</label> <b>{user.caloriesPerDay === 0 ? NO_INFO : user.caloriesPerDay + ' kcal'}</b>
                     </div>
                 </div>
                 {AuthService.isLogged() && AuthService.getDecodedToken().sub === user.id ?
