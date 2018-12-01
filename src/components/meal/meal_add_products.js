@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {List, Avatar, Input, Spin, Tooltip, message, Modal, InputNumber, Button} from 'antd';
+import {List, Avatar, Input, Spin, Tooltip, message, Modal, InputNumber, Button, Table} from 'antd';
 import InfiniteScroll from 'react-infinite-scroller';
 import {Link} from "react-router-dom";
 import {
@@ -77,7 +77,7 @@ class MealEdit extends Component {
             message.warning("Posiłek nie może zawierać drugiego identycznego produktu")
     };
 
-    onCloseTag = (product) => {
+    onClickDeleteProduct = (product) => {
         this.setState({
             products: _.filter(this.state.products, (p) => p.id !== product.id),
             protein: this.state.protein - product.protein * product.amount / 100,
@@ -199,27 +199,27 @@ class MealEdit extends Component {
                             </table>
                         </div>
                         <div className='addProducts__products'>
-                            <h2>Produkty</h2>
-                            <table className='meal-add-products__table'>
-                                <thead>
-                                <tr>
-                                    <th><label>Nazwa</label></th>
-                                    <th><label>Waga</label></th>
-                                    <th/>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {_.map(this.state.products, product =>
-                                    <tr key={product.id}>
-                                        <td><Link to={`/products/${product.id}`}>{product.name}</Link></td>
-                                        <td><label>{product.amount}g</label></td>
-                                        <td onClick={() => this.onCloseTag(product)}
-                                            className='table-add-products__td--pointer'>Usuń
-                                        </td>
-                                    </tr>
-                                )}
-                                </tbody>
-                            </table>
+                            <Table
+                                locale={{emptyText: 'Brak produktów'}}
+                                title={() => <h3><label>Produkty w porcji</label></h3>}
+                                bordered={true}
+                                pagination={false}
+                                rowKey='id'
+                                columns={[{
+                                    title: 'Nazwa', dataIndex: 'name',
+                                    render: (text, record) => <Link to={`/products/${record.id}`}>{text}</Link>
+                                }, {
+                                    title: 'Waga',
+                                    dataIndex: 'amount',
+                                    width: '16%',
+                                    render: (text) => `${text} g`
+                                }, {
+                                    title: '',
+                                    dataIndex: 'id',
+                                    width: '10%',
+                                    render: (text, product,) =>
+                                        <Button type='danger' onClick={() => this.onClickDeleteProduct(product)}>Usuń</Button>
+                                }]} dataSource={this.state.products} size="default"/>
                         </div>
                     </div>
                     <Modal
@@ -268,11 +268,11 @@ class MealEdit extends Component {
                             className='search'
                         />
                         {!content ? <div className='content loading-spin'><Spin size='large'/></div> : this.renderCollapse()}
-                        <Button onClick={this.clickOnSaveButton} type='primary' size='large' className='saveButton'>
-                            Zapisz zmiany
-                        </Button>
                     </div>
                 </div>
+                <Button onClick={this.clickOnSaveButton} type='primary' size='large' className='saveButton'>
+                    Zapisz zmiany
+                </Button>
             </div>
         );
     }

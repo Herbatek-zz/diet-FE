@@ -24,11 +24,12 @@ class MealShow extends Component {
 
     componentDidMount() {
         this.props.setMenuItem('');
-        this.props.fetchMeal(this.state.mealId, () => message.error("Nie odnaleziono produktu"));
+        this.props.fetchMeal(this.state.mealId, () => message.error("Nie odnaleziono produktu"))
+            .then(() => this.setState({meal: this.props.meal}));
     }
 
     render() {
-        const {meal} = this.props;
+        const {meal} = this.state;
         const {mealId, isLoggedIn, amount} = this.state;
 
         if (!meal)
@@ -43,7 +44,8 @@ class MealShow extends Component {
                             <HearthIcon mealId={mealId}/>
                             <AddToCartIcon onClick={() => this.setState({modalVisible: true})}/>
                             {meal.userId === AuthService.getDecodedToken().sub ? <EditIcon link={`/meals/${mealId}/edit`}/> : ''}
-                            {meal.userId === AuthService.getDecodedToken().sub ? <EditIcon link={`/meals/${mealId}/add-products`} text='Edytuj produkty'/> : ''}
+                            {meal.userId === AuthService.getDecodedToken().sub ?
+                                <EditIcon link={`/meals/${mealId}/add-products`} text='Edytuj produkty'/> : ''}
                             {meal.userId === AuthService.getDecodedToken().sub ?
                                 <DeleteIcon confirmText='Czy na pewno chcesz usunąć ten posiłek ?'
                                             onDelete={() => deleteMeal(this.state.mealId, () => this.props.history.push('/meals/my'))}/> : ''}

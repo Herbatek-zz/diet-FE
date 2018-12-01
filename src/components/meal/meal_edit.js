@@ -3,6 +3,7 @@ import {Field, reduxForm} from 'redux-form';
 import {connect} from 'react-redux';
 import {Button, Icon, message, Upload} from 'antd';
 import {TextField, TextAreaField} from 'redux-form-antd';
+import {Redirect} from "react-router-dom";
 
 import AuthService from '../../helpers/auth_service';
 import {fetchMeal, editMeal, setMenuItem} from "../../actions";
@@ -14,7 +15,8 @@ class MealEdit extends Component {
     state = {
         isLoggedIn: AuthService.isLogged(),
         mealId: this.props.match.params.id,
-        imageFile: []
+        imageFile: [],
+        redirect: false
     };
 
     componentDidMount() {
@@ -35,7 +37,7 @@ class MealEdit extends Component {
     onSubmit = (values) => {
         values.image = this.state.imageFile[0];
         this.props.editMeal(this.state.mealId, values, () => {
-            this.props.history.push(`/meals/${this.state.mealId}`);
+            this.setState({redirect: true});
             message.success('Poprawnie edytowano posiłek');
         });
     };
@@ -43,6 +45,8 @@ class MealEdit extends Component {
     render() {
         if (!this.state.isLoggedIn)
             return <div className='content'>{NO_LOGGED_MESSAGE}</div>;
+        if (this.state.redirect)
+            return <Redirect to={`/meals/${this.state.mealId}`}/>;
 
         return (
             <div className='form-container'>

@@ -109,7 +109,8 @@ export function editProduct(productId, update, callback) {
     const formData = new FormData();
     formData.append("name", update.name);
     formData.append("description", update.description);
-    formData.append("imageToSave", update.image);
+    if (update.image instanceof File)
+        formData.append("imageToSave", update.image);
     formData.append("protein", update.protein);
     formData.append("carbohydrate", update.carbohydrate);
     formData.append("fat", update.fat);

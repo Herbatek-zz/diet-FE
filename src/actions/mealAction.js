@@ -13,7 +13,8 @@ import {
     REMOVE_MEAL_FROM_FAVOURITES,
     SEARCH_MEALS,
     EDIT_MEAL,
-    FETCH_TOP_MEALS, FETCH_LATEST_MEALS
+    FETCH_TOP_MEALS,
+    FETCH_LATEST_MEALS
 } from "./index";
 
 export function createMeal(meal, callback) {
@@ -109,7 +110,7 @@ export function addMealToFavourites(mealId, onErrorDo) {
     const userId = AuthService.getDecodedToken().sub;
     const token = AuthService.getToken();
     const request = SecuredRequest.post(`/users/${userId}/meals/${mealId}/favourites`, null, {headers: {'Authorization': `Bearer ${token}`}})
-        .catch(e  => onErrorDo());
+        .catch(e => onErrorDo());
 
     return {
         type: ADD_MEAL_TO_FAVOURITES,
@@ -131,12 +132,29 @@ export function removeMealFromFavourites(mealId, onErrorDo) {
 
 export function editMeal(mealId, update, callback) {
     const token = AuthService.getToken();
-
     const formData = new FormData();
-    formData.append("imageToSave", update.image);
+    if (update.image instanceof File)
+        formData.append("imageToSave", update.image);
     formData.append("recipe", update.recipe);
     formData.append("description", update.description);
     formData.append("name", update.name);
+
+    let index = 0;
+    for(let product of update.products) {
+        formData.append(`products[${index}].id`, product.id);
+        formData.append(`products[${index}].name`, product.name);
+        formData.append(`products[${index}].imageUrl`, product.imageUrl);
+        formData.append(`products[${index}].protein`, product.protein);
+        formData.append(`products[${index}].carbohydrate`, product.carbohydrate);
+        formData.append(`products[${index}].fat`, product.fat);
+        formData.append(`products[${index}].fibre`, product.fibre);
+        formData.append(`products[${index}].kcal`, product.kcal);
+        formData.append(`products[${index}].amount`, product.amount);
+        formData.append(`products[${index}].carbohydrateExchange`, product.carbohydrateExchange);
+        formData.append(`products[${index}].proteinAndFatEquivalent`, product.proteinAndFatEquivalent);
+        formData.append(`products[${index}].userId`, product.userId);
+        index++;
+    }
 
     const request = SecuredRequest.put(`/meals/${mealId}`, formData, {headers: {'Authorization': `Bearer ${token}`}})
         .then((response) => {

@@ -66,19 +66,24 @@
 
     .addProducts__body {
         flex-direction: row;
+        justify-content: space-around;
         width: 100%;
         padding: 0 20px 5px 0;
     }
 
     .addProducts__firstPanel {
-        width: 50%;
+        width: 49%;
     }
 
     .addProducts_secondPanel {
-        width: 50%;
+        width: 49%;
     }
 
     .infinite-container {
         height: 600px;
+    }
+
+    .saveButton {
+        width: 28%;
     }
 }
