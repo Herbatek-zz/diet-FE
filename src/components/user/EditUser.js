@@ -52,7 +52,9 @@ class UserEdit extends Component {
         return (
             <div className='form-container'>
                 <div className='form-container__wrapper'>
-                    <h1 className='form-container__title'><label>Edycja profilu</label></h1>
+                    <h1 className='form-container__title'>
+                        <label>Edycja profilu</label>
+                    </h1>
                     <form onSubmit={this.props.handleSubmit(this.onSubmit)} className='form' autoComplete='off'>
                         <Field
                             name='username'
@@ -188,10 +190,10 @@ function validate({username, firstName, lastName, email, picture_url, sex, activ
     if (!picture_url || !picture_url.trim())
         errors.picture_url = 'Musisz podać link do avatara';
 
-    if(!sex)
+    if (!sex)
         errors.sex = NECESSARY_FIELD;
 
-    if(!activity)
+    if (!activity)
         errors.activity = NECESSARY_FIELD;
 
     if (!email || !email.trim())

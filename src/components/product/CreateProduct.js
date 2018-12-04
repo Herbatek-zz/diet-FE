@@ -36,6 +36,7 @@ class ProductCreate extends Component {
             values.image = this.state.imageFile[0];
             this.props.createProduct(values, () => {
                 this.props.reset();
+                this.setState({imageFile: []});
                 message.success('Poprawnie stworzono produkt');
             });
         }
