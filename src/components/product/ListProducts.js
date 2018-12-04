@@ -6,7 +6,7 @@ import {fetchProducts, searchProducts, setMenuItem} from "../../actions";
 import ShowProductList from '../common/show_product_list';
 import {LOADING_SPIN} from '../../helpers/messages';
 
-class ProductList extends Component {
+class ListProducts extends Component {
     state = {
         searched: false,
         searchValue: '',
@@ -60,4 +60,4 @@ const mapStateToProps = ({products}) => {
     }
 };
 
-export default connect(mapStateToProps, {fetchProducts, searchProducts, setMenuItem})(ProductList);
+export default connect(mapStateToProps, {fetchProducts, searchProducts, setMenuItem})(ListProducts);

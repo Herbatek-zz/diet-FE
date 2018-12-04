@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 
 import {fetchMeal, setMenuItem, addMealToCart, deleteMeal} from "../../actions";
 import AuthService from "../../helpers/auth_service";
-import './meal_show.css';
+import './ShowMeals.css';
 import {LOADING_SPIN} from "../../helpers/messages";
 import HearthIcon from '../common/icons/hearthIcon';
 import AddToCartIcon from '../common/icons/addToCartIcon';

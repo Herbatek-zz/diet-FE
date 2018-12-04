@@ -5,7 +5,7 @@ import {setMenuItem, fetchUser} from "../../actions";
 import {LOADING_SPIN} from "../../helpers/messages";
 import AuthService from "../../helpers/auth_service";
 import EditIcon from './../common/icons/editIcon';
-import './user_show.css';
+import './ShowUser.css';
 import {NO_INFO} from "../../helpers/constants";
 
 

@@ -11,7 +11,7 @@ import {
     editMeal,
     setMenuItem
 } from "../../actions";
-import './meal_add_products.css';
+import './AddProductToMeal.css';
 import AuthService from "../../helpers/auth_service";
 import {LOADING_SPIN} from "../../helpers/messages";
 import _ from "lodash";
@@ -44,13 +44,41 @@ class MealEdit extends Component {
             .then(() => this.setState({
                 name: this.props.meal.name,
                 products: this.props.meal.products,
-                protein: this.props.meal.protein,
-                carbohydrate: this.props.meal.carbohydrate,
-                fat: this.props.meal.fat,
-                fibre: this.props.meal.fibre,
-                kcal: this.props.meal.kcal,
-                carbohydrateExchange: this.props.meal.carbohydrateExchange,
-                proteinAndFatEquivalent: this.props.meal.proteinAndFatEquivalent
+                protein: (() => {
+                    let sum = 0;
+                    this.props.meal.products.forEach(product => sum += product.protein);
+                    return sum;
+                })(),
+                carbohydrate: (() => {
+                    let sum = 0;
+                    this.props.meal.products.forEach(product => sum += product.carbohydrate);
+                    return sum;
+                })(),
+                fat: (() => {
+                    let sum = 0;
+                    this.props.meal.products.forEach(product => sum += product.fat);
+                    return sum;
+                })(),
+                fibre: (() => {
+                    let sum = 0;
+                    this.props.meal.products.forEach(product => sum += product.fibre);
+                    return sum;
+                })(),
+                kcal: (() => {
+                    let sum = 0;
+                    this.props.meal.products.forEach(product => sum += product.kcal);
+                    return sum;
+                })(),
+                carbohydrateExchange: (() => {
+                    let sum = 0;
+                    this.props.meal.products.forEach(product => sum += product.carbohydrateExchange);
+                    return sum;
+                })(),
+                proteinAndFatEquivalent: (() => {
+                    let sum = 0;
+                    this.props.meal.products.forEach(product => sum += product.proteinAndFatEquivalent);
+                    return sum;
+                })(),
             }));
         this.props.fetchProductsInfinity(0, this.state.pageSize);
     }
@@ -169,23 +197,23 @@ class MealEdit extends Component {
                                 <tbody>
                                 <tr className='table-info__row'>
                                     <td><label>Białko</label></td>
-                                    <td><label>{Math.floor(this.state.protein)}g</label></td>
+                                    <td><label>{Math.round(this.state.protein)}g</label></td>
                                 </tr>
                                 <tr className='table-info__row'>
                                     <td><label>Węglowodany</label></td>
-                                    <td><label>{Math.floor(this.state.carbohydrate)}g</label></td>
+                                    <td><label>{Math.round(this.state.carbohydrate)}g</label></td>
                                 </tr>
                                 <tr className='table-info__row'>
                                     <td><label>Tłuszcz</label></td>
-                                    <td><label>{Math.floor(this.state.fat)}g</label></td>
+                                    <td><label>{Math.round(this.state.fat)}g</label></td>
                                 </tr>
                                 <tr className='table-info__row'>
                                     <td><label>Błonnik</label></td>
-                                    <td><label>{Math.floor(this.state.fibre)}g</label></td>
+                                    <td><label>{Math.round(this.state.fibre)}g</label></td>
                                 </tr>
                                 <tr className='table-info__row'>
                                     <td><label>Kcal</label></td>
-                                    <td><label>{Math.floor(this.state.kcal)}</label></td>
+                                    <td><label>{Math.round(this.state.kcal)}</label></td>
                                 </tr>
                                 <tr className='table-info__row'>
                                     <td><label>WW</label></td>

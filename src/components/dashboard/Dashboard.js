@@ -2,9 +2,9 @@ import React, {Component} from 'react';
 import {Carousel} from 'antd';
 
 import AuthService from "../../helpers/auth_service";
-import MealTop from '../meal/meal_top';
-import MealLatest from "../meal/meal_latest";
-import './dashboard.css';
+import MealTop from './ListTopMeals';
+import MealLatest from "./ListLatestMeals";
+import './Dashboard.css';
 import {DASHBOARD_TEXT_1, DASHBOARD_TEXT_2, DASHBOARD_TEXT_3} from "../../helpers/constants";
 
 class Dashboard extends Component {

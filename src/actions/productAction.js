@@ -1,6 +1,5 @@
 import AuthService from "../helpers/auth_service";
-import SecuredRequest from "../helpers/secured_request";
-import Request from "../helpers/request";
+import request from "../helpers/request";
 import {
     CREATE_PRODUCT,
     FETCH_PRODUCT,
@@ -27,28 +26,28 @@ export function createProduct(product, callback) {
     formData.append("fibre", product.fibre);
     formData.append("kcal", product.kcal);
 
-    const request = SecuredRequest.post(`/users/${userId}/products`, formData, {headers: {'Authorization': `Bearer ${token}`}})
+    const requestPost = request.post(`/users/${userId}/products`, formData, {headers: {'Authorization': `Bearer ${token}`}})
         .then(() => callback());
 
     return {
         type: CREATE_PRODUCT,
-        payload: request
+        payload: requestPost
     }
 }
 
 export function fetchProduct(id, onErrorDo) {
-    const request = Request.get(`/products/${id}`)
+    const requestGet = request.get(`/products/${id}`)
         .catch(e => onErrorDo());
 
     return {
         type: FETCH_PRODUCT,
-        payload: request
+        payload: requestGet
     }
 }
 
 export function deleteProduct(id, callback) {
     const token = AuthService.getToken();
-    SecuredRequest.delete(`/products/${id}`, {headers: {'Authorization': `Bearer ${token}`}})
+    request.delete(`/products/${id}`, {headers: {'Authorization': `Bearer ${token}`}})
         .then(() => callback());
 
     return {
@@ -58,48 +57,48 @@ export function deleteProduct(id, callback) {
 }
 
 export function fetchProducts(page, pageSize) {
-    const request = Request.get(`/products?page=${page}&size=${pageSize}`);
+    const requestGet = request.get(`/products?page=${page}&size=${pageSize}`);
 
     return {
         type: FETCH_PRODUCTS,
-        payload: request
+        payload: requestGet
     }
 }
 
 export function fetchProductsInfinity(page, pageSize) {
-    const request = Request.get(`/products?page=${page}&size=${pageSize}`);
+    const requestGet = request.get(`/products?page=${page}&size=${pageSize}`);
 
     return {
         type: FETCH_PRODUCTS_INFINITY,
-        payload: request
+        payload: requestGet
     }
 }
 
 export function fetchMyProducts(page, pageSize) {
     const userId = AuthService.getDecodedToken().sub;
-    const request = Request.get(`/users/${userId}/products?page=${page}&size=${pageSize}`);
+    const requestGet = request.get(`/users/${userId}/products?page=${page}&size=${pageSize}`);
 
     return {
         type: FETCH_MY_PRODUCTS,
-        payload: request
+        payload: requestGet
     }
 }
 
 export function searchProducts(query, page, pageSize) {
-    const request = Request.get(`/products/search?query=${query}&page=${page}&size=${pageSize}`);
+    const requestGet = request.get(`/products/search?query=${query}&page=${page}&size=${pageSize}`);
 
     return {
         type: SEARCH_PRODUCTS,
-        payload: request
+        payload: requestGet
     }
 }
 
 export function searchProductsInfinity(query, page, pageSize) {
-    const request = Request.get(`/products/search?query=${query}&page=${page}&size=${pageSize}`);
+    const requestGet = request.get(`/products/search?query=${query}&page=${page}&size=${pageSize}`);
 
     return {
         type: SEARCH_PRODUCTS_INFINITY,
-        payload: request
+        payload: requestGet
     }
 }
 
@@ -117,7 +116,7 @@ export function editProduct(productId, update, callback) {
     formData.append("fibre", update.fibre);
     formData.append("kcal", update.kcal);
 
-    const request = SecuredRequest.put(`/products/${productId}`, formData, {headers: {'Authorization': `Bearer ${token}`}})
+    const requestPut = request.put(`/products/${productId}`, formData, {headers: {'Authorization': `Bearer ${token}`}})
         .then((response) => {
             callback();
             return response;
@@ -125,6 +124,6 @@ export function editProduct(productId, update, callback) {
 
     return {
         type: EDIT_PRODUCT,
-        payload: request
+        payload: requestPut
     }
 }

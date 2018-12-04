@@ -6,14 +6,15 @@ import locale from 'antd/lib/date-picker/locale/pl_PL';
 import {fetchCart, setMenuItem, removeProductFromCart, removeMealFromCart} from "../../actions";
 import AuthService from "../../helpers/auth_service";
 import {NO_LOGGED_MESSAGE} from "../../helpers/messages";
-import './show_cart.css';
+import './ShowCart.css';
 import {Link} from "react-router-dom";
 import moment from "moment";
 
 
-class Show_cart extends Component {
+class ShowCart extends Component {
     state = {
         isLoggedIn: AuthService.isLogged(),
+        currentDate: new Date()
     };
 
     componentDidMount() {
@@ -25,6 +26,7 @@ class Show_cart extends Component {
 
     onChange = (date) => {
         this.props.fetchCart(date._d, () => message.error('Nie znaleziono koszyka'));
+        this.setState({currentDate: date._d});
     };
 
 
@@ -39,7 +41,8 @@ class Show_cart extends Component {
                 <div className='show-cart__head'>
                     <h1 className='head__title'><label>Koszyk</label></h1>
                     <div className='head__date-picker--left'>
-                        <DatePicker onChange={this.onChange} locale={locale}
+                        <DatePicker onChange={this.onChange}
+                                    locale={locale}
                                     size='large' format='DD-MM-YYYY'
                                     defaultValue={moment()}
                                     allowClear={false}
@@ -73,7 +76,7 @@ class Show_cart extends Component {
                                         <Popconfirm title={'Czy na pewno chcesz usunąć ten posiłek z koszyka?'}
                                                     placement='bottomRight' okText='Tak' cancelText='Nie'
                                                     icon={<Icon type='question-circle-o' style={{color: 'red'}}/>}
-                                                    onConfirm={() => this.props.removeMealFromCart(text, new Date())}>
+                                                    onConfirm={() => this.props.removeMealFromCart(text, this.state.currentDate)}>
                                             <Button type='danger'>Usuń</Button>
                                         </Popconfirm>
                                 }]} dataSource={cart.meals} size="default"/>
@@ -103,7 +106,7 @@ class Show_cart extends Component {
                                         <Popconfirm title={'Czy na pewno chcesz usunąć ten produkt z koszyka?'}
                                                     placement='bottomRight' okText='Tak' cancelText='Nie'
                                                     icon={<Icon type='question-circle-o' style={{color: 'red'}}/>}
-                                                    onConfirm={() => this.props.removeProductFromCart(text, new Date())}>
+                                                    onConfirm={() => this.props.removeProductFromCart(text, this.state.currentDate)}>
                                             <Button type='danger'>Usuń</Button>
                                         </Popconfirm>
                                 }]} dataSource={cart.products} size="default"/>
@@ -185,4 +188,4 @@ const mapStateToProps = ({cart}) => {
     }
 };
 
-export default connect(mapStateToProps, {fetchCart, removeMealFromCart, removeProductFromCart, setMenuItem})(Show_cart);
+export default connect(mapStateToProps, {fetchCart, removeMealFromCart, removeProductFromCart, setMenuItem})(ShowCart);

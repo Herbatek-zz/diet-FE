@@ -1,6 +1,5 @@
 import AuthService from "../helpers/auth_service";
-import SecuredRequest from "../helpers/secured_request";
-import Request from "../helpers/request";
+import request from "../helpers/request";
 import {
     CREATE_MEAL,
     FETCH_MEAL,
@@ -27,18 +26,18 @@ export function createMeal(meal, callback) {
     formData.append("description", meal.description);
     formData.append("name", meal.name);
 
-    const request = SecuredRequest.post(`/users/${userId}/meals`, formData, {headers: {'Authorization': `Bearer ${token}`}})
+    const requestPost = request.post(`/users/${userId}/meals`, formData, {headers: {'Authorization': `Bearer ${token}`}})
         .then((response) => callback(response.data.id));
 
     return {
         type: CREATE_MEAL,
-        payload: request
+        payload: requestPost
     }
 }
 
 export function deleteMeal(id, callback) {
     const token = AuthService.getToken();
-    SecuredRequest.delete(`/meals/${id}`, {headers: {'Authorization': `Bearer ${token}`}})
+    request.delete(`/meals/${id}`, {headers: {'Authorization': `Bearer ${token}`}})
         .then(() => callback());
 
     return {
@@ -48,85 +47,85 @@ export function deleteMeal(id, callback) {
 }
 
 export function fetchMeal(id, onErrorDo) {
-    const request = Request.get(`/meals/${id}`)
+    const requestGet = request.get(`/meals/${id}`)
         .catch(() => onErrorDo());
 
     return {
         type: FETCH_MEAL,
-        payload: request
+        payload: requestGet
     }
 }
 
 export function fetchMeals(page, pageSize) {
-    const request = Request.get(`/meals?page=${page}&size=${pageSize}`);
+    const requestGet = request.get(`/meals?page=${page}&size=${pageSize}`);
 
     return {
         type: FETCH_MEALS,
-        payload: request
+        payload: requestGet
     }
 }
 
 export function fetchMyMeals(page, pageSize) {
     const userId = AuthService.getDecodedToken().sub;
-    const request = Request.get(`/users/${userId}/meals?page=${page}&size=${pageSize}`);
+    const requestGet = request.get(`/users/${userId}/meals?page=${page}&size=${pageSize}`);
 
     return {
         type: FETCH_MY_MEALS,
-        payload: request
+        payload: requestGet
     }
 }
 
 export function searchMeals(query, page, pageSize) {
-    const request = Request.get(`/meals/search?query=${query}&page=${page}&size=${pageSize}`);
+    const requestGet = request.get(`/meals/search?query=${query}&page=${page}&size=${pageSize}`);
 
     return {
         type: SEARCH_MEALS,
-        payload: request
+        payload: requestGet
     }
 }
 
 export function fetchFavouriteMeals(page, pageSize) {
     const userId = AuthService.getDecodedToken().sub;
-    const request = Request.get(`/users/${userId}/meals/favourites?page=${page}&size=${pageSize}`);
+    const requestGet = request.get(`/users/${userId}/meals/favourites?page=${page}&size=${pageSize}`);
 
     return {
         type: FETCH_FAVOURITE_MEALS,
-        payload: request
+        payload: requestGet
     }
 }
 
 export function isFavouriteMeal(mealId) {
     const userId = AuthService.getDecodedToken().sub;
     const token = AuthService.getToken();
-    const request = SecuredRequest.get(`/users/${userId}/meals/${mealId}/favourites`, {headers: {'Authorization': `Bearer ${token}`}});
+    const requestGet = request.get(`/users/${userId}/meals/${mealId}/favourites`, {headers: {'Authorization': `Bearer ${token}`}});
 
     return {
         type: IS_FAVOURITE_MEAL,
-        payload: request
+        payload: requestGet
     }
 }
 
 export function addMealToFavourites(mealId, onErrorDo) {
     const userId = AuthService.getDecodedToken().sub;
     const token = AuthService.getToken();
-    const request = SecuredRequest.post(`/users/${userId}/meals/${mealId}/favourites`, null, {headers: {'Authorization': `Bearer ${token}`}})
+    const requestPost = request.post(`/users/${userId}/meals/${mealId}/favourites`, null, {headers: {'Authorization': `Bearer ${token}`}})
         .catch(e => onErrorDo());
 
     return {
         type: ADD_MEAL_TO_FAVOURITES,
-        payload: request
+        payload: requestPost
     }
 }
 
 export function removeMealFromFavourites(mealId, onErrorDo) {
     const userId = AuthService.getDecodedToken().sub;
     const token = AuthService.getToken();
-    const request = SecuredRequest.delete(`/users/${userId}/meals/${mealId}/favourites`, {headers: {'Authorization': `Bearer ${token}`}})
+    const requestDelete = request.delete(`/users/${userId}/meals/${mealId}/favourites`, {headers: {'Authorization': `Bearer ${token}`}})
         .catch(() => onErrorDo());
 
     return {
         type: REMOVE_MEAL_FROM_FAVOURITES,
-        payload: request
+        payload: requestDelete
     }
 }
 
@@ -156,7 +155,7 @@ export function editMeal(mealId, update, callback) {
         index++;
     }
 
-    const request = SecuredRequest.put(`/meals/${mealId}`, formData, {headers: {'Authorization': `Bearer ${token}`}})
+    const requestPut = request.put(`/meals/${mealId}`, formData, {headers: {'Authorization': `Bearer ${token}`}})
         .then((response) => {
             callback();
             return response;
@@ -164,24 +163,24 @@ export function editMeal(mealId, update, callback) {
 
     return {
         type: EDIT_MEAL,
-        payload: request
+        payload: requestPut
     }
 }
 
 export function fetchTopMeals() {
-    const request = Request.get('meals/top-favourites');
+    const requestGet = request.get('meals/top-favourites');
 
     return {
         type: FETCH_TOP_MEALS,
-        payload: request
+        payload: requestGet
     }
 }
 
 export function fetchLatestMeals() {
-    const request = Request.get('meals/latest');
+    const requestGet = request.get('meals/latest');
 
     return {
         type: FETCH_LATEST_MEALS,
-        payload: request
+        payload: requestGet
     }
 }

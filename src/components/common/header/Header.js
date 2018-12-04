@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import {Menu, Icon, message, Badge} from 'antd';
+
 import MyIcon from '../my-icon';
 import AuthService from '../../../helpers/auth_service';
-import './header.css';
 import connect from "react-redux/es/connect/connect";
-import {fetchCart, fetchUserFromCookie} from "../../../actions";
 import Avatar from './avatar';
+import {fetchCart, fetchUserFromCookie} from "../../../actions";
+import './Header.css';
 
 const {SubMenu, Item} = Menu;
 
@@ -18,8 +19,7 @@ class MyHeader extends Component {
             this.props.fetchUserFromCookie();
             this.props.fetchCart(new Date());
             this.setState({logged: true});
-        }
-        else
+        } else
             this.setState({logged: false})
     }
 
@@ -85,7 +85,8 @@ class MyHeader extends Component {
                     <Link to='/'><Icon type='home' className='no-margin'/></Link>
                 </Item>
 
-                <SubMenu title={<span><MyIcon type="icon-foodvariant" className='no-margin menu__products--icon' /></span>} key='products'>
+                <SubMenu title={<span><MyIcon type="icon-foodvariant" className='no-margin menu__products--icon'/></span>}
+                         key='products'>
                     <Item key='product-list'>
                         <Link to='/products'>
                             <Icon type='bars'/>Wszystkie

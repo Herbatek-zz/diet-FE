@@ -4,7 +4,7 @@ import {InputNumber, Modal, message} from 'antd';
 
 import {fetchProduct, setMenuItem, addProductToCart, deleteProduct} from "../../actions";
 import {LOADING_SPIN} from "../../helpers/messages";
-import './product_show.css';
+import './ShowProducts.css';
 import AddToCartIcon from "../common/icons/addToCartIcon";
 import AuthService from "../../helpers/auth_service";
 import EditIcon from '../common/icons/editIcon';

@@ -6,7 +6,6 @@ export default (state = '', action) => {
         case SELECT_MENU_ITEM:
             return action.payload;
 
-
         default:
             return state;
     }
