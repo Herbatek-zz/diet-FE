@@ -6,9 +6,9 @@ import {TextField, TextAreaField} from 'redux-form-antd';
 
 import AuthService from '../../helpers/auth_service';
 import {createMeal, setMenuItem} from "../../actions";
-import {NO_LOGGED_MESSAGE} from '../../helpers/messages';
 import '../common/form.css';
 import {NECESSARY_FIELD} from "../../helpers/constants";
+import NoAuthAlert from './../common/NoAuthAlert';
 
 
 class MealCreate extends Component {
@@ -35,7 +35,7 @@ class MealCreate extends Component {
 
     render() {
         if (!this.state.isLoggedIn)
-            return <div className='content__list'>{NO_LOGGED_MESSAGE}</div>;
+            return <NoAuthAlert/>;
 
         return (
             <div className='form-container'>

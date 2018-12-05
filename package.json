@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "antd": "^3.11.0",
-    "autoprefixer": "^9.4.0",
+    "autoprefixer": "^9.4.2",
     "axios": "^0.18.0",
     "babel-plugin-import": "^1.11.0",
     "hoist-non-react-statics": "^3.2.1",
@@ -27,7 +27,8 @@
     "redux": "^4.0.1",
     "redux-form": "^7.4.2",
     "redux-form-antd": "^3.0.3",
-    "redux-promise": "^0.6.0"
+    "redux-promise": "^0.6.0",
+    "redux-thunk": "^2.3.0"
   },
   "scripts": {
     "start": "react-app-rewired start",

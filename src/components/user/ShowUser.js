@@ -7,6 +7,7 @@ import AuthService from "../../helpers/auth_service";
 import EditIcon from './../common/icons/editIcon';
 import './ShowUser.css';
 import {NO_INFO} from "../../helpers/constants";
+import NoAuthAlert from "../common/NoAuthAlert";
 
 
 class UserShow extends Component {
@@ -19,10 +20,14 @@ class UserShow extends Component {
 
     componentDidMount() {
         this.props.setMenuItem('');
-        this.props.fetchUser(this.state.productId);
+        if (!this.state.isLoggedIn)
+            this.props.fetchUser(this.state.productId);
     }
 
     render() {
+        if (!this.state.isLoggedIn)
+            return <NoAuthAlert/>;
+
         const {user} = this.props;
 
         if (!user)
@@ -56,7 +61,8 @@ class UserShow extends Component {
                         <label>Waga:</label> <b>{user.weight === 0 ? NO_INFO : user.weight + ' kg'}</b>
                     </div>
                     <div className='body__item'>
-                        <label>Dzienne zapotrzebowanie kaloryczne:</label> <b>{user.caloriesPerDay === 0 ? NO_INFO : user.caloriesPerDay + ' kcal'}</b>
+                        <label>Dzienne zapotrzebowanie kaloryczne:</label>
+                        <b>{user.caloriesPerDay === 0 ? NO_INFO : user.caloriesPerDay + ' kcal'}</b>
                     </div>
                 </div>
                 {AuthService.isLogged() && AuthService.getDecodedToken().sub === user.id ?

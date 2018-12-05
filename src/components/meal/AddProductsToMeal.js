@@ -15,6 +15,7 @@ import './AddProductToMeal.css';
 import AuthService from "../../helpers/auth_service";
 import {LOADING_SPIN} from "../../helpers/messages";
 import _ from "lodash";
+import NoAuthAlert from "../common/NoAuthAlert";
 
 class MealEdit extends Component {
     state = {
@@ -39,48 +40,50 @@ class MealEdit extends Component {
     componentDidMount() {
         this.props.setMenuItem('');
 
-        const {id} = this.props.match.params;
-        this.props.fetchMeal(id)
-            .then(() => this.setState({
-                name: this.props.meal.name,
-                products: this.props.meal.products,
-                protein: (() => {
-                    let sum = 0;
-                    this.props.meal.products.forEach(product => sum += product.protein);
-                    return sum;
-                })(),
-                carbohydrate: (() => {
-                    let sum = 0;
-                    this.props.meal.products.forEach(product => sum += product.carbohydrate);
-                    return sum;
-                })(),
-                fat: (() => {
-                    let sum = 0;
-                    this.props.meal.products.forEach(product => sum += product.fat);
-                    return sum;
-                })(),
-                fibre: (() => {
-                    let sum = 0;
-                    this.props.meal.products.forEach(product => sum += product.fibre);
-                    return sum;
-                })(),
-                kcal: (() => {
-                    let sum = 0;
-                    this.props.meal.products.forEach(product => sum += product.kcal);
-                    return sum;
-                })(),
-                carbohydrateExchange: (() => {
-                    let sum = 0;
-                    this.props.meal.products.forEach(product => sum += product.carbohydrateExchange);
-                    return sum;
-                })(),
-                proteinAndFatEquivalent: (() => {
-                    let sum = 0;
-                    this.props.meal.products.forEach(product => sum += product.proteinAndFatEquivalent);
-                    return sum;
-                })(),
-            }));
-        this.props.fetchProductsInfinity(0, this.state.pageSize);
+        if (!this.state.isLoggedIn) {
+            const {id} = this.props.match.params;
+            this.props.fetchMeal(id)
+                .then(() => this.setState({
+                    name: this.props.meal.name,
+                    products: this.props.meal.products,
+                    protein: (() => {
+                        let sum = 0;
+                        this.props.meal.products.forEach(product => sum += product.protein);
+                        return sum;
+                    })(),
+                    carbohydrate: (() => {
+                        let sum = 0;
+                        this.props.meal.products.forEach(product => sum += product.carbohydrate);
+                        return sum;
+                    })(),
+                    fat: (() => {
+                        let sum = 0;
+                        this.props.meal.products.forEach(product => sum += product.fat);
+                        return sum;
+                    })(),
+                    fibre: (() => {
+                        let sum = 0;
+                        this.props.meal.products.forEach(product => sum += product.fibre);
+                        return sum;
+                    })(),
+                    kcal: (() => {
+                        let sum = 0;
+                        this.props.meal.products.forEach(product => sum += product.kcal);
+                        return sum;
+                    })(),
+                    carbohydrateExchange: (() => {
+                        let sum = 0;
+                        this.props.meal.products.forEach(product => sum += product.carbohydrateExchange);
+                        return sum;
+                    })(),
+                    proteinAndFatEquivalent: (() => {
+                        let sum = 0;
+                        this.props.meal.products.forEach(product => sum += product.proteinAndFatEquivalent);
+                        return sum;
+                    })(),
+                }));
+            this.props.fetchProductsInfinity(0, this.state.pageSize);
+        }
     }
 
     handleInfiniteOnLoad = () => {
@@ -169,6 +172,8 @@ class MealEdit extends Component {
     };
 
     render() {
+        if (!this.state.isLoggedIn)
+            return <NoAuthAlert/>;
         if (!this.props.meal)
             return LOADING_SPIN;
 

@@ -9,8 +9,8 @@ import ProgressBars from './ProgressBars';
 import AllProductsTable from './AllProductsTable';
 import MealsTable from './MealsTable';
 import ProductsTable from './ProductsTable';
-import {NO_LOGGED_MESSAGE} from "../../helpers/messages";
 import './ShowCart.css';
+import NoAuthAlert from "../common/NoAuthAlert";
 
 class ShowCart extends Component {
     state = {
@@ -33,7 +33,7 @@ class ShowCart extends Component {
     render() {
         const {cart} = this.props;
         if (!this.state.isLoggedIn)
-            return <div className='show-cart'>{NO_LOGGED_MESSAGE}</div>;
+            return <NoAuthAlert/>;
 
         return (
             <div className='show-cart'>

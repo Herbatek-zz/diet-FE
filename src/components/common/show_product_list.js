@@ -10,6 +10,8 @@ class ShowProductList extends Component {
 
         return (
             <List
+                locale={{emptyText: 'Lista produktów jest pusta'}}
+                loading
                 itemLayout="vertical"
                 size="large"
                 pagination={{

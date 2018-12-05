@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import {Menu, Icon, message, Badge} from 'antd';
 
-import MyIcon from '../my-icon';
+import MyIcon from '../MyIcon';
 import AuthService from '../../../helpers/auth_service';
 import connect from "react-redux/es/connect/connect";
 import Avatar from './avatar';

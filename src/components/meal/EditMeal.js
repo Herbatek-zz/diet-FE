@@ -7,9 +7,9 @@ import {Redirect} from "react-router-dom";
 
 import AuthService from '../../helpers/auth_service';
 import {fetchMeal, editMeal, setMenuItem} from "../../actions";
-import {NO_LOGGED_MESSAGE} from '../../helpers/messages';
 import '../common/form.css';
 import {NECESSARY_FIELD} from "../../helpers/constants";
+import NoAuthAlert from "../common/NoAuthAlert";
 
 class MealEdit extends Component {
     state = {
@@ -44,7 +44,7 @@ class MealEdit extends Component {
 
     render() {
         if (!this.state.isLoggedIn)
-            return <div className='content'>{NO_LOGGED_MESSAGE}</div>;
+            return <NoAuthAlert/>;
         if (this.state.redirect)
             return <Redirect to={`/meals/${this.state.mealId}`}/>;
 

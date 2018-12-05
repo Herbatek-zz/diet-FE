@@ -12,8 +12,6 @@ import {
     REMOVE_MEAL_FROM_FAVOURITES,
     SEARCH_MEALS,
     EDIT_MEAL,
-    FETCH_TOP_MEALS,
-    FETCH_LATEST_MEALS
 } from "./index";
 
 export function createMeal(meal, callback) {
@@ -139,7 +137,7 @@ export function editMeal(mealId, update, callback) {
     formData.append("name", update.name);
 
     let index = 0;
-    for(let product of update.products) {
+    for (let product of update.products) {
         formData.append(`products[${index}].id`, product.id);
         formData.append(`products[${index}].name`, product.name);
         formData.append(`products[${index}].imageUrl`, product.imageUrl);
@@ -164,23 +162,5 @@ export function editMeal(mealId, update, callback) {
     return {
         type: EDIT_MEAL,
         payload: requestPut
-    }
-}
-
-export function fetchTopMeals() {
-    const requestGet = request.get('meals/top-favourites');
-
-    return {
-        type: FETCH_TOP_MEALS,
-        payload: requestGet
-    }
-}
-
-export function fetchLatestMeals() {
-    const requestGet = request.get('meals/latest');
-
-    return {
-        type: FETCH_LATEST_MEALS,
-        payload: requestGet
     }
 }

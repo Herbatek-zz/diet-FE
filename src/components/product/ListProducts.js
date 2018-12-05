@@ -4,7 +4,6 @@ import {Input} from 'antd';
 
 import {fetchProducts, searchProducts, setMenuItem} from "../../actions";
 import ShowProductList from '../common/show_product_list';
-import {LOADING_SPIN} from '../../helpers/messages';
 
 class ListProducts extends Component {
     state = {
@@ -41,8 +40,7 @@ class ListProducts extends Component {
                     />
                 </div>
                 <div className='list'>
-                    {Object.keys(this.props.products.content).length === 0 ? LOADING_SPIN :
-                        <ShowProductList products={this.props.products} onChange={this.onChange}/>}
+                        <ShowProductList products={this.props.products} onChange={this.onChange}/>
                 </div>
             </div>
         );

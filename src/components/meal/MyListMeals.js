@@ -3,8 +3,8 @@ import {connect} from 'react-redux';
 
 import {fetchMyMeals, setMenuItem} from "../../actions";
 import AuthService from "../../helpers/auth_service";
-import {NO_LOGGED_MESSAGE} from "../../helpers/messages";
 import ShowMealList from "../common/show_meal_list";
+import NoAuthAlert from "../common/NoAuthAlert";
 
 
 class MealMyList extends Component {
@@ -24,11 +24,7 @@ class MealMyList extends Component {
         const {meals} = this.props;
 
         if (!this.state.isLoggedIn)
-            return <div className='content__list'>{NO_LOGGED_MESSAGE}</div>;
-        if (Object.keys(meals.content).length === 0)
-            return <div className='content__list'>
-                <div className='container__message'><p>Nie stworzyłeś jeszcze żadnego posiłku</p></div>
-            </div>;
+            return <NoAuthAlert/>;
 
         return (
             <div className='content__list'>

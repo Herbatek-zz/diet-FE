@@ -15,7 +15,10 @@ const MealsTable = (props) => {
             rowKey='id'
             columns={[{
                 title: 'Nazwa', dataIndex: 'name',
-                render: (text, record) => <Link to={`/meals/${record.id}`}>{text}</Link>
+                render: (text, record) => <Link to={{
+                    pathname: `/meals/${record.id}`,
+                    state: {meal: record}
+                }}>{text}</Link>
             }, {
                 title: 'Waga',
                 dataIndex: 'amount',

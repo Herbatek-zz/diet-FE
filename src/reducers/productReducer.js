@@ -1,6 +1,9 @@
 import _ from 'lodash';
 
 import {
+    CREATE_PRODUCT,
+    CREATE_PRODUCT_DONE,
+    CREATE_PRODUCT_FAILED,
     FETCH_PRODUCT,
     DELETE_PRODUCT,
     FETCH_PRODUCTS,
@@ -11,8 +14,32 @@ import {
 } from "../actions";
 
 
-export default (state = {content: {}}, action) => {
+export default (state = {content: {}, created: {}}, action) => {
     switch (action.type) {
+
+        case CREATE_PRODUCT: {
+            console.log("Tworzenie");
+            return {
+                ...state,
+                created: {isLoading: true, isError: false}
+            }
+        }
+
+        case CREATE_PRODUCT_DONE: {
+            console.log("Stworzono");
+            return {
+                ...state,
+                created: {product: action.payload.data, isLoading: false, isError: false}
+            }
+        }
+
+        case CREATE_PRODUCT_FAILED: {
+            return {
+                ...state,
+                created: {isLoading: false, isError: true}
+            }
+        }
+
         case FETCH_PRODUCTS: {
             if (action.payload.data)
                 return {

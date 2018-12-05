@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 import {Table} from "antd";
 
 import {fetchLatestMeals} from "../../actions";
-import MyIcon from "../common/my-icon";
+import MyIcon from "../common/MyIcon";
 
 class MealLatest extends Component {
 
@@ -21,9 +21,10 @@ class MealLatest extends Component {
         </h3>;
 
     render() {
+        const {list, isLoading} = this.props.latestMeals;
         return <Table className='dashboard__table'
                       locale={{emptyText: 'Nie znaleziono ostatnich posiłków'}}
-                      loading={!this.props.latestMeals}
+                      loading={isLoading}
                       showHeader={false}
                       title={this.title}
                       bordered={false}
@@ -35,13 +36,13 @@ class MealLatest extends Component {
                               <Link style={{color: 'black'}} to={`/meals/${record.id}`}>
                                   {++index}. {text}
                               </Link>
-                      }]} dataSource={this.props.latestMeals} size="middle"/>
+                      }]} dataSource={list} size="middle"/>
     }
 }
 
-const mapStateToProps = ({meals}) => {
+const mapStateToProps = ({latestMeals}) => {
     return {
-        latestMeals: meals.latestMeals
+        latestMeals
     }
 };
 

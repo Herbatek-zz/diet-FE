@@ -17,16 +17,28 @@ class ProductShow extends Component {
         isLoggedIn: AuthService.isLogged(),
         productId: this.props.match.params.id,
         modalVisible: false,
-        amount: 0
+        amount: null,
+        isActual: true
     };
 
     componentDidMount() {
         this.props.setMenuItem('');
-        this.props.fetchProduct(this.state.productId, () => message.error("Nie odnaleziono produktu"));
+        this.props.fetchProduct(this.state.productId, () => {
+            if (this.props.location.state)
+                this.setState({isActual: false});
+            else
+                message.error("Nie odnaleziono produktu")
+        });
     }
 
+    onSubmit = (event) => {
+        event.preventDefault();
+        this.props.addProductToCart(this.props.product.id, new Date(), this.state.amount);
+        this.setState({modalVisible: false})
+    };
+
     render() {
-        const {product} = this.props;
+        const {product} = this.state.isActual ? this.props : this.props.location.state;
 
         if (!product)
             return LOADING_SPIN;
@@ -35,7 +47,7 @@ class ProductShow extends Component {
             <div className='product-show'>
                 <div className='product-show__head'>
                     <h2><label>{product.name}</label></h2>
-                    {this.state.isLoggedIn ?
+                    {this.state.isLoggedIn && this.state.isActual ?
                         <div className='product-show__icon-menu'>
                             <AddToCartIcon onClick={() => this.setState({modalVisible: true})}/>
                             {AuthService.getDecodedToken().sub === product.userId ?
@@ -63,18 +75,21 @@ class ProductShow extends Component {
                     </div>
                 </div>
                 <Modal
-                    title="Ile gram produktu chcesz dodać do koszyka"
+                    title={<label>Ile gram produktu chcesz dodać do koszyka?</label>}
                     visible={this.state.modalVisible}
-                    cancelText='Anuluj' okText='Dodaj'
-                    onOk={() => {
-                        this.props.addProductToCart(product.id, new Date(), this.state.amount);
-                        this.setState({modalVisible: false})
-                    }}
+                    cancelText='Anuluj'
+                    okText='Dodaj'
+                    onOk={this.onSubmit}
                     onCancel={() => this.setState({modalVisible: false})}
                 >
-                    <InputNumber min={0} value={this.state.amount} onChange={(value) => {
-                        this.setState({amount: value})
-                    }}/> [g]
+                    <form className='form' onSubmit={this.onSubmit} autoComplete='off'>
+                        <InputNumber
+                            min={0}
+                            autoFocus
+                            value={this.state.amount}
+                            onChange={(value) => this.setState({amount: value})}
+                        />
+                    </form>
 
                 </Modal>
             </div>

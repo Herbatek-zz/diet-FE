@@ -16,7 +16,10 @@ const ProductsTable = (props) => {
             columns={[{
                 title: 'Nazwa',
                 dataIndex: 'name',
-                render: (text, record) => <Link to={`/products/${record.id}`}>{text}</Link>
+                render: (text, record) => <Link to={{
+                    pathname: `/products/${record.id}`,
+                    state: {product: record}
+                }}>{text}</Link>
             }, {
                 title: 'Waga',
                 dataIndex: 'amount',

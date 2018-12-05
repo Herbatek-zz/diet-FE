@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 import {Table} from "antd";
 
 import {fetchTopMeals} from "../../actions";
-import MyIcon from "../common/my-icon";
+import MyIcon from "../common/MyIcon";
 
 class MealTop extends Component {
 
@@ -21,16 +21,17 @@ class MealTop extends Component {
         </h3>;
 
     render() {
+        const {list, isLoading} = this.props.topMeals;
         return (
             <Table className='dashboard__table'
                    locale={{emptyText: 'Nie znaleziono najlepszych posiłków'}}
-                   loading={!this.props.topMeals}
+                   loading={isLoading}
                    showHeader={false}
                    title={this.title}
                    bordered={false}
                    pagination={false}
                    rowKey='id'
-                   dataSource={this.props.topMeals}
+                   dataSource={list}
                    size='middle'
                    columns={[{
                        title: 'Nazwa', dataIndex: 'name',
@@ -49,10 +50,10 @@ class MealTop extends Component {
     }
 }
 
-const mapStateToProps = ({meals}) => {
+const mapStateToProps = ({topMeals}) => {
     return {
-        topMeals: meals.top
+        topMeals
     }
 };
 
-export default connect(mapStateToProps, {fetchTopMeals})(MealTop);
+export default connect(mapStateToProps, {fetchTopMeals: fetchTopMeals})(MealTop);

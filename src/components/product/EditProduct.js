@@ -6,9 +6,9 @@ import {TextField, TextAreaField, NumberField} from 'redux-form-antd';
 
 import AuthService from '../../helpers/auth_service';
 import {fetchProduct, editProduct, setMenuItem} from "../../actions";
-import {NO_LOGGED_MESSAGE} from '../../helpers/messages';
 import {NECESSARY_FIELD} from "../../helpers/constants";
 import '../common/form.css';
+import NoAuthAlert from "../common/NoAuthAlert";
 
 class ProductEdit extends Component {
     state = {
@@ -45,7 +45,7 @@ class ProductEdit extends Component {
 
     render() {
         if (!this.state.isLoggedIn)
-            return <div className='content'>{NO_LOGGED_MESSAGE}</div>;
+            return <NoAuthAlert/>;
 
         return (
             <div className='form-container'>

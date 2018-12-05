@@ -12,7 +12,7 @@ import MealEdit from "./meal/EditMeal";
 import MealAddProducts from "./meal/AddProductsToMeal";
 import MealMyList from "./meal/MyListMeals";
 import MealCreate from "./meal/CreateMeal";
-import MealShow from "./meal/ShowMeals";
+import MealShow from "./meal/show-meal/ShowMeal";
 import MealList from "./meal/ListMeals";
 import ProductEdit from "./product/EditProduct";
 import ProductMyList from "./product/MyListProducts";

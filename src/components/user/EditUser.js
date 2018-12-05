@@ -3,12 +3,11 @@ import {Field, reduxForm} from 'redux-form';
 import {connect} from 'react-redux';
 import {Button, message} from 'antd';
 import {NumberField, TextField, SliderField, SelectField} from 'redux-form-antd';
-
 import AuthService from '../../helpers/auth_service';
 import {editUser, fetchUser, setMenuItem, fetchUserFromCookie} from "../../actions";
-import {NO_LOGGED_MESSAGE} from '../../helpers/messages';
 import '../common/form.css';
 import {NECESSARY_FIELD} from "../../helpers/constants";
+import NoAuthAlert from "../common/NoAuthAlert";
 
 class UserEdit extends Component {
     state = {
@@ -47,7 +46,7 @@ class UserEdit extends Component {
 
     render() {
         if (!this.state.isLoggedIn)
-            return <div className='content'>{NO_LOGGED_MESSAGE}</div>;
+            return <NoAuthAlert/>;
 
         return (
             <div className='form-container'>

@@ -2,6 +2,8 @@ import AuthService from "../helpers/auth_service";
 import request from "../helpers/request";
 import {
     CREATE_PRODUCT,
+    CREATE_PRODUCT_DONE,
+    CREATE_PRODUCT_FAILED,
     FETCH_PRODUCT,
     FETCH_PRODUCTS,
     DELETE_PRODUCT,
@@ -9,10 +11,12 @@ import {
     SEARCH_PRODUCTS,
     FETCH_PRODUCTS_INFINITY,
     SEARCH_PRODUCTS_INFINITY,
-    EDIT_PRODUCT
+    EDIT_PRODUCT,
 } from "./index";
 
-export function createProduct(product, callback) {
+export const createProduct = (product) => dispatch => {
+    dispatch(createProductStart());
+
     const userId = AuthService.getDecodedToken().sub;
     const token = AuthService.getToken();
 
@@ -26,14 +30,33 @@ export function createProduct(product, callback) {
     formData.append("fibre", product.fibre);
     formData.append("kcal", product.kcal);
 
-    const requestPost = request.post(`/users/${userId}/products`, formData, {headers: {'Authorization': `Bearer ${token}`}})
-        .then(() => callback());
+    request.post(`/users/${userId}/products`, formData, {headers: {'Authorization': `Bearer ${token}`}})
+        .then(response => dispatch(createProductDone(response)))
+        .catch(error => dispatch(createProductFailed(error)));
+};
 
+export const createProductStart = () => {
     return {
-        type: CREATE_PRODUCT,
-        payload: requestPost
-    }
+        type: CREATE_PRODUCT
+    };
+};
+
+export function createProductDone(data) {
+    return {
+        type: CREATE_PRODUCT_DONE,
+        payload: data
+    };
 }
+
+export function createProductFailed(error) {
+    return {
+        type: CREATE_PRODUCT_FAILED,
+        payload: error
+    };
+}
+
+///////////////////////////////////////////////////////////////////////////////
+
 
 export function fetchProduct(id, onErrorDo) {
     const requestGet = request.get(`/products/${id}`)

@@ -6,9 +6,9 @@ import {Button, Icon, message, Upload} from 'antd';
 
 import AuthService from '../../helpers/auth_service';
 import {createProduct, setMenuItem} from "../../actions";
-import {NO_LOGGED_MESSAGE} from "../../helpers/messages";
 import '../common/form.css';
 import {NECESSARY_FIELD} from "../../helpers/constants";
+import NoAuthAlert from "../common/NoAuthAlert";
 
 
 class ProductCreate extends Component {
@@ -29,22 +29,40 @@ class ProductCreate extends Component {
         });
     }
 
-    onSubmit = (values) => {
+    // NEEED TOOOO FIX IT SOMEHOW !
+    componentDidMount() {
+        console.log(this.props.created)
+        if (this.props.created.isLoading) {
+            message.loading("Tworzenie w toku");
+            console.log("w submit --- loading");
+        }
+        else if (this.props.created.isError) {
+            message.error("Coś poszło nie tak");
+            console.log("w submit --- error");
+        }
+        else if(this.props.created.product){
+            console.log("w submit --- success");
+            message.success('Poprawnie stworzono posiłek');
+            this.props.reset();
+            this.setState({imageFile: []});
+        }
+    }
+
+    onSubmit = async (values) => {
+        console.log("w submit --- start");
         if (!this.state.imageFile[0])
             message.error("Musisz wybrać obrazek");
         else {
+            console.log("w submit --- before create");
             values.image = this.state.imageFile[0];
-            this.props.createProduct(values, () => {
-                this.props.reset();
-                this.setState({imageFile: []});
-                message.success('Poprawnie stworzono produkt');
-            });
+            await this.props.createProduct(values);
+            console.log("w submit --- after create");
         }
     };
 
     render() {
         if (!this.state.isLoggedIn)
-            return <div className='content__list'>{NO_LOGGED_MESSAGE}</div>;
+            return <NoAuthAlert/>;
 
         return (
             <div className='form-container'>
@@ -62,12 +80,14 @@ class ProductCreate extends Component {
                             component={TextAreaField}
                             placeholder='Opis'/>
                         <Upload
+                            customRequest={({file, onSuccess}) => {
+                                setTimeout(() => {
+                                    onSuccess("ok");
+                                }, 0);
+                            }}
                             name='image'
                             className='form__upload-btn'
-                            action={(image) => {
-                                this.setState({imageFile: [image]});
-                                this.event.preventDefault();
-                            }}
+                            action={(image) => this.setState({imageFile: [image]})}
                             onRemove={() => this.setState({imageFile: []})}
                             fileList={this.state.imageFile}
                             showUploadList={true}
@@ -175,9 +195,15 @@ function validate({name, description, protein, carbohydrate, fat, fibre, kcal}) 
     return errors;
 }
 
+const mapStateToProps = (state) => {
+    return {
+        created: state.products.created
+    };
+};
+
 export default reduxForm({
     validate,
     form: 'ProductNewForm'
 })(
-    connect(null, {createProduct, setMenuItem})(ProductCreate)
+    connect(mapStateToProps, {createProduct, setMenuItem})(ProductCreate)
 );

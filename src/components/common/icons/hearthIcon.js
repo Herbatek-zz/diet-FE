@@ -39,7 +39,5 @@ const mapStateToProps = ({meals}) => {
 };
 
 export default connect(mapStateToProps, {
-    isFavouriteMeal,
-    addMealToFavourites,
-    removeMealFromFavourites,
+    isFavouriteMeal, addMealToFavourites, removeMealFromFavourites,
 })(HearthIcon);

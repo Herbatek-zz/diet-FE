@@ -9,8 +9,7 @@ import {
     FETCH_FAVOURITE_MEALS,
     IS_FAVOURITE_MEAL,
     ADD_MEAL_TO_FAVOURITES,
-    REMOVE_MEAL_FROM_FAVOURITES, EDIT_MEAL,
-    FETCH_TOP_MEALS, FETCH_LATEST_MEALS
+    REMOVE_MEAL_FROM_FAVOURITES, EDIT_MEAL
 } from "../actions";
 
 
@@ -65,20 +64,6 @@ export default (state = {content: {}}, action) => {
                 currentPage: action.payload.data.pageNumber,
                 pageSize: action.payload.data.pageSize,
                 totalElements: action.payload.data.totalElements
-            }
-        }
-
-        case FETCH_TOP_MEALS: {
-            return {
-                ...state,
-                top: action.payload.data
-            }
-        }
-
-        case FETCH_LATEST_MEALS: {
-            return {
-                ...state,
-                latestMeals: action.payload.data
             }
         }
 

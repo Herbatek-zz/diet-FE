@@ -13,7 +13,10 @@ const AllProductsTable = (props) => {
             rowKey='id'
             columns={[{
                 title: <label>Nazwa</label>, dataIndex: 'name',
-                render: (text, record) => <Link to={`/products/${record.id}`}>{text}</Link>
+                render: (text, record) => <Link to={{
+                    pathname: `/products/${record.id}`,
+                    state: {product: record}
+                }}>{text}</Link>
             }, {
                 title: <label>Waga</label>,
                 dataIndex: 'amount',

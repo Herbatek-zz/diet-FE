@@ -10,6 +10,8 @@ class ShowMealList extends Component {
 
         return (
             <List
+                locale={{emptyText: 'Lista posiłków jest pusta'}}
+                loading
                 itemLayout="vertical"
                 size="large"
                 pagination={{
@@ -30,7 +32,7 @@ class ShowMealList extends Component {
                             </div>}
                     >
                         <List.Item.Meta
-                            title={<Link to={`/meals/${item.id}`}><b>{item.name}</b></Link>}
+                            title={<Link to={{pathname: `/meals/${item.id}`, state: {meal: item}}}><b>{item.name}</b></Link>}
                             description={item.description.substring(0, 256) + (item.description.length > 256 ? '...' : '')}
                         />
                         {item.content}
