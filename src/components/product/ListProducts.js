@@ -3,7 +3,9 @@ import {connect} from 'react-redux';
 import {Input} from 'antd';
 
 import {fetchProducts, searchProducts, setMenuItem} from "../../actions";
-import ShowProductList from '../common/show_product_list';
+import ShowProductList from '../common/ShowProductList';
+
+const {Search} = Input;
 
 class ListProducts extends Component {
     state = {
@@ -18,9 +20,8 @@ class ListProducts extends Component {
     }
 
     render() {
-        const {Search} = Input;
         const {searchValue, pageSize} = this.state;
-
+        const {currentPage, totalElements, list, isLoading} = this.props.allProducts;
         return (
             <div className='content__list'>
                 <div className='header'>
@@ -40,7 +41,12 @@ class ListProducts extends Component {
                     />
                 </div>
                 <div className='list'>
-                        <ShowProductList products={this.props.products} onChange={this.onChange}/>
+                    <ShowProductList
+                        currentPage={currentPage}
+                        totalElements={totalElements}
+                        list={list}
+                        isLoading={isLoading}
+                        onChange={this.onChange}/>
                 </div>
             </div>
         );
@@ -54,7 +60,7 @@ class ListProducts extends Component {
 
 const mapStateToProps = ({products}) => {
     return {
-        products
+        allProducts: products.allProducts
     }
 };
 

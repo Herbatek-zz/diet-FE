@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {InputNumber, Modal, message} from 'antd';
+import {InputNumber, Modal, Alert} from 'antd';
 
 import {fetchProduct, setMenuItem, addProductToCart, deleteProduct} from "../../actions";
 import {LOADING_SPIN} from "../../helpers/messages";
@@ -17,18 +17,12 @@ class ProductShow extends Component {
         isLoggedIn: AuthService.isLogged(),
         productId: this.props.match.params.id,
         modalVisible: false,
-        amount: null,
-        isActual: true
+        amount: null
     };
 
     componentDidMount() {
+        this.props.fetchProduct(this.state.productId);
         this.props.setMenuItem('');
-        this.props.fetchProduct(this.state.productId, () => {
-            if (this.props.location.state)
-                this.setState({isActual: false});
-            else
-                message.error("Nie odnaleziono produktu")
-        });
     }
 
     onSubmit = (event) => {
@@ -38,16 +32,25 @@ class ProductShow extends Component {
     };
 
     render() {
-        const {product} = this.state.isActual ? this.props : this.props.location.state;
+        const {product} = this.props;
 
-        if (!product)
+        if(product.isError)
+            return <Alert
+                message="Błąd"
+                style={{width: '80%', marginTop: '1%'}}
+                description="Niestety nie udało nam się znaleźć tego produktu."
+                type="error"
+                showIcon
+            />;
+
+        if (!product.id || product.isLoading)
             return LOADING_SPIN;
 
         return (
             <div className='product-show'>
                 <div className='product-show__head'>
                     <h2><label>{product.name}</label></h2>
-                    {this.state.isLoggedIn && this.state.isActual ?
+                    {this.state.isLoggedIn ?
                         <div className='product-show__icon-menu'>
                             <AddToCartIcon onClick={() => this.setState({modalVisible: true})}/>
                             {AuthService.getDecodedToken().sub === product.userId ?
@@ -97,10 +100,8 @@ class ProductShow extends Component {
     }
 }
 
-const mapStateToProps = ({products}, ownProps) => {
-    return {
-        product: products.content[ownProps.match.params.id]
-    }
+const mapStateToProps = ({products}) => {
+    return {product: products.selectedProduct}
 };
 
 export default connect(mapStateToProps, {fetchProduct, setMenuItem, addProductToCart, deleteProduct})(ProductShow);

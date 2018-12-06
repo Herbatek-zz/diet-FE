@@ -17,8 +17,13 @@ import {LOADING_SPIN} from "../../helpers/messages";
 import _ from "lodash";
 import NoAuthAlert from "../common/NoAuthAlert";
 
+const {Item} = List;
+const {Search} = Input;
+
 class MealEdit extends Component {
     state = {
+        sent: false,
+        mealId: this.props.match.params.id,
         modalVisible: false,
         searched: false,
         searchValue: '',
@@ -34,66 +39,82 @@ class MealEdit extends Component {
         fibre: 0,
         kcal: 0,
         carbohydrateExchange: 0,
-        proteinAndFatEquivalent: 0
+        proteinAndFatEquivalent: 0,
+        mealLoaded: false
     };
 
     componentDidMount() {
         this.props.setMenuItem('');
 
-        if (!this.state.isLoggedIn) {
-            const {id} = this.props.match.params;
-            this.props.fetchMeal(id)
-                .then(() => this.setState({
-                    name: this.props.meal.name,
-                    products: this.props.meal.products,
-                    protein: (() => {
-                        let sum = 0;
-                        this.props.meal.products.forEach(product => sum += product.protein);
-                        return sum;
-                    })(),
-                    carbohydrate: (() => {
-                        let sum = 0;
-                        this.props.meal.products.forEach(product => sum += product.carbohydrate);
-                        return sum;
-                    })(),
-                    fat: (() => {
-                        let sum = 0;
-                        this.props.meal.products.forEach(product => sum += product.fat);
-                        return sum;
-                    })(),
-                    fibre: (() => {
-                        let sum = 0;
-                        this.props.meal.products.forEach(product => sum += product.fibre);
-                        return sum;
-                    })(),
-                    kcal: (() => {
-                        let sum = 0;
-                        this.props.meal.products.forEach(product => sum += product.kcal);
-                        return sum;
-                    })(),
-                    carbohydrateExchange: (() => {
-                        let sum = 0;
-                        this.props.meal.products.forEach(product => sum += product.carbohydrateExchange);
-                        return sum;
-                    })(),
-                    proteinAndFatEquivalent: (() => {
-                        let sum = 0;
-                        this.props.meal.products.forEach(product => sum += product.proteinAndFatEquivalent);
-                        return sum;
-                    })(),
-                }));
+        if (this.state.isLoggedIn) {
+            this.props.fetchMeal(this.state.mealId);
             this.props.fetchProductsInfinity(0, this.state.pageSize);
         }
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        const {meal} = this.props;
+        if (!this.state.mealLoaded && this.props.meal.id && !this.props.meal.isLoading && !this.props.meal.isError) {
+            this.setState({
+                mealLoaded: true,
+                name: this.props.meal.name,
+                products: this.props.meal.products,
+                protein: (() => {
+                    let sum = 0;
+                    this.props.meal.products.forEach(product => sum += product.protein * product.amount / 100);
+                    return sum;
+                })(),
+                carbohydrate: (() => {
+                    let sum = 0;
+                    this.props.meal.products.forEach(product => sum += product.carbohydrate * product.amount / 100);
+                    return sum;
+                })(),
+                fat: (() => {
+                    let sum = 0;
+                    this.props.meal.products.forEach(product => sum += product.fat * product.amount / 100);
+                    return sum;
+                })(),
+                fibre: (() => {
+                    let sum = 0;
+                    this.props.meal.products.forEach(product => sum += product.fibre * product.amount / 100);
+                    return sum;
+                })(),
+                kcal: (() => {
+                    let sum = 0;
+                    this.props.meal.products.forEach(product => sum += product.kcal * product.amount / 100);
+                    return sum;
+                })(),
+                carbohydrateExchange: (() => {
+                    let sum = 0;
+                    this.props.meal.products.forEach(product => sum += product.carbohydrateExchange * product.amount / 100);
+                    return sum;
+                })(),
+                proteinAndFatEquivalent: (() => {
+                    let sum = 0;
+                    this.props.meal.products.forEach(product => sum += product.proteinAndFatEquivalent * product.amount / 100);
+                    return sum;
+                })(),
+            });
+        }
+
+        if (this.state.sent && meal.isLoading)
+            message.loading("Zapisywanie w toku");
+        else if (this.state.sent && meal.isError)
+            message.error("Coś poszło nie tak");
+        else if (this.state.sent && !meal.isLoading && !meal.isError) {
+            message.success('Poprawnie edytowano produkt');
+            this.props.history.push(`/meals/${this.state.mealId}`);
+        }
+    }
+
     handleInfiniteOnLoad = () => {
-        const {content, currentPage, totalElements, isLast} = this.props.products;
+        const {list, currentPage, totalElements, isLast} = this.props.products;
         const {searched} = this.state;
         const {searchProductsInfinity, fetchProductsInfinity} = this.props;
         const {searchValue, pageSize} = this.state;
         this.setState({loading: true});
 
-        if (Object.values(content).length >= totalElements && isLast) {
+        if (Object.values(list).length >= totalElements && isLast) {
             this.setState({loading: false});
             return;
         }
@@ -126,15 +147,12 @@ class MealEdit extends Component {
         const {meal} = this.props;
         if (this.state.products)
             meal.products = this.state.products;
-        this.props.editMeal(meal.id, meal, () => {
-            this.props.history.push(`/meals/${meal.id}`);
-            message.success("Poprawnie zapisano")
-        });
+        this.props.editMeal(meal.id, meal);
+        this.setState({sent: true});
     };
 
     renderCollapse = () => {
-        const {content, isLast} = this.props.products;
-        const {Item} = List;
+        const {list, isLast} = this.props.products;
         const {loading} = this.state;
 
         return (
@@ -147,7 +165,7 @@ class MealEdit extends Component {
                     useWindow={false}
                 >
                     <List
-                        dataSource={Object.values(content)}
+                        dataSource={Object.values(list)}
                         renderItem={item => (
                             <Tooltip placement="bottom" title='Kliknij aby dodać' arrowPointAtCenter='true' mouseEnterDelay={0.6}>
                                 <Item key={item.id} onClick={() => this.clickOnProduct(item)} className='edit__search--item'>
@@ -178,9 +196,7 @@ class MealEdit extends Component {
             return LOADING_SPIN;
 
         const {meal} = this.props;
-        const {Search} = Input;
         const {searchValue, pageSize} = this.state;
-        const {content} = this.props.products;
 
         return (
             <div className='addProducts__content'>
@@ -189,7 +205,7 @@ class MealEdit extends Component {
                 </div>
                 <div className='addProducts__body'>
                     <div className='addProducts__firstPanel'>
-                        <h2><label>{meal.name}</label></h2>
+                        <h2><Link to={`/meals/${meal.id}`}>{meal.name}</Link></h2>
                         <div className='show__meal-info'>
                             <h2><label>Informacje o posiłku</label></h2>
                             <table className='table-info'>
@@ -202,19 +218,19 @@ class MealEdit extends Component {
                                 <tbody>
                                 <tr className='table-info__row'>
                                     <td><label>Białko</label></td>
-                                    <td><label>{Math.round(this.state.protein)}g</label></td>
+                                    <td><label>{Math.round(this.state.protein * 10) / 10}g</label></td>
                                 </tr>
                                 <tr className='table-info__row'>
                                     <td><label>Węglowodany</label></td>
-                                    <td><label>{Math.round(this.state.carbohydrate)}g</label></td>
+                                    <td><label>{Math.round(this.state.carbohydrate * 10) / 10}g</label></td>
                                 </tr>
                                 <tr className='table-info__row'>
                                     <td><label>Tłuszcz</label></td>
-                                    <td><label>{Math.round(this.state.fat)}g</label></td>
+                                    <td><label>{Math.round(this.state.fat * 10) / 10}g</label></td>
                                 </tr>
                                 <tr className='table-info__row'>
                                     <td><label>Błonnik</label></td>
-                                    <td><label>{Math.round(this.state.fibre)}g</label></td>
+                                    <td><label>{Math.round(this.state.fibre * 10) / 10}g</label></td>
                                 </tr>
                                 <tr className='table-info__row'>
                                     <td><label>Kcal</label></td>
@@ -300,7 +316,7 @@ class MealEdit extends Component {
                             size="large"
                             className='search'
                         />
-                        {!content ? <div className='content loading-spin'><Spin size='large'/></div> : this.renderCollapse()}
+                        {this.renderCollapse()}
                     </div>
                 </div>
                 <Button onClick={this.clickOnSaveButton} type='primary' size='large' className='saveButton'>
@@ -311,10 +327,10 @@ class MealEdit extends Component {
     }
 }
 
-const mapStateToProps = ({meals, products}, ownProps) => {
+const mapStateToProps = ({meals, products}) => {
     return {
-        meal: meals.content[ownProps.match.params.id],
-        products
+        meal: meals.selectedMeal,
+        products: products.allProducts
     }
 };
 

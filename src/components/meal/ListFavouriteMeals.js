@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 
 import {fetchFavouriteMeals, setMenuItem} from "../../actions";
 import AuthService from "../../helpers/auth_service";
-import ShowMealList from "../common/show_meal_list";
+import ShowMealList from "../common/ShowMealList";
 import NoAuthAlert from "../common/NoAuthAlert";
 
 
@@ -20,7 +20,7 @@ class MealFavourite extends Component {
     }
 
     render() {
-        const {meals} = this.props;
+        const {list, totalElements, currentPage, isLoading} = this.props.favourites;
         if (!this.state.isLoggedIn)
             return <NoAuthAlert/>;
 
@@ -30,7 +30,12 @@ class MealFavourite extends Component {
                     <h1 className='header__title'><label>Ulubione posiłki</label></h1>
                 </div>
                 <div className='list'>
-                    <ShowMealList meals={meals} onChange={page => this.props.fetchFavouriteMeals(page - 1, this.state.pageSize)}/>
+                    <ShowMealList
+                        mealsList={list}
+                        totalElements={totalElements}
+                        currentPage={currentPage}
+                        isLoading={isLoading}
+                        onChange={page => this.props.fetchFavouriteMeals(page - 1, this.state.pageSize)}/>
                 </div>
             </div>
         );
@@ -39,7 +44,7 @@ class MealFavourite extends Component {
 
 const mapStateToProps = ({meals}) => {
     return {
-        meals
+        favourites: meals.favourites
     }
 };
 

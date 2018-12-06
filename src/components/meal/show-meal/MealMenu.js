@@ -20,6 +20,26 @@ class MealMenu extends Component {
         this.setState({modalVisible: false})
     };
 
+    modal = () => {
+        return (
+            <Modal
+                title={<label>Ile gram posiłku chcesz dodać do koszyka?</label>}
+                visible={this.state.modalVisible}
+                onOk={this.onSubmit}
+                onCancel={() => this.setState({modalVisible: false})}
+            >
+                <form className='form' onSubmit={this.onSubmit} autoComplete='off'>
+                    <InputNumber
+                        min={0}
+                        autoFocus
+                        value={this.state.amount}
+                        onChange={value => this.setState({amount: value})}
+                    />
+                </form>
+            </Modal>
+        )
+    };
+
     renderWhenUserIsAuthor = () => {
         const {mealId, onDelete} = this.props;
         return (
@@ -31,21 +51,7 @@ class MealMenu extends Component {
                 <DeleteIcon
                     confirmText='Czy na pewno chcesz usunąć ten posiłek ?'
                     onDelete={() => deleteMeal(mealId, onDelete)}/>
-                <Modal
-                    title={<label>Ile gram posiłku chcesz dodać do koszyka?</label>}
-                    visible={this.state.modalVisible}
-                    onOk={this.onSubmit}
-                    onCancel={() => this.setState({modalVisible: false})}
-                >
-                    <form className='form' onSubmit={this.onSubmit} autoComplete='off'>
-                        <InputNumber
-                            min={0}
-                            autoFocus
-                            value={this.state.amount}
-                            onChange={value => this.setState({amount: value})}
-                        />
-                    </form>
-                </Modal>
+                {this.modal()}
             </div>
         )
     };
@@ -55,6 +61,7 @@ class MealMenu extends Component {
             <div className='meal-show__menu'>
                 <HearthIcon mealId={this.props.mealId}/>
                 <AddToCartIcon onClick={() => this.setState({modalVisible: true})}/>
+                {this.modal()}
             </div>
         )
     };

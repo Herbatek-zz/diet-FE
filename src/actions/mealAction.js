@@ -4,6 +4,8 @@ import {
     CREATE_MEAL,
     FETCH_MEAL,
     FETCH_MEALS,
+    FETCH_MEALS_DONE,
+    FETCH_MEALS_FAILED,
     DELETE_MEAL,
     FETCH_MY_MEALS,
     FETCH_FAVOURITE_MEALS,
@@ -12,9 +14,22 @@ import {
     REMOVE_MEAL_FROM_FAVOURITES,
     SEARCH_MEALS,
     EDIT_MEAL,
+    FETCH_MY_MEALS_FAILED,
+    FETCH_MY_MEALS_DONE,
+    FETCH_MEAL_DONE,
+    FETCH_MEAL_FAILED,
+    CREATE_MEAL_DONE,
+    CREATE_MEAL_FAILED,
+    FETCH_FAVOURITE_MEALS_DONE,
+    FETCH_FAVOURITE_MEALS_FAILED,
+    SEARCH_MEALS_DONE,
+    SEARCH_MEALS_FAILED,
+    EDIT_MEAL_FAILED, EDIT_MEAL_DONE,
 } from "./index";
 
-export function createMeal(meal, callback) {
+export const createMeal = (meal) => async dispatch => {
+    await dispatch(createMealStart());
+
     const userId = AuthService.getDecodedToken().sub;
     const token = AuthService.getToken();
 
@@ -24,14 +39,23 @@ export function createMeal(meal, callback) {
     formData.append("description", meal.description);
     formData.append("name", meal.name);
 
-    const requestPost = request.post(`/users/${userId}/meals`, formData, {headers: {'Authorization': `Bearer ${token}`}})
-        .then((response) => callback(response.data.id));
+    await request.post(`/users/${userId}/meals`, formData, {headers: {'Authorization': `Bearer ${token}`}})
+        .then(response => dispatch(createMealDone(response)))
+        .catch(error => dispatch(createMealFailed(error)));
 
-    return {
-        type: CREATE_MEAL,
-        payload: requestPost
-    }
-}
+};
+
+export const createMealStart = () => {
+    return {type: CREATE_MEAL}
+};
+
+export const createMealDone = (data) => {
+    return {type: CREATE_MEAL_DONE, payload: data}
+};
+
+export const createMealFailed = (error) => {
+    return {type: CREATE_MEAL_FAILED, payload: error}
+};
 
 export function deleteMeal(id, callback) {
     const token = AuthService.getToken();
@@ -44,53 +68,108 @@ export function deleteMeal(id, callback) {
     }
 }
 
-export function fetchMeal(id, onErrorDo) {
-    const requestGet = request.get(`/meals/${id}`)
-        .catch(() => onErrorDo());
+export const fetchMeal = (id) => async dispatch => {
+    await dispatch(fetchMealStart());
 
-    return {
-        type: FETCH_MEAL,
-        payload: requestGet
-    }
-}
+    await request.get(`/meals/${id}`)
+        .then(response => dispatch(fetchMealDone(response)))
+        .catch(error => dispatch(fetchMealFailed(error)));
+};
 
-export function fetchMeals(page, pageSize) {
-    const requestGet = request.get(`/meals?page=${page}&size=${pageSize}`);
+export const fetchMealStart = () => {
+    return {type: FETCH_MEAL,}
+};
 
-    return {
-        type: FETCH_MEALS,
-        payload: requestGet
-    }
-}
+export const fetchMealDone = (data) => {
+    return {type: FETCH_MEAL_DONE, payload: data}
+};
 
-export function fetchMyMeals(page, pageSize) {
+export const fetchMealFailed = (error) => {
+    return {type: FETCH_MEAL_FAILED, payload: error}
+};
+
+export const fetchMeals = (page, pageSize) => async dispatch => {
+    await dispatch(fetchMealsStart());
+
+    await request.get(`/meals?page=${page}&size=${pageSize}`)
+        .then(response => dispatch(fetchMealsDone(response)))
+        .catch(error => dispatch(fetchMealsFailed(error)));
+};
+
+export const fetchMealsStart = () => {
+    return {type: FETCH_MEALS}
+};
+
+export const fetchMealsDone = (data) => {
+    return {type: FETCH_MEALS_DONE, payload: data}
+};
+
+export const fetchMealsFailed = (error) => {
+    return {type: FETCH_MEALS_FAILED, payload: error}
+};
+
+
+export const fetchMyMeals = (page, pageSize) => async dispatch => {
+    await dispatch(fetchMyMealsStart());
+
     const userId = AuthService.getDecodedToken().sub;
-    const requestGet = request.get(`/users/${userId}/meals?page=${page}&size=${pageSize}`);
+    await request.get(`/users/${userId}/meals?page=${page}&size=${pageSize}`)
+        .then(response => dispatch(fetchMyMealsDone(response)))
+        .catch(error => dispatch(fetchMyMealsFailed(error)));
+};
 
-    return {
-        type: FETCH_MY_MEALS,
-        payload: requestGet
-    }
-}
+export const fetchMyMealsStart = () => {
+    return {type: FETCH_MY_MEALS}
+};
 
-export function searchMeals(query, page, pageSize) {
-    const requestGet = request.get(`/meals/search?query=${query}&page=${page}&size=${pageSize}`);
+export const fetchMyMealsDone = (data) => {
+    return {type: FETCH_MY_MEALS_DONE, payload: data}
+};
 
-    return {
-        type: SEARCH_MEALS,
-        payload: requestGet
-    }
-}
+export const fetchMyMealsFailed = (error) => {
+    return {type: FETCH_MY_MEALS_FAILED, payload: error}
+};
 
-export function fetchFavouriteMeals(page, pageSize) {
+export const searchMeals = (query, page, pageSize) => async dispatch => {
+    await dispatch(searchMealsStart());
+
+    await request.get(`/meals/search?query=${query}&page=${page}&size=${pageSize}`)
+        .then(response => dispatch(searchMealsDone(response)))
+        .catch(error => dispatch(searchMealsFailed(error)));
+};
+
+export const searchMealsStart = () => {
+    return {type: SEARCH_MEALS}
+};
+
+export const searchMealsDone = (data) => {
+    return {type: SEARCH_MEALS_DONE, payload: data}
+};
+
+export const searchMealsFailed = (error) => {
+    return {type: SEARCH_MEALS_FAILED, payload: error}
+};
+
+export const fetchFavouriteMeals = (page, pageSize) => async dispatch => {
+    await dispatch(fetchFavouriteMealsStart());
+
     const userId = AuthService.getDecodedToken().sub;
-    const requestGet = request.get(`/users/${userId}/meals/favourites?page=${page}&size=${pageSize}`);
+    await request.get(`/users/${userId}/meals/favourites?page=${page}&size=${pageSize}`)
+        .then(response => dispatch(fetchFavouriteMealsDone(response)))
+        .catch(error => dispatch(fetchFavouriteMealsFailed(error)));
+};
 
-    return {
-        type: FETCH_FAVOURITE_MEALS,
-        payload: requestGet
-    }
-}
+export const fetchFavouriteMealsStart = () => {
+    return {type: FETCH_FAVOURITE_MEALS}
+};
+
+export const fetchFavouriteMealsDone = (data) => {
+    return {type: FETCH_FAVOURITE_MEALS_DONE, payload: data}
+};
+
+export const fetchFavouriteMealsFailed = (error) => {
+    return {type: FETCH_FAVOURITE_MEALS_FAILED, payload: error}
+};
 
 export function isFavouriteMeal(mealId) {
     const userId = AuthService.getDecodedToken().sub;
@@ -127,7 +206,9 @@ export function removeMealFromFavourites(mealId, onErrorDo) {
     }
 }
 
-export function editMeal(mealId, update, callback) {
+export const editMeal = (mealId, update) => async dispatch => {
+    await dispatch(editMealStart());
+
     const token = AuthService.getToken();
     const formData = new FormData();
     if (update.image instanceof File)
@@ -153,14 +234,19 @@ export function editMeal(mealId, update, callback) {
         index++;
     }
 
-    const requestPut = request.put(`/meals/${mealId}`, formData, {headers: {'Authorization': `Bearer ${token}`}})
-        .then((response) => {
-            callback();
-            return response;
-        });
+    await request.put(`/meals/${mealId}`, formData, {headers: {'Authorization': `Bearer ${token}`}})
+        .then(response => dispatch(editMealDone(response)))
+        .catch(error => dispatch(editMealFailed(error)));
+};
 
-    return {
-        type: EDIT_MEAL,
-        payload: requestPut
-    }
-}
+export const editMealStart = () => {
+    return {type: EDIT_MEAL}
+};
+
+export const editMealDone = (data) => {
+    return {type: EDIT_MEAL_DONE, payload: data}
+};
+
+export const editMealFailed = (error) => {
+    return {type: EDIT_MEAL_FAILED, payload: error}
+};

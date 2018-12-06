@@ -21,15 +21,23 @@ class MealCreate extends Component {
         this.props.setMenuItem('meal-create');
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.created.isLoading)
+            message.loading("Tworzenie w toku");
+        else if (this.props.created.isError)
+            message.error("Coś poszło nie tak");
+        else if(this.props.created.id && !this.props.created.isLoading && !this.props.created.isError) {
+            message.success('Poprawnie stworzono posiłek');
+            this.props.history.push(`/meals/${this.props.created.id}/add-products`);
+        }
+    }
+
     onSubmit = (values) => {
         if (!this.state.imageFile[0])
             message.error("Musisz wybrać obrazek");
         else {
             values.image = this.state.imageFile[0];
-            this.props.createMeal(values, (mealId) => {
-                this.props.history.push(`/meals/${mealId}/add-products`);
-                message.success('Poprawnie stworzono posiłek');
-            });
+            this.props.createMeal(values);
         }
     };
 
@@ -104,9 +112,13 @@ function validate({name, description, recipe}) {
     return errors;
 }
 
+const mapStateToPros = ({meals}) => {
+  return {created: meals.created}
+};
+
 export default reduxForm({
     validate,
     form: 'MealNewForm'
 })(
-    connect(null, {createMeal, setMenuItem})(MealCreate)
+    connect(mapStateToPros, {createMeal, setMenuItem})(MealCreate)
 );

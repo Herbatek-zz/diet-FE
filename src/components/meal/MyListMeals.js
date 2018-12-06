@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 
 import {fetchMyMeals, setMenuItem} from "../../actions";
 import AuthService from "../../helpers/auth_service";
-import ShowMealList from "../common/show_meal_list";
+import ShowMealList from "../common/ShowMealList";
 import NoAuthAlert from "../common/NoAuthAlert";
 
 
@@ -21,7 +21,7 @@ class MealMyList extends Component {
     }
 
     render() {
-        const {meals} = this.props;
+        const {list, totalElements, currentPage, isLoading} = this.props.myMeals;
 
         if (!this.state.isLoggedIn)
             return <NoAuthAlert/>;
@@ -32,7 +32,12 @@ class MealMyList extends Component {
                     <h1 className='header__title'><label>Moje posiłki</label></h1>
                 </div>
                 <div className='list'>
-                    <ShowMealList meals={meals} onChange={page => this.props.fetchMyMeals(page - 1, this.state.pageSize)}/>
+                    <ShowMealList
+                        mealsList={list}
+                        totalElements={totalElements}
+                        currentPage={currentPage}
+                        isLoading={isLoading}
+                        onChange={page => this.props.fetchMyMeals(page - 1, this.state.pageSize)}/>
                 </div>
             </div>
         );
@@ -41,7 +46,7 @@ class MealMyList extends Component {
 
 const mapStateToProps = ({meals}) => {
     return {
-        meals
+        myMeals: meals.myMeals
     }
 };
 

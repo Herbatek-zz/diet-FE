@@ -14,7 +14,8 @@ import NoAuthAlert from "../common/NoAuthAlert";
 class ProductCreate extends Component {
     state = {
         isLoggedIn: AuthService.isLogged(),
-        imageFile: []
+        imageFile: [],
+        sent: false
     };
 
     componentWillMount() {
@@ -29,36 +30,26 @@ class ProductCreate extends Component {
         });
     }
 
-    // NEEED TOOOO FIX IT SOMEHOW !
-    componentDidMount() {
-        console.log(this.props.created)
-        if (this.props.created.isLoading) {
-            message.loading("Tworzenie w toku");
-            console.log("w submit --- loading");
-        }
-        else if (this.props.created.isError) {
-            message.error("Coś poszło nie tak");
-            console.log("w submit --- error");
-        }
-        else if(this.props.created.product){
-            console.log("w submit --- success");
-            message.success('Poprawnie stworzono posiłek');
-            this.props.reset();
-            this.setState({imageFile: []});
-        }
-    }
-
-    onSubmit = async (values) => {
-        console.log("w submit --- start");
+    onSubmit = (values) => {
         if (!this.state.imageFile[0])
             message.error("Musisz wybrać obrazek");
         else {
-            console.log("w submit --- before create");
             values.image = this.state.imageFile[0];
-            await this.props.createProduct(values);
-            console.log("w submit --- after create");
+            this.props.createProduct(values);
+            this.setState({sent: true})
         }
     };
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.state.sent && this.props.created.isLoading)
+            message.loading("Tworzenie w toku");
+        else if (this.state.sent && this.props.created.isError)
+            message.error("Coś poszło nie tak");
+        else if(this.state.sent && this.props.created.id && !this.props.created.isLoading && !this.props.created.isError) {
+            message.success('Poprawnie stworzono posiłek');
+            this.props.history.push(`/products/${this.props.created.id}`);
+        }
+    }
 
     render() {
         if (!this.state.isLoggedIn)
@@ -125,7 +116,7 @@ class ProductCreate extends Component {
                                 step={1}
                                 label='Kalorie'/>
                         </div>
-                        <Button className='form__button' type="primary" ghost htmlType='submit'>Zatwierdź</Button>
+                        <Button className='form__button' type="primary" ghost htmlType='submit' loading={this.props.created.isLoading}>Zatwierdź</Button>
                     </form>
                 </div>
             </div>
@@ -196,9 +187,7 @@ function validate({name, description, protein, carbohydrate, fat, fibre, kcal}) 
 }
 
 const mapStateToProps = (state) => {
-    return {
-        created: state.products.created
-    };
+    return {created: state.products.created};
 };
 
 export default reduxForm({

@@ -4,7 +4,7 @@ import {Input} from 'antd';
 
 import {fetchMeals, searchMeals, setMenuItem} from "../../actions";
 import '../common/list.css';
-import ShowMealList from "../common/show_meal_list";
+import ShowMealList from "../common/ShowMealList";
 
 
 class MealList extends Component {
@@ -27,6 +27,7 @@ class MealList extends Component {
     render() {
         const {Search} = Input;
         const {searchValue, pageSize} = this.state;
+        const {list, totalElements, currentPage, isLoading} = this.props.allMeals;
 
         return (
             <div className='content__list'>
@@ -36,9 +37,7 @@ class MealList extends Component {
                         placeholder="Wyszukaj posiłek"
                         onSearch={value => {
                             this.props.searchMeals(value, 0, pageSize);
-                            this.setState({
-                                searched: true
-                            });
+                            this.setState({searched: true});
                         }}
                         onChange={e => this.setState({searchValue: e.target.value})}
                         value={searchValue}
@@ -47,7 +46,12 @@ class MealList extends Component {
                     />
                 </div>
                 <div className='list'>
-                    <ShowMealList meals={this.props.meals} onChange={this.onChange}/>
+                    <ShowMealList
+                        mealsList={list}
+                        totalElements={totalElements}
+                        currentPage={currentPage}
+                        isLoading={isLoading}
+                        onChange={this.onChange}/>
                 </div>
             </div>
         );
@@ -56,7 +60,7 @@ class MealList extends Component {
 
 const mapStateToProps = ({meals}) => {
     return {
-        meals
+        allMeals: meals.allMeals
     }
 };
 

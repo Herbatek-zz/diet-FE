@@ -20,7 +20,7 @@ class UserShow extends Component {
 
     componentDidMount() {
         this.props.setMenuItem('');
-        if (!this.state.isLoggedIn)
+        if (this.state.isLoggedIn)
             this.props.fetchUser(this.state.productId);
     }
 

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Field, reduxForm} from 'redux-form';
 import {connect} from 'react-redux';
-import {Button, Icon, message, Upload} from 'antd';
+import {Button, Icon, message, Upload, Spin, Alert} from 'antd';
 import {TextField, TextAreaField, NumberField} from 'redux-form-antd';
 
 import AuthService from '../../helpers/auth_service';
@@ -14,100 +14,122 @@ class ProductEdit extends Component {
     state = {
         isLoggedIn: AuthService.isLogged(),
         productId: this.props.match.params.id,
-        imageFile: []
+        imageFile: [],
+        loaded: false,
+        sent: false
     };
 
     componentDidMount() {
         this.props.setMenuItem('-');
         if (this.state.isLoggedIn)
-            this.props.fetchProduct(this.state.productId)
-                .then(() => {
-                    const {product} = this.props;
-                    this.props.initialize({
-                        name: product.name,
-                        description: product.description,
-                        protein: product.protein,
-                        carbohydrate: product.carbohydrate,
-                        fat: product.fat,
-                        fibre: product.fibre,
-                        kcal: product.kcal
-                    });
-                })
+            this.props.fetchProduct(this.state.productId);
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        const {product} = this.props;
+        if (!this.state.loaded && product.id && !product.isError && !product.isLoading) {
+            this.setState({loaded: true});
+            this.props.initialize({
+                name: product.name,
+                description: product.description,
+                protein: product.protein,
+                carbohydrate: product.carbohydrate,
+                fat: product.fat,
+                fibre: product.fibre,
+                kcal: product.kcal
+            });
+        }
+        if (this.state.sent && product.isLoading)
+            message.loading("Zapisywanie w toku");
+        else if (this.state.sent && product.isError)
+            message.error("Coś poszło nie tak");
+        else if (this.state.sent && !product.isLoading && !product.isError) {
+            message.success('Poprawnie edytowano produkt');
+            this.props.history.push(`/products/${this.state.productId}`);
+        }
     }
 
     onSubmit = (values) => {
         values.image = this.state.imageFile[0];
-        this.props.editProduct(this.state.productId, values, () => {
-            this.props.history.push(`/products/${this.state.productId}`);
-            message.success('Poprawnie edytowano produkt');
-        });
+        this.props.editProduct(this.state.productId, values);
+        this.setState({sent: true});
     };
 
     render() {
         if (!this.state.isLoggedIn)
             return <NoAuthAlert/>;
+        if (this.props.product.isError)
+            return <Alert
+                message="Błąd"
+                style={{width: '80%', marginTop: '1%'}}
+                description="Niestety nie udało nam się znaleźć tego produktu."
+                type="error"
+                showIcon
+            />;
 
         return (
             <div className='form-container'>
                 <div className='form-container__wrapper'>
                     <h1 className='form-container__title'><label>Edytuj produkt</label></h1>
-                    <form onSubmit={this.props.handleSubmit(this.onSubmit)} className='form' autoComplete='off'>
-                        <Field
-                            name='name'
-                            component={TextField}
-                            addonBefore={<label>Nazwa</label>}
-                            placeholder='Nazwa'/>
-                        <Field
-                            name='description'
-                            rows={4}
-                            component={TextAreaField}
-                            placeholder='Opis'/>
-                        <Upload
-                            name='image'
-                            className='form__upload-btn'
-                            action={(image) => {
-                                this.setState({imageFile: [image]});
-                                this.event.preventDefault();
-                            }}
-                            onRemove={() => this.setState({imageFile: []})}
-                            fileList={this.state.imageFile}
-                            showUploadList={true}
-                            accept='.jpg, .jpeg, .png' supportServerRender={true}>
-                            <Button htmlType='button'>
-                                <Icon type="upload"/> Wczytaj zdjęcie
-                            </Button>
-                        </Upload>
+                    <Spin tip='Ładowanie' spinning={this.props.product.isLoading}>
+                        <form onSubmit={this.props.handleSubmit(this.onSubmit)} className='form' autoComplete='off'>
+                            <Field
+                                name='name'
+                                component={TextField}
+                                addonBefore={<label>Nazwa</label>}
+                                placeholder='Nazwa'/>
+                            <Field
+                                name='description'
+                                rows={4}
+                                component={TextAreaField}
+                                placeholder='Opis'/>
+                            <Upload
+                                name='image'
+                                className='form__upload-btn'
+                                action={(image) => {
+                                    this.setState({imageFile: [image]});
+                                    this.event.preventDefault();
+                                }}
+                                onRemove={() => this.setState({imageFile: []})}
+                                fileList={this.state.imageFile}
+                                showUploadList={true}
+                                accept='.jpg, .jpeg, .png' supportServerRender={true}>
+                                <Button htmlType='button'>
+                                    <Icon type="upload"/> Wczytaj zdjęcie
+                                </Button>
+                            </Upload>
 
-                        <div>
-                            <label>Makroskładniki oraz pozostałe informacje w <b>100g</b> produktu</label>
-                            <Field
-                                name='protein'
-                                component={NumberField}
-                                step={0.1}
-                                label='Białko'/>
-                            <Field
-                                name='carbohydrate'
-                                component={NumberField}
-                                step={0.1}
-                                label='Węglowodany'/>
-                            <Field
-                                name='fat'
-                                component={NumberField}
-                                step={0.1}
-                                label='Tłuszcz'/>
-                            <Field
-                                name='fibre'
-                                component={NumberField}
-                                step={0.1}
-                                label='Błonnik'/>
-                            <Field
-                                name='kcal'
-                                component={NumberField}
-                                step={1}
-                                label='Kalorie'/>
-                        </div>
-                        <Button className='form__button' type="primary" ghost htmlType='submit'>Zatwierdź</Button>
-                    </form>
+                            <div>
+                                <label>Makroskładniki oraz pozostałe informacje w <b>100g</b> produktu</label>
+                                <Field
+                                    name='protein'
+                                    component={NumberField}
+                                    step={0.1}
+                                    label='Białko'/>
+                                <Field
+                                    name='carbohydrate'
+                                    component={NumberField}
+                                    step={0.1}
+                                    label='Węglowodany'/>
+                                <Field
+                                    name='fat'
+                                    component={NumberField}
+                                    step={0.1}
+                                    label='Tłuszcz'/>
+                                <Field
+                                    name='fibre'
+                                    component={NumberField}
+                                    step={0.1}
+                                    label='Błonnik'/>
+                                <Field
+                                    name='kcal'
+                                    component={NumberField}
+                                    step={1}
+                                    label='Kalorie'/>
+                            </div>
+                            <Button className='form__button' type="primary" ghost htmlType='submit'>Zatwierdź</Button>
+                        </form>
+                    </Spin>
                 </div>
             </div>
         )
@@ -176,10 +198,8 @@ function validate({name, description, protein, carbohydrate, fat, fibre, kcal}) 
     return errors;
 }
 
-const mapStateToProps = ({products}, ownProps) => {
-    return {
-        product: products.content[ownProps.match.params.id]
-    }
+const mapStateToProps = ({products}) => {
+    return {product: products.selectedProduct,}
 };
 
 export default reduxForm({

@@ -6,16 +6,28 @@ import {
     CREATE_PRODUCT_FAILED,
     FETCH_PRODUCT,
     FETCH_PRODUCTS,
+    FETCH_PRODUCTS_DONE,
+    FETCH_PRODUCTS_FAILED,
     DELETE_PRODUCT,
     FETCH_MY_PRODUCTS,
     SEARCH_PRODUCTS,
     FETCH_PRODUCTS_INFINITY,
     SEARCH_PRODUCTS_INFINITY,
     EDIT_PRODUCT,
+    FETCH_MY_PRODUCTS_FAILED,
+    FETCH_MY_PRODUCTS_DONE,
+    FETCH_PRODUCT_FAILED,
+    FETCH_PRODUCT_DONE,
+    SEARCH_PRODUCTS_DONE,
+    SEARCH_PRODUCTS_FAILED,
+    EDIT_PRODUCT_DONE,
+    EDIT_PRODUCT_FAILED,
+    SEARCH_PRODUCTS_INFINITY_FAILED,
+    SEARCH_PRODUCTS_INFINITY_DONE, FETCH_PRODUCTS_INFINITY_DONE, FETCH_PRODUCTS_INFINITY_FAILED,
 } from "./index";
 
-export const createProduct = (product) => dispatch => {
-    dispatch(createProductStart());
+export const createProduct = (product) => async dispatch => {
+    await dispatch(createProductStart());
 
     const userId = AuthService.getDecodedToken().sub;
     const token = AuthService.getToken();
@@ -30,43 +42,43 @@ export const createProduct = (product) => dispatch => {
     formData.append("fibre", product.fibre);
     formData.append("kcal", product.kcal);
 
-    request.post(`/users/${userId}/products`, formData, {headers: {'Authorization': `Bearer ${token}`}})
+    await request.post(`/users/${userId}/products`, formData, {headers: {'Authorization': `Bearer ${token}`}})
         .then(response => dispatch(createProductDone(response)))
         .catch(error => dispatch(createProductFailed(error)));
 };
 
 export const createProductStart = () => {
-    return {
-        type: CREATE_PRODUCT
-    };
+    return {type: CREATE_PRODUCT};
 };
 
-export function createProductDone(data) {
-    return {
-        type: CREATE_PRODUCT_DONE,
-        payload: data
-    };
-}
+export const createProductDone = (data) => {
+    return {type: CREATE_PRODUCT_DONE, payload: data};
+};
 
-export function createProductFailed(error) {
-    return {
-        type: CREATE_PRODUCT_FAILED,
-        payload: error
-    };
-}
-
-///////////////////////////////////////////////////////////////////////////////
+export const createProductFailed = (error) => {
+    return {type: CREATE_PRODUCT_FAILED, payload: error};
+};
 
 
-export function fetchProduct(id, onErrorDo) {
-    const requestGet = request.get(`/products/${id}`)
-        .catch(e => onErrorDo());
+export const fetchProduct = (id) => dispatch => {
+    dispatch(fetchProductStart());
 
-    return {
-        type: FETCH_PRODUCT,
-        payload: requestGet
-    }
-}
+    request.get(`/products/${id}`)
+        .then(response => dispatch(fetchProductDone(response)))
+        .catch(error => dispatch(fetchProductFailed(error)));
+};
+
+export const fetchProductStart = () => {
+    return {type: FETCH_PRODUCT}
+};
+
+export const fetchProductDone = (data) => {
+    return {type: FETCH_PRODUCT_DONE, payload: data}
+};
+
+export const fetchProductFailed = (error) => {
+    return {type: FETCH_PRODUCT_FAILED, payload: error}
+};
 
 export function deleteProduct(id, callback) {
     const token = AuthService.getToken();
@@ -79,53 +91,115 @@ export function deleteProduct(id, callback) {
     }
 }
 
-export function fetchProducts(page, pageSize) {
-    const requestGet = request.get(`/products?page=${page}&size=${pageSize}`);
+export const fetchProducts = (page, pageSize) => dispatch => {
+    dispatch(fetchProductsStart());
+    request.get(`/products?page=${page}&size=${pageSize}`)
+        .then(response => dispatch(fetchProductsDone(response)))
+        .catch(error => dispatch(fetchProductsFailed(error)));
+};
 
+export const fetchProductsStart = () => {
+    return {type: FETCH_PRODUCTS};
+};
+
+export const fetchProductsDone = (data) => {
     return {
-        type: FETCH_PRODUCTS,
-        payload: requestGet
+        type: FETCH_PRODUCTS_DONE,
+        payload: data
     }
-}
+};
 
-export function fetchProductsInfinity(page, pageSize) {
-    const requestGet = request.get(`/products?page=${page}&size=${pageSize}`);
-
+export const fetchProductsFailed = (error) => {
     return {
-        type: FETCH_PRODUCTS_INFINITY,
-        payload: requestGet
+        type: FETCH_PRODUCTS_FAILED,
+        payload: error
     }
-}
+};
 
-export function fetchMyProducts(page, pageSize) {
+export const fetchProductsInfinity = (page, pageSize) => dispatch => {
+    dispatch(fetchProductsInfinityStart());
+    request.get(`/products?page=${page}&size=${pageSize}`)
+        .then(response => dispatch(fetchProductsInfinityDone(response)))
+        .catch(error => dispatch(fetchProductsInfinityFailed(error)));
+};
+
+export const fetchProductsInfinityStart = () => {
+    return {type: FETCH_PRODUCTS_INFINITY}
+};
+
+export const fetchProductsInfinityDone = (data) => {
+    return {type: FETCH_PRODUCTS_INFINITY_DONE, payload: data}
+};
+
+export const fetchProductsInfinityFailed = (error) => {
+    return {type: FETCH_PRODUCTS_INFINITY_FAILED, payload: error}
+};
+
+export const fetchMyProducts = (page, pageSize) => dispatch => {
+    dispatch(fetchMyProductsStart());
+
     const userId = AuthService.getDecodedToken().sub;
-    const requestGet = request.get(`/users/${userId}/products?page=${page}&size=${pageSize}`);
+    request.get(`/users/${userId}/products?page=${page}&size=${pageSize}`)
+        .then(response => dispatch(fetchMyProductsDone(response)))
+        .catch(error => dispatch(fetchMyProductsFailed(error)));
+};
 
-    return {
-        type: FETCH_MY_PRODUCTS,
-        payload: requestGet
-    }
-}
+export const fetchMyProductsStart = () => {
+    return {type: FETCH_MY_PRODUCTS}
+};
 
-export function searchProducts(query, page, pageSize) {
-    const requestGet = request.get(`/products/search?query=${query}&page=${page}&size=${pageSize}`);
+export const fetchMyProductsDone = (data) => {
+    return {type: FETCH_MY_PRODUCTS_DONE, payload: data}
+};
 
-    return {
-        type: SEARCH_PRODUCTS,
-        payload: requestGet
-    }
-}
+export const fetchMyProductsFailed = (error) => {
+    return {type: FETCH_MY_PRODUCTS_FAILED, payload: error}
+};
 
-export function searchProductsInfinity(query, page, pageSize) {
-    const requestGet = request.get(`/products/search?query=${query}&page=${page}&size=${pageSize}`);
 
-    return {
-        type: SEARCH_PRODUCTS_INFINITY,
-        payload: requestGet
-    }
-}
+export const searchProducts = (query, page, pageSize) => dispatch => {
+    dispatch(searchProductsStart());
 
-export function editProduct(productId, update, callback) {
+    request.get(`/products/search?query=${query}&page=${page}&size=${pageSize}`)
+        .then(response => dispatch(searchProductsDone(response)))
+        .catch(error => dispatch(searchProductsFailed(error)));
+};
+
+export const searchProductsStart = () => {
+    return {type: SEARCH_PRODUCTS}
+};
+
+export const searchProductsDone = (data) => {
+    return {type: SEARCH_PRODUCTS_DONE, payload: data}
+};
+
+export const searchProductsFailed = (error) => {
+    return {type: SEARCH_PRODUCTS_FAILED, payload: error}
+};
+
+
+export const searchProductsInfinity = (query, page, pageSize) => dispatch => {
+    dispatch(searchProductsInfinityStart());
+
+    request.get(`/products/search?query=${query}&page=${page}&size=${pageSize}`)
+        .then(response => dispatch(searchProductsInfinityDone(response)))
+        .catch(error => dispatch(searchProductsInfinityFailed(error)));
+};
+
+export const searchProductsInfinityStart = () => {
+    return {type: SEARCH_PRODUCTS_INFINITY}
+};
+
+export const searchProductsInfinityDone = (data) => {
+    return {type: SEARCH_PRODUCTS_INFINITY_DONE, payload: data}
+};
+
+export const searchProductsInfinityFailed = (error) => {
+    return {type: SEARCH_PRODUCTS_INFINITY_FAILED, payload: error}
+};
+
+export const editProduct = (productId, update) => async dispatch => {
+    await dispatch(editProductStart());
     const token = AuthService.getToken();
 
     const formData = new FormData();
@@ -139,14 +213,19 @@ export function editProduct(productId, update, callback) {
     formData.append("fibre", update.fibre);
     formData.append("kcal", update.kcal);
 
-    const requestPut = request.put(`/products/${productId}`, formData, {headers: {'Authorization': `Bearer ${token}`}})
-        .then((response) => {
-            callback();
-            return response;
-        });
+    await request.put(`/products/${productId}`, formData, {headers: {'Authorization': `Bearer ${token}`}})
+        .then(response => dispatch(editProductDone(response)))
+        .catch(error => dispatch(editProductFailed(error)));
+};
 
-    return {
-        type: EDIT_PRODUCT,
-        payload: requestPut
-    }
-}
+export const editProductStart = () => {
+    return {type: EDIT_PRODUCT,}
+};
+
+export const editProductDone = (data) => {
+    return {type: EDIT_PRODUCT_DONE, payload: data}
+};
+
+export const editProductFailed = (error) => {
+    return {type: EDIT_PRODUCT_FAILED, payload: error}
+};

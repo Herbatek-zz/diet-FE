@@ -3,7 +3,6 @@ import {Field, reduxForm} from 'redux-form';
 import {connect} from 'react-redux';
 import {Button, Icon, message, Upload} from 'antd';
 import {TextField, TextAreaField} from 'redux-form-antd';
-import {Redirect} from "react-router-dom";
 
 import AuthService from '../../helpers/auth_service';
 import {fetchMeal, editMeal, setMenuItem} from "../../actions";
@@ -13,10 +12,10 @@ import NoAuthAlert from "../common/NoAuthAlert";
 
 class MealEdit extends Component {
     state = {
+        sent: false,
         isLoggedIn: AuthService.isLogged(),
         mealId: this.props.match.params.id,
-        imageFile: [],
-        redirect: false
+        imageFile: []
     };
 
     componentDidMount() {
@@ -34,19 +33,27 @@ class MealEdit extends Component {
                 })
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        const {meal} = this.props;
+        if (this.state.sent && meal.isLoading)
+            message.loading("Zapisywanie w toku");
+        else if (this.state.sent && meal.isError)
+            message.error("Coś poszło nie tak");
+        else if (this.state.sent && !meal.isLoading && !meal.isError) {
+            message.success('Poprawnie edytowano produkt');
+            this.props.history.push(`/meals/${this.state.mealId}`);
+        }
+    }
+
     onSubmit = (values) => {
         values.image = this.state.imageFile[0];
-        this.props.editMeal(this.state.mealId, values, () => {
-            this.setState({redirect: true});
-            message.success('Poprawnie edytowano posiłek');
-        });
+        this.props.editMeal(this.state.mealId, values);
+        this.setState({sent: true});
     };
 
     render() {
         if (!this.state.isLoggedIn)
             return <NoAuthAlert/>;
-        if (this.state.redirect)
-            return <Redirect to={`/meals/${this.state.mealId}`}/>;
 
         return (
             <div className='form-container'>
@@ -114,9 +121,9 @@ function validate({name, description, recipe}) {
     return errors;
 }
 
-const mapStateToProps = ({meals}, ownProps) => {
+const mapStateToProps = ({meals}) => {
     return {
-        meal: meals.content[ownProps.match.params.id]
+        meal: meals.selectedMeal
     }
 };
 
