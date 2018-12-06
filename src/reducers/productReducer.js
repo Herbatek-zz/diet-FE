@@ -26,7 +26,7 @@ import {
 } from "../actions";
 
 
-export default (state = {allProducts: {list: {}}, myProducts: {list: {}}, created: {}, selectedProduct: {}}, action) => {
+export default (state = {allProducts: {list: {}}, myProducts: {list: {}}, created: {}}, action) => {
     switch (action.type) {
 
         case CREATE_PRODUCT: {

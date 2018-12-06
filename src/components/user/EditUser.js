@@ -218,9 +218,9 @@ const mapStateToProps = ({user}) => {
     }
 };
 
-export default reduxForm({
+const formWrapped = reduxForm({
     validate,
-    form: 'UserEditForm'
-})(
-    connect(mapStateToProps, {fetchUser, editUser, setMenuItem, fetchUserFromCookie})(UserEdit)
-);
+    form: 'EditUserForm'
+})(UserEdit);
+
+export default connect(mapStateToProps, {fetchUser, editUser, setMenuItem, fetchUserFromCookie})(formWrapped);

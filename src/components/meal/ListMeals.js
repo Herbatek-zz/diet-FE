@@ -32,7 +32,7 @@ class MealList extends Component {
         return (
             <div className='content__list'>
                 <div className='header'>
-                    <h1 className='header__title'><label>Lista posiłków</label></h1>
+                    <h1><label>Lista posiłków</label></h1>
                     <Search
                         placeholder="Wyszukaj posiłek"
                         onSearch={value => {

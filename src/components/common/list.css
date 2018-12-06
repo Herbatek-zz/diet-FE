@@ -11,11 +11,6 @@
     width: 96%;
 }
 
-.header__title {
-    font-weight: bold;
-    text-decoration: underline;
-}
-
 .list {
     margin: 20px 0;
 }

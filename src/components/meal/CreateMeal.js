@@ -14,7 +14,8 @@ import NoAuthAlert from './../common/NoAuthAlert';
 class MealCreate extends Component {
     state = {
         isLoggedIn: AuthService.isLogged(),
-        imageFile: []
+        imageFile: [],
+        sent: false
     };
 
     componentDidMount() {
@@ -26,7 +27,7 @@ class MealCreate extends Component {
             message.loading("Tworzenie w toku");
         else if (this.props.created.isError)
             message.error("Coś poszło nie tak");
-        else if(this.props.created.id && !this.props.created.isLoading && !this.props.created.isError) {
+        else if (this.state.sent && this.props.created.id && !this.props.created.isLoading && !this.props.created.isError) {
             message.success('Poprawnie stworzono posiłek');
             this.props.history.push(`/meals/${this.props.created.id}/add-products`);
         }
@@ -38,6 +39,7 @@ class MealCreate extends Component {
         else {
             values.image = this.state.imageFile[0];
             this.props.createMeal(values);
+            this.setState({sent: true})
         }
     };
 
@@ -113,12 +115,12 @@ function validate({name, description, recipe}) {
 }
 
 const mapStateToPros = ({meals}) => {
-  return {created: meals.created}
+    return {created: meals.created}
 };
 
-export default reduxForm({
+const wrappedForm = reduxForm({
     validate,
-    form: 'MealNewForm'
-})(
-    connect(mapStateToPros, {createMeal, setMenuItem})(MealCreate)
-);
+    form: 'CreateMealForm'
+})(MealCreate);
+
+export default connect(mapStateToPros, {createMeal, setMenuItem})(wrappedForm);

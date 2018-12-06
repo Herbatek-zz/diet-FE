@@ -28,13 +28,7 @@ import {
 } from "../actions";
 
 
-export default (state = {
-    allMeals: {list: {}},
-    myMeals: {list: {}},
-    selectedMeal: {},
-    created: {},
-    favourites: {list: {}}
-}, action) => {
+export default (state = {allMeals: {list: {}}, myMeals: {list: {}}, created: {}, favourites: {list: {}}}, action) => {
     switch (action.type) {
 
         case FETCH_MEALS: {

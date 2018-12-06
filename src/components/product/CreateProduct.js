@@ -18,7 +18,7 @@ class ProductCreate extends Component {
         sent: false
     };
 
-    componentWillMount() {
+    componentDidMount() {
         this.props.setMenuItem('product-create');
 
         this.props.initialize({
@@ -30,9 +30,21 @@ class ProductCreate extends Component {
         });
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        const {created} = this.props;
+        if (created.isLoading)
+            message.loading('Zapisywanie produktu...', 0.7);
+        else if (this.state.sent && created.isError)
+            message.error('Podczas zapisywania produktu wystąpił błąd.', 1.2);
+        else if (this.state.sent && !created.isLoading && !created.isError) {
+            message.success('Produkt został stworzony.', 1);
+            this.props.history.push(`/products/${created.id}`);
+        }
+    }
+
     onSubmit = (values) => {
         if (!this.state.imageFile[0])
-            message.error("Musisz wybrać obrazek");
+            message.error('Musisz wybrać obrazek.');
         else {
             values.image = this.state.imageFile[0];
             this.props.createProduct(values);
@@ -40,18 +52,8 @@ class ProductCreate extends Component {
         }
     };
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.state.sent && this.props.created.isLoading)
-            message.loading("Tworzenie w toku");
-        else if (this.state.sent && this.props.created.isError)
-            message.error("Coś poszło nie tak");
-        else if(this.state.sent && this.props.created.id && !this.props.created.isLoading && !this.props.created.isError) {
-            message.success('Poprawnie stworzono posiłek');
-            this.props.history.push(`/products/${this.props.created.id}`);
-        }
-    }
-
     render() {
+        const {handleSubmit, created} = this.props;
         if (!this.state.isLoggedIn)
             return <NoAuthAlert/>;
 
@@ -59,35 +61,32 @@ class ProductCreate extends Component {
             <div className='form-container'>
                 <div className='form-container__wrapper'>
                     <h1 className='form-container__title'><label>Dodaj produkt</label></h1>
-                    <form onSubmit={this.props.handleSubmit(this.onSubmit)} autoComplete='off' className='form'>
+                    <form className='form' onSubmit={handleSubmit(this.onSubmit)} autoComplete='off'>
                         <Field
                             name='name'
                             component={TextField}
                             addonBefore={<label>Nazwa</label>}
                             placeholder='Nazwa'/>
                         <Field
+                            label='Opis'
                             name='description'
                             rows={4}
                             component={TextAreaField}
                             placeholder='Opis'/>
                         <Upload
-                            customRequest={({file, onSuccess}) => {
-                                setTimeout(() => {
-                                    onSuccess("ok");
-                                }, 0);
-                            }}
-                            name='image'
                             className='form__upload-btn'
+                            customRequest={({file, onSuccess}) => setTimeout(() => onSuccess("ok"), 0)}
+                            name='image'
                             action={(image) => this.setState({imageFile: [image]})}
                             onRemove={() => this.setState({imageFile: []})}
                             fileList={this.state.imageFile}
                             showUploadList={true}
-                            accept='.jpg, .jpeg, .png' supportServerRender={true}>
+                            accept='.jpg, .jpeg, .png'
+                            supportServerRender={true}>
                             <Button htmlType='button'>
                                 <Icon type="upload"/> Wczytaj zdjęcie
                             </Button>
                         </Upload>
-
                         <div>
                             <label>Makroskładniki oraz pozostałe informacje w <b>100g</b> produktu</label>
                             <Field
@@ -116,7 +115,9 @@ class ProductCreate extends Component {
                                 step={1}
                                 label='Kalorie'/>
                         </div>
-                        <Button className='form__button' type="primary" ghost htmlType='submit' loading={this.props.created.isLoading}>Zatwierdź</Button>
+                        <Button className='form__button' type="primary" ghost htmlType='submit' loading={created.isLoading}>
+                            Zatwierdź
+                        </Button>
                     </form>
                 </div>
             </div>
@@ -190,9 +191,9 @@ const mapStateToProps = (state) => {
     return {created: state.products.created};
 };
 
-export default reduxForm({
+const formWrapped = reduxForm({
     validate,
-    form: 'ProductNewForm'
-})(
-    connect(mapStateToProps, {createProduct, setMenuItem})(ProductCreate)
-);
+    form: 'CreateProductForm'
+})(ProductCreate);
+
+export default connect(mapStateToProps, {createProduct, setMenuItem})(formWrapped);

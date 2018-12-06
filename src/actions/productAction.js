@@ -27,7 +27,7 @@ import {
 } from "./index";
 
 export const createProduct = (product) => async dispatch => {
-    await dispatch(createProductStart());
+    dispatch(createProductStart());
 
     const userId = AuthService.getDecodedToken().sub;
     const token = AuthService.getToken();
@@ -42,9 +42,14 @@ export const createProduct = (product) => async dispatch => {
     formData.append("fibre", product.fibre);
     formData.append("kcal", product.kcal);
 
-    await request.post(`/users/${userId}/products`, formData, {headers: {'Authorization': `Bearer ${token}`}})
-        .then(response => dispatch(createProductDone(response)))
-        .catch(error => dispatch(createProductFailed(error)));
+    try {
+        const response = await request.post(`/users/${userId}/products`, formData, {
+            headers: {'Authorization': `Bearer ${token}`}
+        });
+        dispatch(createProductDone(response));
+    } catch (error) {
+        dispatch(createProductFailed(error))
+    }
 };
 
 export const createProductStart = () => {
@@ -60,12 +65,15 @@ export const createProductFailed = (error) => {
 };
 
 
-export const fetchProduct = (id) => dispatch => {
+export const fetchProduct = (id) => async dispatch => {
     dispatch(fetchProductStart());
 
-    request.get(`/products/${id}`)
-        .then(response => dispatch(fetchProductDone(response)))
-        .catch(error => dispatch(fetchProductFailed(error)));
+    try {
+        const response = await request.get(`/products/${id}`);
+        dispatch(fetchProductDone(response));
+    } catch (error) {
+        dispatch(fetchProductFailed(error))
+    }
 };
 
 export const fetchProductStart = () => {
@@ -91,11 +99,14 @@ export function deleteProduct(id, callback) {
     }
 }
 
-export const fetchProducts = (page, pageSize) => dispatch => {
+export const fetchProducts = (page, pageSize) => async dispatch => {
     dispatch(fetchProductsStart());
-    request.get(`/products?page=${page}&size=${pageSize}`)
-        .then(response => dispatch(fetchProductsDone(response)))
-        .catch(error => dispatch(fetchProductsFailed(error)));
+    try {
+        const response = await request.get(`/products?page=${page}&size=${pageSize}`);
+        dispatch(fetchProductsDone(response));
+    } catch (error) {
+        dispatch(fetchProductsFailed(error))
+    }
 };
 
 export const fetchProductsStart = () => {
@@ -116,11 +127,14 @@ export const fetchProductsFailed = (error) => {
     }
 };
 
-export const fetchProductsInfinity = (page, pageSize) => dispatch => {
+export const fetchProductsInfinity = (page, pageSize) => async dispatch => {
     dispatch(fetchProductsInfinityStart());
-    request.get(`/products?page=${page}&size=${pageSize}`)
-        .then(response => dispatch(fetchProductsInfinityDone(response)))
-        .catch(error => dispatch(fetchProductsInfinityFailed(error)));
+    try {
+        const response = await request.get(`/products?page=${page}&size=${pageSize}`);
+        dispatch(fetchProductsInfinityDone(response));
+    } catch (error) {
+        dispatch(fetchProductsInfinityFailed(error));
+    }
 };
 
 export const fetchProductsInfinityStart = () => {
@@ -135,13 +149,16 @@ export const fetchProductsInfinityFailed = (error) => {
     return {type: FETCH_PRODUCTS_INFINITY_FAILED, payload: error}
 };
 
-export const fetchMyProducts = (page, pageSize) => dispatch => {
+export const fetchMyProducts = (page, pageSize) => async dispatch => {
     dispatch(fetchMyProductsStart());
 
     const userId = AuthService.getDecodedToken().sub;
-    request.get(`/users/${userId}/products?page=${page}&size=${pageSize}`)
-        .then(response => dispatch(fetchMyProductsDone(response)))
-        .catch(error => dispatch(fetchMyProductsFailed(error)));
+    try {
+        const response = await request.get(`/users/${userId}/products?page=${page}&size=${pageSize}`);
+        dispatch(fetchMyProductsDone(response));
+    } catch (error) {
+        dispatch(fetchMyProductsFailed(error));
+    }
 };
 
 export const fetchMyProductsStart = () => {
@@ -157,12 +174,15 @@ export const fetchMyProductsFailed = (error) => {
 };
 
 
-export const searchProducts = (query, page, pageSize) => dispatch => {
+export const searchProducts = (query, page, pageSize) => async dispatch => {
     dispatch(searchProductsStart());
 
-    request.get(`/products/search?query=${query}&page=${page}&size=${pageSize}`)
-        .then(response => dispatch(searchProductsDone(response)))
-        .catch(error => dispatch(searchProductsFailed(error)));
+    try {
+        const response = await request.get(`/products/search?query=${query}&page=${page}&size=${pageSize}`);
+        dispatch(searchProductsDone(response));
+    } catch (error) {
+        dispatch(searchProductsFailed(error))
+    }
 };
 
 export const searchProductsStart = () => {
@@ -178,12 +198,14 @@ export const searchProductsFailed = (error) => {
 };
 
 
-export const searchProductsInfinity = (query, page, pageSize) => dispatch => {
+export const searchProductsInfinity = (query, page, pageSize) => async dispatch => {
     dispatch(searchProductsInfinityStart());
-
-    request.get(`/products/search?query=${query}&page=${page}&size=${pageSize}`)
-        .then(response => dispatch(searchProductsInfinityDone(response)))
-        .catch(error => dispatch(searchProductsInfinityFailed(error)));
+    try {
+        const response = await request.get(`/products/search?query=${query}&page=${page}&size=${pageSize}`);
+        dispatch(searchProductsInfinityDone(response));
+    } catch (error) {
+        dispatch(searchProductsInfinityFailed(error));
+    }
 };
 
 export const searchProductsInfinityStart = () => {
@@ -199,7 +221,8 @@ export const searchProductsInfinityFailed = (error) => {
 };
 
 export const editProduct = (productId, update) => async dispatch => {
-    await dispatch(editProductStart());
+    dispatch(editProductStart());
+
     const token = AuthService.getToken();
 
     const formData = new FormData();
@@ -213,9 +236,12 @@ export const editProduct = (productId, update) => async dispatch => {
     formData.append("fibre", update.fibre);
     formData.append("kcal", update.kcal);
 
-    await request.put(`/products/${productId}`, formData, {headers: {'Authorization': `Bearer ${token}`}})
-        .then(response => dispatch(editProductDone(response)))
-        .catch(error => dispatch(editProductFailed(error)));
+    try {
+        const response = await request.put(`/products/${productId}`, formData, {headers: {'Authorization': `Bearer ${token}`}});
+        dispatch(editProductDone(response));
+    } catch (error) {
+        dispatch(editProductFailed(error));
+    }
 };
 
 export const editProductStart = () => {

@@ -16,8 +16,7 @@ import {
 import {fetchTopMeals} from './topMealsAction';
 import {fetchLatestMeals} from './latestMealsAction';
 
-import {
-    createProduct,
+import {createProduct,
     fetchProduct,
     deleteProduct,
     fetchProducts,

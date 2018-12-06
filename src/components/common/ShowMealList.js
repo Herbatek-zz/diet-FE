@@ -24,7 +24,7 @@ class ShowMealList extends Component {
                         key={item.id} className='listItem'
                         extra={
                             <div className='list__image--container'>
-                                <Link to={`/meals/${item.id}`}>
+                                <Link to={{pathname: `/meals/${item.id}`, state: {meal: item}}}>
                                     <img width={272} alt="logo" src={item.imageUrl} className='list__image'/>
                                 </Link>
                             </div>}

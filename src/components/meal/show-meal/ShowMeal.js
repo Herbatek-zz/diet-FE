@@ -26,14 +26,55 @@ class MealShow extends Component {
         this.props.history.push('/meals/my');
     };
 
+    renderMeal = (meal, isActual) => {
+        const {isLogged} = this.state;
+        return (
+            <div className='meal-show'>
+                <div className='meal-show__head'>
+                    <h1 className='meal-show__title'>
+                        <label>{meal.name}</label>
+                    </h1>
+                    {isLogged ? <MealMenu mealId={meal.id} userId={meal.userId} isActual={isActual} onDelete={this.onDelete}/> : null}
+                </div>
+                <div className='meal-show__body'>
+                    <div className='meal-show__first-panel'>
+                        <div className='first-panel__image-container'>
+                            <img className='first-panel__image' src={meal.imageUrl} alt={meal.name}/>
+                        </div>
+                        <div className='first-panel__info'>
+                            <h2>Informacje o posiłku</h2>
+                            <ItemInfoTable item={meal}/>
+                        </div>
+                    </div>
+                    <div className='meal-show__second-panel'>
+                        <div className='second-panel__meal-products'>
+                            <MealProducts products={meal.products}/>
+                        </div>
+                        <div className='second-panel__description'>
+                            <h2>Opis</h2>
+                            <p className='second-panel__description-text'>
+                                {meal.description}
+                            </p>
+                        </div>
+                        <div className='second-panel__recipe'>
+                            <h2>Przepis</h2>
+                            <p className='second-panel__recipe-text'>
+                                {meal.recipe}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
+    };
+
     render() {
         const {selectedMeal} = this.props;
-        const {isLogged} = this.state;
 
-        if (!selectedMeal.id || selectedMeal.isLoading)
+        if (!selectedMeal || selectedMeal.isLoading)
             return LOADING_SPIN;
 
-        if(selectedMeal.isError)
+        if (selectedMeal.isError && !this.props.location.state)
             return <Alert
                 message="Błąd"
                 style={{width: '80%', marginTop: '1%'}}
@@ -41,45 +82,8 @@ class MealShow extends Component {
                 type="error"
                 showIcon
             />;
-
-        return (
-            <div className='meal-show'>
-                <div className='meal-show__head'>
-                    <h1 className='meal-show__title'>
-                        <label>{selectedMeal.name}</label>
-                    </h1>
-                    {isLogged ? <MealMenu mealId={selectedMeal.id} userId={selectedMeal.userId} onDelete={this.onDelete}/> : null}
-                </div>
-                <div className='meal-show__body'>
-                    <div className='meal-show__first-panel'>
-                        <div className='first-panel__image-container'>
-                            <img className='first-panel__image' src={selectedMeal.imageUrl} alt={selectedMeal.name}/>
-                        </div>
-                        <div className='first-panel__info'>
-                            <h2>Informacje o posiłku</h2>
-                            <ItemInfoTable item={selectedMeal}/>
-                        </div>
-                    </div>
-                    <div className='meal-show__second-panel'>
-                        <div className='second-panel__meal-products'>
-                            <MealProducts products={selectedMeal.products}/>
-                        </div>
-                        <div className='second-panel__description'>
-                            <h2>Opis</h2>
-                            <p className='second-panel__description-text'>
-                                {selectedMeal.description}
-                            </p>
-                        </div>
-                        <div className='second-panel__recipe'>
-                            <h2>Przepis</h2>
-                            <p className='second-panel__recipe-text'>
-                                {selectedMeal.recipe}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        );
+        return (this.props.location.state && this.props.location.state.meal && selectedMeal.isError ?
+            this.renderMeal(this.props.location.state.meal, false) : this.renderMeal(selectedMeal, true));
     }
 }
 

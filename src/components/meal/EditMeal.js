@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Field, reduxForm} from 'redux-form';
 import {connect} from 'react-redux';
-import {Button, Icon, message, Upload} from 'antd';
+import {Alert, Button, Icon, message, Upload} from 'antd';
 import {TextField, TextAreaField} from 'redux-form-antd';
 
 import AuthService from '../../helpers/auth_service';
@@ -9,6 +9,7 @@ import {fetchMeal, editMeal, setMenuItem} from "../../actions";
 import '../common/form.css';
 import {NECESSARY_FIELD} from "../../helpers/constants";
 import NoAuthAlert from "../common/NoAuthAlert";
+import {LOADING_SPIN} from "../../helpers/messages";
 
 class MealEdit extends Component {
     state = {
@@ -52,8 +53,21 @@ class MealEdit extends Component {
     };
 
     render() {
+        const {meal} = this.props;
         if (!this.state.isLoggedIn)
             return <NoAuthAlert/>;
+
+        if (!meal || meal.isLoading)
+            return LOADING_SPIN;
+
+        if(meal.isError)
+            return <Alert
+                message="Błąd"
+                style={{width: '80%', marginTop: '1%'}}
+                description="Niestety nie udało nam się znaleźć tego posiłku."
+                type="error"
+                showIcon
+            />;
 
         return (
             <div className='form-container'>
@@ -127,9 +141,9 @@ const mapStateToProps = ({meals}) => {
     }
 };
 
-export default reduxForm({
+const formWrapped = reduxForm({
     validate,
-    form: 'MealEditForm'
-})(
-    connect(mapStateToProps, {editMeal, fetchMeal, setMenuItem})(MealEdit)
-);
+    form: 'EditMealForm'
+})(MealEdit);
+
+export default connect(mapStateToProps, {editMeal, fetchMeal, setMenuItem})(formWrapped);

@@ -28,7 +28,7 @@ import {
 } from "./index";
 
 export const createMeal = (meal) => async dispatch => {
-    await dispatch(createMealStart());
+    dispatch(createMealStart());
 
     const userId = AuthService.getDecodedToken().sub;
     const token = AuthService.getToken();
@@ -39,9 +39,14 @@ export const createMeal = (meal) => async dispatch => {
     formData.append("description", meal.description);
     formData.append("name", meal.name);
 
-    await request.post(`/users/${userId}/meals`, formData, {headers: {'Authorization': `Bearer ${token}`}})
-        .then(response => dispatch(createMealDone(response)))
-        .catch(error => dispatch(createMealFailed(error)));
+    try {
+        const response = await request.post(`/users/${userId}/meals`, formData, {
+            headers: {'Authorization': `Bearer ${token}`}
+        });
+        dispatch(createMealDone(response));
+    } catch (error) {
+        dispatch(createMealFailed(error));
+    }
 
 };
 
@@ -69,11 +74,14 @@ export function deleteMeal(id, callback) {
 }
 
 export const fetchMeal = (id) => async dispatch => {
-    await dispatch(fetchMealStart());
+    dispatch(fetchMealStart());
 
-    await request.get(`/meals/${id}`)
-        .then(response => dispatch(fetchMealDone(response)))
-        .catch(error => dispatch(fetchMealFailed(error)));
+    try {
+        const response = await request.get(`/meals/${id}`);
+        dispatch(fetchMealDone(response));
+    } catch (error) {
+        dispatch(fetchMealFailed(error));
+    }
 };
 
 export const fetchMealStart = () => {
@@ -89,11 +97,14 @@ export const fetchMealFailed = (error) => {
 };
 
 export const fetchMeals = (page, pageSize) => async dispatch => {
-    await dispatch(fetchMealsStart());
+    dispatch(fetchMealsStart());
 
-    await request.get(`/meals?page=${page}&size=${pageSize}`)
-        .then(response => dispatch(fetchMealsDone(response)))
-        .catch(error => dispatch(fetchMealsFailed(error)));
+    try {
+        const response = await request.get(`/meals?page=${page}&size=${pageSize}`);
+        dispatch(fetchMealsDone(response));
+    } catch (error) {
+        dispatch(fetchMealsFailed(error));
+    }
 };
 
 export const fetchMealsStart = () => {
@@ -110,12 +121,16 @@ export const fetchMealsFailed = (error) => {
 
 
 export const fetchMyMeals = (page, pageSize) => async dispatch => {
-    await dispatch(fetchMyMealsStart());
+    dispatch(fetchMyMealsStart());
 
     const userId = AuthService.getDecodedToken().sub;
-    await request.get(`/users/${userId}/meals?page=${page}&size=${pageSize}`)
-        .then(response => dispatch(fetchMyMealsDone(response)))
-        .catch(error => dispatch(fetchMyMealsFailed(error)));
+
+    try {
+        const response = await request.get(`/users/${userId}/meals?page=${page}&size=${pageSize}`);
+        dispatch(fetchMyMealsDone(response));
+    } catch (error) {
+        dispatch(fetchMyMealsFailed(error));
+    }
 };
 
 export const fetchMyMealsStart = () => {
@@ -131,11 +146,14 @@ export const fetchMyMealsFailed = (error) => {
 };
 
 export const searchMeals = (query, page, pageSize) => async dispatch => {
-    await dispatch(searchMealsStart());
+    dispatch(searchMealsStart());
 
-    await request.get(`/meals/search?query=${query}&page=${page}&size=${pageSize}`)
-        .then(response => dispatch(searchMealsDone(response)))
-        .catch(error => dispatch(searchMealsFailed(error)));
+    try {
+        const response = await request.get(`/meals/search?query=${query}&page=${page}&size=${pageSize}`);
+        dispatch(searchMealsDone(response));
+    } catch (error) {
+        dispatch(searchMealsFailed(error));
+    }
 };
 
 export const searchMealsStart = () => {
@@ -151,12 +169,16 @@ export const searchMealsFailed = (error) => {
 };
 
 export const fetchFavouriteMeals = (page, pageSize) => async dispatch => {
-    await dispatch(fetchFavouriteMealsStart());
+    dispatch(fetchFavouriteMealsStart());
 
     const userId = AuthService.getDecodedToken().sub;
-    await request.get(`/users/${userId}/meals/favourites?page=${page}&size=${pageSize}`)
-        .then(response => dispatch(fetchFavouriteMealsDone(response)))
-        .catch(error => dispatch(fetchFavouriteMealsFailed(error)));
+
+    try {
+        const response = await request.get(`/users/${userId}/meals/favourites?page=${page}&size=${pageSize}`);
+        dispatch(fetchFavouriteMealsDone(response));
+    } catch (error) {
+        dispatch(fetchFavouriteMealsFailed(error));
+    }
 };
 
 export const fetchFavouriteMealsStart = () => {
@@ -207,7 +229,7 @@ export function removeMealFromFavourites(mealId, onErrorDo) {
 }
 
 export const editMeal = (mealId, update) => async dispatch => {
-    await dispatch(editMealStart());
+    dispatch(editMealStart());
 
     const token = AuthService.getToken();
     const formData = new FormData();
@@ -234,9 +256,12 @@ export const editMeal = (mealId, update) => async dispatch => {
         index++;
     }
 
-    await request.put(`/meals/${mealId}`, formData, {headers: {'Authorization': `Bearer ${token}`}})
-        .then(response => dispatch(editMealDone(response)))
-        .catch(error => dispatch(editMealFailed(error)));
+    try {
+        const response = await request.put(`/meals/${mealId}`, formData, {headers: {'Authorization': `Bearer ${token}`}});
+        dispatch(editMealDone(response));
+    } catch (error) {
+        dispatch(editMealFailed(error));
+    }
 };
 
 export const editMealStart = () => {

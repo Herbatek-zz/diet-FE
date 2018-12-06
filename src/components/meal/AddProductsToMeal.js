@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {List, Avatar, Input, Spin, Tooltip, message, Modal, InputNumber, Button, Table} from 'antd';
+import {List, Avatar, Input, Spin, Tooltip, message, Modal, InputNumber, Button, Table, Alert} from 'antd';
 import InfiniteScroll from 'react-infinite-scroller';
 import {Link} from "react-router-dom";
 import {
@@ -192,12 +192,22 @@ class MealEdit extends Component {
     render() {
         if (!this.state.isLoggedIn)
             return <NoAuthAlert/>;
-        if (!this.props.meal)
-            return LOADING_SPIN;
 
         const {meal} = this.props;
-        const {searchValue, pageSize} = this.state;
 
+        if (!meal || meal.isLoading)
+            return LOADING_SPIN;
+
+        if (meal.isError)
+            return <Alert
+                message="Błąd"
+                style={{width: '80%', marginTop: '1%'}}
+                description="Niestety nie udało nam się znaleźć tego posiłku."
+                type="error"
+                showIcon
+            />;
+
+        const {searchValue, pageSize} = this.state;
         return (
             <div className='addProducts__content'>
                 <div className='addProducts__head'>
@@ -256,7 +266,10 @@ class MealEdit extends Component {
                                 rowKey='id'
                                 columns={[{
                                     title: 'Nazwa', dataIndex: 'name',
-                                    render: (text, record) => <Link to={`/products/${record.id}`}>{text}</Link>
+                                    render: (text, record) =>
+                                        <Link
+                                            to={{pathname: `/products/${record.id}`, state: {product: record}}}>{text}
+                                        </Link>
                                 }, {
                                     title: 'Waga',
                                     dataIndex: 'amount',

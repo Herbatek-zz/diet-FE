@@ -41,16 +41,16 @@ class MealMenu extends Component {
     };
 
     renderWhenUserIsAuthor = () => {
-        const {mealId, onDelete} = this.props;
+        const {mealId, onDelete, isActual} = this.props;
         return (
             <div className='meal-show__menu'>
-                <HearthIcon mealId={mealId}/>
-                <AddToCartIcon onClick={() => this.setState({modalVisible: true})}/>
-                <EditIcon link={`/meals/${mealId}/edit`}/>
-                <EditIcon link={`/meals/${mealId}/add-products`} text='Edytuj produkty'/>
-                <DeleteIcon
+                <HearthIcon mealId={mealId} isActual={isActual}/>
+                {isActual ? <AddToCartIcon onClick={() => this.setState({modalVisible: true})}/> : null}
+                {isActual ? <EditIcon link={`/meals/${mealId}/edit`}/> : null}
+                {isActual ? <EditIcon link={`/meals/${mealId}/add-products`} text='Edytuj produkty'/> : null}
+                {isActual ? <DeleteIcon
                     confirmText='Czy na pewno chcesz usunąć ten posiłek ?'
-                    onDelete={() => deleteMeal(mealId, onDelete)}/>
+                    onDelete={() => deleteMeal(mealId, onDelete)}/> : null}
                 {this.modal()}
             </div>
         )
@@ -59,8 +59,8 @@ class MealMenu extends Component {
     renderWhenOtherUser = () => {
         return (
             <div className='meal-show__menu'>
-                <HearthIcon mealId={this.props.mealId}/>
-                <AddToCartIcon onClick={() => this.setState({modalVisible: true})}/>
+                <HearthIcon mealId={this.props.mealId} isActual={this.props.isActual}/>
+                {this.props.isActual ? <AddToCartIcon onClick={() => this.setState({modalVisible: true})}/> : null}
                 {this.modal()}
             </div>
         )

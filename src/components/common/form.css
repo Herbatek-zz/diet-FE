@@ -29,11 +29,16 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
+    max-width: 100%;
 }
 
-.ant-upload-list-item-info {
-    width: 100px;
+.ant-upload-list-text {
+    max-width: 90%;
+}
+
+.ant-upload-list-item-name {
+    width: 90%;
+    padding-right: 5px;
 }
 
 @media (min-width: 600px) {

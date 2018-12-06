@@ -25,32 +25,18 @@ class ProductShow extends Component {
         this.props.setMenuItem('');
     }
 
-    onSubmit = (event) => {
+    onSubmit = event => {
         event.preventDefault();
         this.props.addProductToCart(this.props.product.id, new Date(), this.state.amount);
         this.setState({modalVisible: false})
     };
 
-    render() {
-        const {product} = this.props;
-
-        if(product.isError)
-            return <Alert
-                message="Błąd"
-                style={{width: '80%', marginTop: '1%'}}
-                description="Niestety nie udało nam się znaleźć tego produktu."
-                type="error"
-                showIcon
-            />;
-
-        if (!product.id || product.isLoading)
-            return LOADING_SPIN;
-
+    renderProduct = (product, isActual) => {
         return (
             <div className='product-show'>
                 <div className='product-show__head'>
                     <h2><label>{product.name}</label></h2>
-                    {this.state.isLoggedIn ?
+                    {this.state.isLoggedIn && isActual ?
                         <div className='product-show__icon-menu'>
                             <AddToCartIcon onClick={() => this.setState({modalVisible: true})}/>
                             {AuthService.getDecodedToken().sub === product.userId ?
@@ -96,7 +82,26 @@ class ProductShow extends Component {
 
                 </Modal>
             </div>
-        );
+        )
+    };
+
+    render() {
+        const {product} = this.props;
+
+        if (!product || product.isLoading)
+            return LOADING_SPIN;
+
+        if(product.isError && !this.props.location.state)
+            return <Alert
+                message="Błąd"
+                style={{width: '80%', marginTop: '1%'}}
+                description="Niestety nie udało nam się znaleźć tego produktu."
+                type="error"
+                showIcon
+            />;
+
+        return (this.props.location.state && this.props.location.state.product && product.isError ?
+            this.renderProduct(this.props.location.state.product, false) : this.renderProduct(product, true));
     }
 }
 

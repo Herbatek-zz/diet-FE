@@ -40,7 +40,7 @@ class ProductEdit extends Component {
             });
         }
         if (this.state.sent && product.isLoading)
-            message.loading("Zapisywanie w toku");
+            message.loading("Zapisywanie w toku", 0.7);
         else if (this.state.sent && product.isError)
             message.error("Coś poszło nie tak");
         else if (this.state.sent && !product.isLoading && !product.isError) {
@@ -202,9 +202,9 @@ const mapStateToProps = ({products}) => {
     return {product: products.selectedProduct,}
 };
 
-export default reduxForm({
+const formWrapped = reduxForm({
     validate,
-    form: 'ProductEditForm'
-})(
-    connect(mapStateToProps, {editProduct, fetchProduct, setMenuItem})(ProductEdit)
-);
+    form: 'EditProductForm'
+})(ProductEdit);
+
+export default connect(mapStateToProps, {editProduct, fetchProduct, setMenuItem})(formWrapped);

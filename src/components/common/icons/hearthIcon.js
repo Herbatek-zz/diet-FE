@@ -20,7 +20,7 @@ class HearthIcon extends Component {
                         Ulubione
                     </span>
                 </Tooltip>);
-        else
+        else if(this.props.isActual)
             return (
                 <Tooltip placement="topLeft" title='Dodaj do ulubionych' arrowPointAtCenter='true'>
                     <span className='header-icon' onClick={() => this.props.addMealToFavourites(this.props.mealId,
@@ -29,6 +29,7 @@ class HearthIcon extends Component {
                         Ulubione
                     </span>
                 </Tooltip>);
+        return null;
     }
 }
 

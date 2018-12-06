@@ -29,7 +29,7 @@ class MealMyList extends Component {
         return (
             <div className='content__list'>
                 <div className='header'>
-                    <h1 className='header__title'><label>Moje posiłki</label></h1>
+                    <h1><label>Moje posiłki</label></h1>
                 </div>
                 <div className='list'>
                     <ShowMealList

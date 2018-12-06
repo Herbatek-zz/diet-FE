@@ -28,7 +28,7 @@ class ProductMyList extends Component {
         return (
             <div className='content__list'>
                 <div className='header'>
-                    <h1 className='header__title'>Moje produkty</h1>
+                    <h1><label>Moje produkty</label></h1>
                 </div>
                 <div className='list'>
                     <ShowProductList
